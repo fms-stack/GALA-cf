@@ -14,6 +14,7 @@ const NAV = [
 ];
 
 export default function PublicLayout() {
+  const [open, setOpen] = useState(false);
   useEffect(() => {
     document.documentElement.classList.add("dark");
     return () => document.documentElement.classList.remove("dark");
@@ -52,7 +53,32 @@ export default function PublicLayout() {
           >
             Confirmer
           </Link>
+          <button
+            onClick={() => setOpen(!open)}
+            aria-label="Menu"
+            data-testid="public-mobile-burger"
+            className="lg:hidden text-ivoire p-2"
+          >
+            {open ? <X size={24} /> : <List size={24} />}
+          </button>
         </div>
+        {open && (
+          <div className="lg:hidden border-t border-ivoire/10 bg-noir px-6 py-6 flex flex-col gap-4" data-testid="public-mobile-menu">
+            {NAV.map((n) => (
+              <NavLink
+                key={n.to}
+                to={n.to}
+                end={n.end}
+                onClick={() => setOpen(false)}
+                className={({ isActive }) =>
+                  `label-eyebrow ${isActive ? "text-or" : "text-ivoire/70"}`
+                }
+              >
+                {n.label}
+              </NavLink>
+            ))}
+          </div>
+        )}
       </header>
       <main className="pt-20">
         <Outlet />

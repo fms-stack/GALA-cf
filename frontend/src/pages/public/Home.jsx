@@ -21,7 +21,7 @@ export default function Home() {
   return (
     <div data-testid="public-home" className="text-ivoire">
       {/* HERO */}
-      <section className="relative min-h-[88vh] flex items-end overflow-hidden">
+      <section className="relative min-h-[92vh] flex items-end overflow-hidden snap-start">
         <img src={HERO_IMG} alt="" className="absolute inset-0 w-full h-full object-cover opacity-50" />
         <div className="absolute inset-0 bg-gradient-to-t from-noir via-noir/70 to-noir/30" />
         <div className="relative max-w-[1400px] mx-auto px-6 lg:px-12 pb-24 pt-32 w-full">
@@ -64,7 +64,7 @@ export default function Home() {
       </section>
 
       {/* PHRASE FONDATRICE */}
-      <section className="py-32 px-6 lg:px-12">
+      <section className="py-20 md:py-24 px-6 lg:px-12 snap-start">
         <div className="max-w-[1400px] mx-auto">
           <div className="grid lg:grid-cols-12 gap-12 items-end">
             <div className="lg:col-span-2">
@@ -82,7 +82,7 @@ export default function Home() {
       </section>
 
       {/* 7 DISCIPLINES */}
-      <section className="py-32 px-6 lg:px-12 bg-noir border-t border-ivoire/10">
+      <section className="py-20 md:py-24 px-6 lg:px-12 bg-noir border-t border-ivoire/10 snap-start">
         <div className="max-w-[1400px] mx-auto">
           <div className="flex items-end justify-between mb-16 flex-wrap gap-6">
             <div>
@@ -110,14 +110,14 @@ export default function Home() {
       <section className="py-32 px-6 lg:px-12">
         <div className="max-w-[1400px] mx-auto grid lg:grid-cols-2 gap-12">
           <div>
-            <img src={PLATE_IMG} alt="" className="w-full h-[70vh] object-cover" />
+            <img src={PLATE_IMG} alt="" className="w-full h-[50vh] md:h-[60vh] object-cover" />
             <p className="label-eyebrow text-or mt-6">I · Le Flux Gala</p>
             <p className="serif-display text-3xl mt-2 leading-tight">
               L'expérience millimétrée pour 800–1000 convives.
             </p>
           </div>
           <div className="lg:mt-32">
-            <img src={BANQUET_IMG} alt="" className="w-full h-[70vh] object-cover" />
+            <img src={BANQUET_IMG} alt="" className="w-full h-[50vh] md:h-[60vh] object-cover" />
             <p className="label-eyebrow text-or mt-6">II · Le Flux Série</p>
             <p className="serif-display text-3xl mt-2 leading-tight">
               Une captation cinématographique multi-caméras, en temps réel.

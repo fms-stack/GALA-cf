@@ -56,6 +56,9 @@
 
 @layer base {
   * { @apply border-border; }
+  html {
+    scroll-behavior: smooth;
+  }
   body {
     @apply bg-background text-foreground;
     font-family: "Switzer", ui-sans-serif, system-ui, sans-serif;
