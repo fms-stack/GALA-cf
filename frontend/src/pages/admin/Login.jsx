@@ -34,7 +34,7 @@ export default function Login() {
           <div className="serif-display text-5xl mt-8">Gala OS</div>
           <div className="label-eyebrow opacity-60 mt-3">CVLN · Back-office</div>
           <p className="mt-12 max-w-xs mx-auto text-sable text-sm italic">
-            « Ce Gala fonde le standard culturel de la diaspora caribéenne. »
+            « Ce Gala fonde le standard culturel de la diaspora afro mondiale. »
           </p>
         </div>
       </div>
