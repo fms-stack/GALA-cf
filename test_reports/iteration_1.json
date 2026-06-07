@@ -1,0 +1,43 @@
+{
+  "summary": "Backend pytest 15/16 passed (94%). Frontend critical flows verified: public home/RSVP, login as admin, dashboard KPIs (25 positions, days_to_gala J-187, 2 invitations), positions list shows 25 seeded rows, admin nav works, logout in sidebar present. Auth httpOnly cookies (samesite=none; secure) confirmed working over HTTPS preview. RSVP form submission visually loaded but couldn't fully verify the success ref screen due to missing data-testid on name input.",
+  "backend_issues": {
+    "critical": [],
+    "minor": [
+      {"endpoint": "/api/auth/login", "issue": "Brute-force lockout uses request.client.host which behind k8s ingress is the proxy IP; counter may not accumulate per real client. Test 6+ failed attempts on same email returned 401 instead of 429. Consider keying on email only or trust X-Forwarded-For."}
+    ]
+  },
+  "frontend_issues": {
+    "ui_bugs": [
+      {"component": "RSVP form", "issue": "Inputs lack data-testid attrs (rsvp-full-name, rsvp-email, rsvp-seats, rsvp-submit). Tests had to fall back to type selectors.", "selector": "input[name='full_name']", "priority": "MEDIUM"},
+      {"component": "Login form", "issue": "Inputs lack data-testid (login-email/login-password/login-submit). Worked via type selectors.", "selector": "input[type='email']", "priority": "LOW"}
+    ],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "Public Home", "issues": ["Dark Noir Nuit theme + Cormorant Garamond + Or accents render beautifully; logo concentric waves visible; nav and CTA Confirmer work."]},
+      {"screen": "Admin sidebar", "issues": ["Layout clean; KPI cards readable on ivoire background; contrast good."]}
+    ]
+  },
+  "test_report_links": ["/app/backend/tests/test_gala_api.py", "/app/test_reports/pytest/pytest_results.xml"],
+  "action_items": [
+    "Add data-testid attributes on public RSVP and /login form inputs (rsvp-full-name/email/phone/seats/message/submit, login-email/password/submit) and on admin row/CRUD modal elements to harden Playwright testing.",
+    "Improve brute-force protection: key on (email) or read X-Forwarded-For since request.client.host behind ingress returns the proxy IP, defeating the per-IP+email counter.",
+    "Optional: surface a clearer success ref panel on RSVP completion (currently relies on toast)."
+  ],
+  "critical_code_review_comments": [
+    "server.py at ~570 lines is acceptable but approaching split threshold; consider routing modules (auth.py, positions.py, invitations.py) before Phase 4.",
+    "PATCH /api/invitations/{iid} accepts raw dict body — should be a Pydantic model for safer validation and OpenAPI.",
+    "CORS uses allow_origins with explicit FRONTEND_URL + localhost + allow_credentials=True — correct for cookie auth (no wildcard).",
+    "bcrypt hashes correctly start with $2b$ (verified via login flow).",
+    "seed_admin idempotent and refreshes password if changed — good.",
+    "list_assignments does N+1 mongo queries (per-assignment lookup); fine for MVP but use $lookup aggregation if scale grows.",
+    "Dashboard gala_date hardcoded 2026-12-12 — fine for MVP, but move to env for flexibility."
+  ],
+  "updated_files": ["/app/backend/tests/test_gala_api.py", "/app/test_reports/pytest/pytest_results.xml"],
+  "success_rate": {"backend": "94% (15/16)", "frontend": "~90% (all critical flows load; minor data-testid gaps)"},
+  "test_credentials": "laurent@cvln.holding / GalaCVLN2026! (admin) – login verified end-to-end.",
+  "seed_data_creation": "Test created 1 TEST_VIP invitation via public RSVP (kept) and ephemeral TEST-POS-99 position + TEST_Person (deleted by tests).",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Backend stable; pytest at /app/backend/tests/test_gala_api.py covers auth, RSVP, invitations, positions/people/assignments CRUD, RBAC, dashboard. Brute-force test will keep failing until backend uses email-only counter or trusts X-Forwarded-For. Frontend admin pages render but People/Assignments/Invitations are mostly empty by design; create data via UI for deeper checks. data-testid coverage is uneven across forms.",
+  "rca of the issue": "Brute-force 429 not triggered: in deployed env, request.client.host returns the k8s ingress IP, not the real client. The per-(ip:email) counter never accumulates because each request from the test machine may traverse different ingress workers, or—even if stable—the IP is shared with all other traffic and could be reset. Mitigation: parse X-Forwarded-For (first IP) for `ip`, or key the brute-force counter purely on the email being attacked."
+}

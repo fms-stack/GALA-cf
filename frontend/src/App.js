@@ -1,54 +1,62 @@
-import { useEffect } from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { AuthProvider, useAuth } from "@/lib/auth";
+import { Toaster } from "@/components/ui/sonner";
+import PublicLayout from "@/layouts/PublicLayout";
+import AdminLayout from "@/layouts/AdminLayout";
+import Home from "@/pages/public/Home";
+import Concept from "@/pages/public/Concept";
+import Prix from "@/pages/public/Prix";
+import Partenaires from "@/pages/public/Partenaires";
+import RSVP from "@/pages/public/RSVP";
+import Contact from "@/pages/public/Contact";
+import Login from "@/pages/admin/Login";
+import MagicLink from "@/pages/admin/MagicLink";
+import Dashboard from "@/pages/admin/Dashboard";
+import Positions from "@/pages/admin/Positions";
+import People from "@/pages/admin/People";
+import Assignments from "@/pages/admin/Assignments";
+import Invitations from "@/pages/admin/Invitations";
 import "@/App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import axios from "axios";
-import { HOME } from "@/constants/testIds";
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
-
-const Home = () => {
-  const helloWorldApi = async () => {
-    try {
-      const response = await axios.get(`${API}/`);
-      console.log(response.data.message);
-    } catch (e) {
-      console.error(e, `errored out requesting / api`);
-    }
-  };
-
-  useEffect(() => {
-    helloWorldApi();
-  }, []);
-
-  return (
-    <div>
-      <header className="App-header">
-        <a
-          data-testid={HOME.emergentLink}
-          className="App-link"
-          href="https://emergent.sh"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img src="https://avatars.githubusercontent.com/in/1201222?s=120&u=2686cf91179bbafbc7a71bfbc43004cf9ae1acea&v=4" />
-        </a>
-        <p className="mt-5">Building something incredible ~!</p>
-      </header>
-    </div>
-  );
-};
+function Protected({ children }) {
+  const { user, loading } = useAuth();
+  if (loading) return <div className="min-h-screen flex items-center justify-center text-foreground">Chargement…</div>;
+  if (!user) return <Navigate to="/login" replace />;
+  return children;
+}
 
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />}>
-            <Route index element={<Home />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
+            {/* PUBLIC — dark editorial */}
+            <Route element={<PublicLayout />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/concept" element={<Concept />} />
+              <Route path="/prix" element={<Prix />} />
+              <Route path="/partenaires" element={<Partenaires />} />
+              <Route path="/rsvp" element={<RSVP />} />
+              <Route path="/contact" element={<Contact />} />
+            </Route>
+
+            {/* BACK-OFFICE — light dense */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/portail" element={<MagicLink />} />
+            <Route element={<Protected><AdminLayout /></Protected>}>
+              <Route path="/admin" element={<Dashboard />} />
+              <Route path="/admin/positions" element={<Positions />} />
+              <Route path="/admin/people" element={<People />} />
+              <Route path="/admin/assignments" element={<Assignments />} />
+              <Route path="/admin/invitations" element={<Invitations />} />
+            </Route>
+
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+          <Toaster richColors position="top-right" />
+        </BrowserRouter>
+      </AuthProvider>
     </div>
   );
 }
