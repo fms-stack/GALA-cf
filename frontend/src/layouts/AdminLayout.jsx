@@ -2,7 +2,7 @@ import { Outlet, NavLink, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useAuth } from "@/lib/auth";
 import { Logo } from "@/components/Logo";
-import { House, Users, IdentificationCard, Briefcase, Envelope, SignOut } from "@phosphor-icons/react";
+import { House, Users, IdentificationCard, Briefcase, Envelope, SignOut, Tray } from "@phosphor-icons/react";
 
 const NAV = [
   { to: "/admin", label: "Tableau de bord", icon: House, end: true },
@@ -10,6 +10,7 @@ const NAV = [
   { to: "/admin/people", label: "Personnes", icon: IdentificationCard },
   { to: "/admin/assignments", label: "Affectations", icon: Users },
   { to: "/admin/invitations", label: "Invitations VIP", icon: Envelope },
+  { to: "/admin/submissions", label: "Réceptions publiques", icon: Tray },
 ];
 
 export default function AdminLayout() {

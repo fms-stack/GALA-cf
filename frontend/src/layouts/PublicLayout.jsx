@@ -6,9 +6,11 @@ const NAV = [
   { to: "/", label: "Accueil", end: true },
   { to: "/concept", label: "Concept" },
   { to: "/prix", label: "Les 7 Prix" },
-  { to: "/partenaires", label: "Partenaires" },
+  { to: "/billetterie", label: "Billetterie" },
+  { to: "/candidatures", label: "Soumettre" },
+  { to: "/casting", label: "Casting" },
+  { to: "/sponsoring", label: "Partenaires" },
   { to: "/rsvp", label: "RSVP VIP" },
-  { to: "/contact", label: "Contact" },
 ];
 
 export default function PublicLayout() {

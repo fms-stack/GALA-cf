@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Logo } from "@/components/Logo";
+import { Countdown } from "@/components/Countdown";
 
 const HERO_IMG = "https://images.pexels.com/photos/4997894/pexels-photo-4997894.jpeg";
 const PLATE_IMG = "https://images.pexels.com/photos/2403392/pexels-photo-2403392.jpeg";
@@ -48,12 +49,15 @@ export default function Home() {
                 Confirmer ma présence →
               </Link>
               <Link
-                to="/concept"
-                data-testid="home-cta-concept"
+                to="/billetterie"
+                data-testid="home-cta-billet"
                 className="border border-ivoire/40 px-8 py-4 label-eyebrow hover:border-or hover:text-or transition-colors"
               >
-                Découvrir le concept
+                Billetterie publique
               </Link>
+            </div>
+            <div className="mt-20 pt-10 border-t border-ivoire/10">
+              <Countdown />
             </div>
           </motion.div>
         </div>

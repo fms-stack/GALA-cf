@@ -19,6 +19,9 @@ from fastapi.responses import JSONResponse
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 from pydantic import BaseModel, Field, EmailStr, ConfigDict
+from emergentintegrations.payments.stripe.checkout import (
+    StripeCheckout, CheckoutSessionRequest, CheckoutSessionResponse, CheckoutStatusResponse,
+)
 
 
 # ============================================================================
@@ -173,6 +176,53 @@ class InvitationVIPIn(BaseModel):
     seats: int = Field(ge=1, le=10, default=1)
     message: Optional[str] = ""
     honeypot: Optional[str] = ""  # anti-spam
+
+
+class ApplicationIn(BaseModel):
+    full_name: str = Field(min_length=2, max_length=120)
+    email: EmailStr
+    discipline: str  # cuisine, musique, art, mode, cinema, litterature, culture
+    project_title: str = Field(min_length=2, max_length=200)
+    description: str = Field(min_length=10, max_length=2000)
+    portfolio_url: Optional[str] = ""
+    honeypot: Optional[str] = ""
+
+
+class CastingIn(BaseModel):
+    full_name: str = Field(min_length=2, max_length=120)
+    email: EmailStr
+    phone: Optional[str] = ""
+    profile_type: str  # chef, artiste, performer, mc
+    bio: str = Field(min_length=10, max_length=2000)
+    demo_url: Optional[str] = ""
+    honeypot: Optional[str] = ""
+
+
+class SponsoringIn(BaseModel):
+    company_name: str = Field(min_length=2, max_length=200)
+    contact_name: str = Field(min_length=2, max_length=120)
+    email: EmailStr
+    phone: Optional[str] = ""
+    tier_interest: str  # titre, or, argent, partenaire
+    sector: Optional[str] = ""
+    message: str = Field(min_length=10, max_length=2000)
+    honeypot: Optional[str] = ""
+
+
+# Ticket packages — server-side definition (never trust frontend prices)
+TICKET_PACKAGES = {
+    "gradin":  {"label": "Gradin face", "amount": 50.0, "currency": "eur"},
+    "lateral": {"label": "Zone latérale (debout)", "amount": 80.0, "currency": "eur"},
+    "premium": {"label": "Gradin premium", "amount": 120.0, "currency": "eur"},
+}
+
+
+class CheckoutCreateIn(BaseModel):
+    package_id: str
+    quantity: int = Field(ge=1, le=10, default=1)
+    origin_url: str
+    full_name: str = Field(min_length=2, max_length=120)
+    email: EmailStr
 
 
 # ============================================================================
@@ -467,6 +517,161 @@ async def update_invitation_status(iid: str, body: dict, user: dict = Depends(re
 
 
 # ============================================================================
+# PUBLIC FORMS — Candidatures · Casting · Sponsoring (write-only)
+# ============================================================================
+@api_router.post("/public/applications")
+async def public_application(p: ApplicationIn, request: Request):
+    if p.honeypot:
+        return {"ok": True}
+    doc = p.model_dump(exclude={"honeypot"})
+    doc["status"] = "new"
+    doc["source_ip"] = request.client.host if request.client else ""
+    doc["created_at"] = datetime.now(timezone.utc).isoformat()
+    res = await db.applications.insert_one(doc)
+    return {"ok": True, "ref": str(res.inserted_id)[-6:].upper()}
+
+
+@api_router.post("/public/casting")
+async def public_casting(p: CastingIn, request: Request):
+    if p.honeypot:
+        return {"ok": True}
+    doc = p.model_dump(exclude={"honeypot"})
+    doc["status"] = "new"
+    doc["source_ip"] = request.client.host if request.client else ""
+    doc["created_at"] = datetime.now(timezone.utc).isoformat()
+    res = await db.castings.insert_one(doc)
+    return {"ok": True, "ref": str(res.inserted_id)[-6:].upper()}
+
+
+@api_router.post("/public/sponsoring")
+async def public_sponsoring(p: SponsoringIn, request: Request):
+    if p.honeypot:
+        return {"ok": True}
+    doc = p.model_dump(exclude={"honeypot"})
+    doc["status"] = "new"
+    doc["source_ip"] = request.client.host if request.client else ""
+    doc["created_at"] = datetime.now(timezone.utc).isoformat()
+    res = await db.sponsoring_requests.insert_one(doc)
+    return {"ok": True, "ref": str(res.inserted_id)[-6:].upper()}
+
+
+@api_router.get("/applications")
+async def list_applications(user: dict = Depends(require_role("admin", "production"))):
+    items = await db.applications.find({}).sort("created_at", -1).to_list(500)
+    return [doc_out(x) for x in items]
+
+
+@api_router.get("/castings")
+async def list_castings(user: dict = Depends(require_role("admin", "production"))):
+    items = await db.castings.find({}).sort("created_at", -1).to_list(500)
+    return [doc_out(x) for x in items]
+
+
+@api_router.get("/sponsoring")
+async def list_sponsoring(user: dict = Depends(require_role("admin", "production"))):
+    items = await db.sponsoring_requests.find({}).sort("created_at", -1).to_list(500)
+    return [doc_out(x) for x in items]
+
+
+@api_router.get("/orders")
+async def list_orders(user: dict = Depends(require_role("admin", "production"))):
+    items = await db.payment_transactions.find({}).sort("created_at", -1).to_list(500)
+    return [doc_out(x) for x in items]
+
+
+# ============================================================================
+# BILLETTERIE — Stripe Checkout (public)
+# ============================================================================
+@api_router.get("/public/tickets")
+async def public_tickets():
+    return [{"id": k, **v} for k, v in TICKET_PACKAGES.items()]
+
+
+@api_router.post("/public/checkout/session")
+async def create_checkout_session(payload: CheckoutCreateIn, request: Request):
+    pkg = TICKET_PACKAGES.get(payload.package_id)
+    if not pkg:
+        raise HTTPException(status_code=400, detail="Type de billet invalide")
+    amount = float(pkg["amount"]) * int(payload.quantity)
+    api_key = os.environ.get("STRIPE_API_KEY", "")
+    host_url = str(request.base_url).rstrip("/")
+    webhook_url = f"{host_url}/api/webhook/stripe"
+    stripe_checkout = StripeCheckout(api_key=api_key, webhook_url=webhook_url)
+
+    success_url = f"{payload.origin_url}/billetterie/success?session_id={{CHECKOUT_SESSION_ID}}"
+    cancel_url = f"{payload.origin_url}/billetterie"
+    metadata = {
+        "package_id": payload.package_id,
+        "quantity": str(payload.quantity),
+        "full_name": payload.full_name,
+        "email": payload.email,
+    }
+    req = CheckoutSessionRequest(
+        amount=amount, currency=pkg["currency"],
+        success_url=success_url, cancel_url=cancel_url, metadata=metadata,
+    )
+    session: CheckoutSessionResponse = await stripe_checkout.create_checkout_session(req)
+    await db.payment_transactions.insert_one({
+        "session_id": session.session_id,
+        "amount": amount,
+        "currency": pkg["currency"],
+        "package_id": payload.package_id,
+        "package_label": pkg["label"],
+        "quantity": payload.quantity,
+        "full_name": payload.full_name,
+        "email": payload.email.lower(),
+        "payment_status": "initiated",
+        "status": "open",
+        "metadata": metadata,
+        "created_at": datetime.now(timezone.utc).isoformat(),
+    })
+    return {"url": session.url, "session_id": session.session_id}
+
+
+@api_router.get("/public/checkout/status/{session_id}")
+async def checkout_status(session_id: str, request: Request):
+    api_key = os.environ.get("STRIPE_API_KEY", "")
+    host_url = str(request.base_url).rstrip("/")
+    webhook_url = f"{host_url}/api/webhook/stripe"
+    stripe_checkout = StripeCheckout(api_key=api_key, webhook_url=webhook_url)
+    st: CheckoutStatusResponse = await stripe_checkout.get_checkout_status(session_id)
+    record = await db.payment_transactions.find_one({"session_id": session_id})
+    if record and record.get("payment_status") != "paid" and st.payment_status == "paid":
+        await db.payment_transactions.update_one(
+            {"session_id": session_id},
+            {"$set": {"payment_status": st.payment_status, "status": st.status, "paid_at": datetime.now(timezone.utc).isoformat()}},
+        )
+    elif record:
+        await db.payment_transactions.update_one(
+            {"session_id": session_id},
+            {"$set": {"payment_status": st.payment_status, "status": st.status}},
+        )
+    return {
+        "status": st.status, "payment_status": st.payment_status,
+        "amount_total": st.amount_total, "currency": st.currency, "metadata": st.metadata,
+    }
+
+
+@app.post("/api/webhook/stripe")
+async def stripe_webhook(request: Request):
+    body = await request.body()
+    api_key = os.environ.get("STRIPE_API_KEY", "")
+    host_url = str(request.base_url).rstrip("/")
+    stripe_checkout = StripeCheckout(api_key=api_key, webhook_url=f"{host_url}/api/webhook/stripe")
+    try:
+        ev = await stripe_checkout.handle_webhook(body, request.headers.get("Stripe-Signature"))
+        if ev.payment_status == "paid":
+            await db.payment_transactions.update_one(
+                {"session_id": ev.session_id},
+                {"$set": {"payment_status": "paid", "status": "complete", "paid_at": datetime.now(timezone.utc).isoformat()}},
+            )
+        return {"received": True}
+    except Exception as e:
+        logger.error(f"Stripe webhook error: {e}")
+        return {"received": False}
+
+
+# ============================================================================
 # DASHBOARD STATS
 # ============================================================================
 @api_router.get("/dashboard/stats")
@@ -477,6 +682,11 @@ async def dashboard_stats(user: dict = Depends(get_current_user)):
     inv_total = await db.invitations_vip.count_documents({})
     inv_pending = await db.invitations_vip.count_documents({"status": "pending"})
     inv_confirmed = await db.invitations_vip.count_documents({"status": "confirmed"})
+    apps_count = await db.applications.count_documents({})
+    castings_count = await db.castings.count_documents({})
+    sponsoring_count = await db.sponsoring_requests.count_documents({})
+    orders_paid = await db.payment_transactions.count_documents({"payment_status": "paid"})
+    orders_total = await db.payment_transactions.count_documents({})
     gala_date = datetime(2026, 12, 12, tzinfo=timezone.utc)
     days_to_gala = (gala_date - datetime.now(timezone.utc)).days
     return {
@@ -489,6 +699,10 @@ async def dashboard_stats(user: dict = Depends(get_current_user)):
             "confirmed": inv_confirmed,
         },
         "contracts": {"signed": 0, "pending": 0, "refused": 0},
+        "applications": apps_count,
+        "castings": castings_count,
+        "sponsoring": sponsoring_count,
+        "orders": {"total": orders_total, "paid": orders_paid},
         "days_to_gala": days_to_gala,
         "gala_date": gala_date.isoformat(),
     }
@@ -515,6 +729,17 @@ async def public_prizes():
         {"code": "CF-GAP-06", "title": "Prix de la Mode", "discipline": "Création textile & silhouette"},
         {"code": "CF-GAP-07", "title": "Prix de la Littérature", "discipline": "Écriture & édition"},
     ]
+
+
+@api_router.get("/public/countdown")
+async def public_countdown():
+    gala = datetime(2026, 12, 12, 19, 0, 0, tzinfo=timezone.utc)
+    delta = gala - datetime.now(timezone.utc)
+    return {
+        "gala_date": gala.isoformat(),
+        "days": max(0, delta.days),
+        "hours": max(0, delta.seconds // 3600),
+    }
 
 
 @api_router.get("/health")

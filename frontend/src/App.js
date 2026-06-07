@@ -9,6 +9,10 @@ import Prix from "@/pages/public/Prix";
 import Partenaires from "@/pages/public/Partenaires";
 import RSVP from "@/pages/public/RSVP";
 import Contact from "@/pages/public/Contact";
+import Candidatures from "@/pages/public/Candidatures";
+import Casting from "@/pages/public/Casting";
+import Sponsoring from "@/pages/public/Sponsoring";
+import Billetterie, { BilletterieSuccess } from "@/pages/public/Billetterie";
 import Login from "@/pages/admin/Login";
 import MagicLink from "@/pages/admin/MagicLink";
 import Dashboard from "@/pages/admin/Dashboard";
@@ -16,6 +20,7 @@ import Positions from "@/pages/admin/Positions";
 import People from "@/pages/admin/People";
 import Assignments from "@/pages/admin/Assignments";
 import Invitations from "@/pages/admin/Invitations";
+import Submissions from "@/pages/admin/Submissions";
 import "@/App.css";
 
 function Protected({ children }) {
@@ -38,6 +43,11 @@ function App() {
               <Route path="/prix" element={<Prix />} />
               <Route path="/partenaires" element={<Partenaires />} />
               <Route path="/rsvp" element={<RSVP />} />
+              <Route path="/billetterie" element={<Billetterie />} />
+              <Route path="/billetterie/success" element={<BilletterieSuccess />} />
+              <Route path="/candidatures" element={<Candidatures />} />
+              <Route path="/casting" element={<Casting />} />
+              <Route path="/sponsoring" element={<Sponsoring />} />
               <Route path="/contact" element={<Contact />} />
             </Route>
 
@@ -50,6 +60,7 @@ function App() {
               <Route path="/admin/people" element={<People />} />
               <Route path="/admin/assignments" element={<Assignments />} />
               <Route path="/admin/invitations" element={<Invitations />} />
+              <Route path="/admin/submissions" element={<Submissions />} />
             </Route>
 
             <Route path="*" element={<Navigate to="/" replace />} />
