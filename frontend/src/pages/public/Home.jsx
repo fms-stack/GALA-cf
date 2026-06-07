@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { useRef } from "react";
 import { Logo } from "@/components/Logo";
 import { Countdown } from "@/components/Countdown";
+import { useCinematics } from "@/lib/cinematics";
 
 const HERO_IMG = "https://images.pexels.com/photos/4997894/pexels-photo-4997894.jpeg";
 const PLATE_IMG = "https://images.pexels.com/photos/2403392/pexels-photo-2403392.jpeg";
@@ -18,144 +19,120 @@ const DISCIPLINES = [
 ];
 
 export default function Home() {
+  const rootRef = useRef(null);
+  useCinematics(rootRef);
+
   return (
-    <div data-testid="public-home" className="text-ivoire">
+    <div ref={rootRef} data-testid="public-home" className="text-ivoire">
       {/* HERO */}
       <section className="relative min-h-[92vh] flex items-end overflow-hidden snap-start">
-        <img src={HERO_IMG} alt="" className="absolute inset-0 w-full h-full object-cover opacity-50" />
+        <img src={HERO_IMG} alt="" data-parallax className="absolute inset-0 w-full h-full object-cover opacity-50" />
         <div className="absolute inset-0 bg-gradient-to-t from-noir via-noir/70 to-noir/30" />
-        <div className="relative max-w-[1400px] mx-auto px-6 lg:px-12 pb-24 pt-32 w-full">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-            className="max-w-3xl"
-          >
-            <div className="label-eyebrow text-or mb-8">Chapitre I · Samedi 12 Décembre 2026 · Paris</div>
-            <h1 className="serif-display text-[clamp(3rem,9vw,7.5rem)] mb-8">
-              Cook &amp; Food<br />
-              <span className="italic opacity-90">Gala.</span>
+        <div className="relative max-w-[1400px] mx-auto px-6 lg:px-12 pb-16 md:pb-24 pt-32 w-full">
+          <div className="max-w-3xl">
+            <div className="label-eyebrow text-or mb-6 md:mb-8" data-reveal>Chapitre I · Samedi 12 Décembre 2026 · Paris</div>
+            <h1 data-hero-title className="serif-display text-[clamp(2.6rem,9vw,7.5rem)] mb-6 md:mb-8">
+              Cook &amp; Food Gala.
             </h1>
-            <p className="text-lg lg:text-xl text-sable max-w-2xl leading-relaxed">
+            <p className="text-base md:text-xl text-sable max-w-2xl leading-relaxed" data-reveal>
               Une expérience gastronomique &amp; culturelle immersive — Cuisine, Culture, Musique, Art, Mode, Cinéma &amp; Littérature.
               <span className="italic"> Plus qu'un événement, une empreinte culturelle.</span>
             </p>
-            <div className="mt-12 flex flex-wrap gap-4">
-              <Link
-                to="/rsvp"
-                data-testid="home-cta-rsvp"
-                className="bg-or text-noir px-8 py-4 label-eyebrow hover:bg-ivoire transition-colors"
-              >
+            <div className="mt-8 md:mt-12 flex flex-wrap gap-3 md:gap-4" data-reveal>
+              <Link to="/rsvp" data-testid="home-cta-rsvp" className="bg-or text-noir px-6 md:px-8 py-3 md:py-4 label-eyebrow hover:bg-ivoire transition-colors">
                 Confirmer ma présence →
               </Link>
-              <Link
-                to="/billetterie"
-                data-testid="home-cta-billet"
-                className="border border-ivoire/40 px-8 py-4 label-eyebrow hover:border-or hover:text-or transition-colors"
-              >
+              <Link to="/billetterie" data-testid="home-cta-billet" className="border border-ivoire/40 px-6 md:px-8 py-3 md:py-4 label-eyebrow hover:border-or hover:text-or transition-colors">
                 Billetterie publique
               </Link>
             </div>
-            <div className="mt-20 pt-10 border-t border-ivoire/10">
+            <div className="mt-12 md:mt-20 pt-6 md:pt-10 border-t border-ivoire/10" data-reveal>
               <Countdown />
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
       {/* PHRASE FONDATRICE */}
       <section className="py-20 md:py-24 px-6 lg:px-12 snap-start">
         <div className="max-w-[1400px] mx-auto">
-          <div className="grid lg:grid-cols-12 gap-12 items-end">
-            <div className="lg:col-span-2">
-              <Logo size={48} className="text-or" />
-            </div>
+          <div className="grid lg:grid-cols-12 gap-12 items-end" data-reveal>
+            <div className="lg:col-span-2"><Logo size={56} className="text-or" /></div>
             <div className="lg:col-span-9">
-              <p className="label-eyebrow text-or mb-6">Phrase fondatrice</p>
-              <p className="serif-display text-4xl lg:text-6xl leading-[1.05] italic">
-                « Ce Gala fonde le standard culturel<br />
-                de la diaspora afro mondiale. »
+              <p className="label-eyebrow text-or mb-4 md:mb-6">Phrase fondatrice</p>
+              <p className="serif-display text-3xl md:text-5xl lg:text-6xl leading-[1.05] italic">
+                « Ce Gala fonde le standard culturel<br />de la diaspora afro mondiale. »
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 7 DISCIPLINES */}
+      {/* 7 DISCIPLINES — horizontal premium */}
       <section className="py-20 md:py-24 px-6 lg:px-12 bg-noir border-t border-ivoire/10 snap-start">
         <div className="max-w-[1400px] mx-auto">
-          <div className="flex items-end justify-between mb-16 flex-wrap gap-6">
+          <div className="flex items-end justify-between mb-10 md:mb-16 flex-wrap gap-6" data-reveal>
             <div>
-              <p className="label-eyebrow text-or mb-4">Sept disciplines · une nuit</p>
-              <h2 className="serif-display text-5xl lg:text-6xl">L'arène double-produit.</h2>
+              <p className="label-eyebrow text-or mb-3 md:mb-4">Sept disciplines · une nuit</p>
+              <h2 className="serif-display text-4xl md:text-6xl">L'arène double-produit.</h2>
             </div>
             <p className="text-sable max-w-md text-sm leading-relaxed">
-              Scène circulaire, deux îlots cuisine, gradins panoramiques. La salle est un studio 360°.
-              L'événement se vit, se filme, se diffuse — chapitre I d'une série en construction.
+              Scène circulaire, deux îlots cuisine, gradins panoramiques. La salle est un studio 360°. L'événement se vit, se filme, se diffuse.
             </p>
           </div>
-          <div className="flex md:overflow-x-auto md:snap-x md:snap-mandatory flex-col md:flex-row gap-px bg-ivoire/10 -mx-6 lg:-mx-12 px-6 lg:px-12 pb-4 scrollbar-hide">
+          <div data-stagger className="flex md:overflow-x-auto md:snap-x md:snap-mandatory flex-col md:flex-row gap-px bg-ivoire/10 -mx-6 lg:-mx-12 px-6 lg:px-12 pb-4 scrollbar-hide">
             {DISCIPLINES.map((d) => (
-              <div key={d.num} className="bg-noir p-8 md:p-10 md:min-w-[340px] md:snap-start hover:bg-noir/50 transition-colors group flex-shrink-0">
-                <div className="label-eyebrow text-or mb-8">{d.num}</div>
+              <div key={d.num} data-stagger-item className="bg-noir p-7 md:p-10 md:min-w-[340px] md:snap-start hover:bg-noir/50 transition-colors group flex-shrink-0">
+                <div className="label-eyebrow text-or mb-6 md:mb-8">{d.num}</div>
                 <div className="serif-display text-3xl md:text-4xl mb-2">{d.name}</div>
                 <div className="text-sable italic text-sm opacity-60 group-hover:opacity-100 transition-opacity">— {d.word}</div>
               </div>
             ))}
           </div>
-          <p className="md:block hidden mt-4 label-eyebrow opacity-40">← Faire défiler latéralement →</p>
+          <p className="hidden md:block mt-4 label-eyebrow opacity-40">← Faire défiler latéralement →</p>
         </div>
       </section>
 
-      {/* DOUBLE IMAGE EDITORIAL */}
-      <section className="py-32 px-6 lg:px-12">
-        <div className="max-w-[1400px] mx-auto grid lg:grid-cols-2 gap-12">
-          <div>
-            <img src={PLATE_IMG} alt="" className="w-full h-[50vh] md:h-[60vh] object-cover" />
-            <p className="label-eyebrow text-or mt-6">I · Le Flux Gala</p>
-            <p className="serif-display text-3xl mt-2 leading-tight">
-              L'expérience millimétrée pour 800–1000 convives.
-            </p>
+      {/* DOUBLE EDITORIAL */}
+      <section className="py-20 md:py-24 px-6 lg:px-12 snap-start">
+        <div className="max-w-[1400px] mx-auto grid lg:grid-cols-2 gap-8 lg:gap-12">
+          <div data-reveal>
+            <img src={PLATE_IMG} alt="" className="w-full h-[40vh] md:h-[60vh] object-cover" />
+            <p className="label-eyebrow text-or mt-4 md:mt-6">I · Le Flux Gala</p>
+            <p className="serif-display text-2xl md:text-3xl mt-2 leading-tight">L'expérience millimétrée pour 800–1000 convives.</p>
           </div>
-          <div className="lg:mt-32">
-            <img src={BANQUET_IMG} alt="" className="w-full h-[50vh] md:h-[60vh] object-cover" />
-            <p className="label-eyebrow text-or mt-6">II · Le Flux Série</p>
-            <p className="serif-display text-3xl mt-2 leading-tight">
-              Une captation cinématographique multi-caméras, en temps réel.
-            </p>
+          <div className="lg:mt-32" data-reveal>
+            <img src={BANQUET_IMG} alt="" className="w-full h-[40vh] md:h-[60vh] object-cover" />
+            <p className="label-eyebrow text-or mt-4 md:mt-6">II · Le Flux Série</p>
+            <p className="serif-display text-2xl md:text-3xl mt-2 leading-tight">Une captation cinématographique multi-caméras, en temps réel.</p>
           </div>
         </div>
       </section>
 
-      {/* ECOSYSTEM — silencieux */}
+      {/* ÉCOSYSTÈME */}
       <section className="py-20 px-6 lg:px-12 bg-noir border-t border-ivoire/10">
-        <div className="max-w-[1400px] mx-auto text-center">
+        <div className="max-w-[1400px] mx-auto text-center" data-reveal>
           <p className="label-eyebrow text-or mb-4">Écosystème</p>
           <p className="serif-display text-3xl md:text-5xl italic max-w-3xl mx-auto leading-tight">
             « Le Gala<br />présente l'écosystème. »
           </p>
-          <p className="mt-8 text-sable text-sm opacity-60 max-w-md mx-auto leading-relaxed">
+          <p className="mt-6 md:mt-8 text-sable text-sm opacity-60 max-w-md mx-auto leading-relaxed">
             Cook &amp; Food Gala est l'un des chapitres d'une infrastructure culturelle plus large — qu'on dévoilera, pierre par pierre.
           </p>
         </div>
       </section>
 
       {/* CTA FINAL */}
-      <section className="py-40 px-6 lg:px-12 bg-noir border-t border-ivoire/10">
-        <div className="max-w-3xl mx-auto text-center">
-          <p className="label-eyebrow text-or mb-6">Invitation personnelle · non transférable</p>
-          <h2 className="serif-display text-5xl lg:text-7xl mb-8">
-            Soyez témoin<br />
-            <span className="italic">d'un acte fondateur.</span>
+      <section className="py-24 md:py-32 px-6 lg:px-12 bg-noir border-t border-ivoire/10 snap-start">
+        <div className="max-w-3xl mx-auto text-center" data-reveal>
+          <p className="label-eyebrow text-or mb-4 md:mb-6">Invitation personnelle · non transférable</p>
+          <h2 className="serif-display text-4xl md:text-7xl mb-6 md:mb-8">
+            Soyez témoin<br /><span className="italic">d'un acte fondateur.</span>
           </h2>
-          <p className="text-sable mb-12 text-lg">
+          <p className="text-sable mb-8 md:mb-12 text-base md:text-lg">
             120 places VIP · 800 places publiques · une cérémonie, sept prix, une nuit.
           </p>
-          <Link
-            to="/rsvp"
-            data-testid="home-final-cta"
-            className="inline-block bg-or text-noir px-12 py-5 label-eyebrow hover:bg-ivoire transition-colors"
-          >
+          <Link to="/rsvp" data-testid="home-final-cta" className="inline-block bg-or text-noir px-8 md:px-12 py-4 md:py-5 label-eyebrow hover:bg-ivoire transition-colors">
             Confirmer ma présence
           </Link>
         </div>

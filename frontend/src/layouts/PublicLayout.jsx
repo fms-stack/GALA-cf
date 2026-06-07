@@ -1,6 +1,7 @@
 import { Outlet, NavLink, Link } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Logo } from "@/components/Logo";
+import { List, X } from "@phosphor-icons/react";
 
 const NAV = [
   { to: "/", label: "Accueil", end: true },
