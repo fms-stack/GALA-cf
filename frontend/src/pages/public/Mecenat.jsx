@@ -38,7 +38,7 @@ export default function Mecenat() {
             </div>
             <div>
               <p className="label-eyebrow text-or mb-2">Conseil dédié</p>
-              <p className="serif-display text-xl">+33 6 00 00 00 00</p>
+              <p className="serif-display text-xl">+596 696 78 89 86</p>
               <p className="text-sable text-xs italic opacity-70">mecenat@cookandfood.gala — réponse 24h</p>
             </div>
           </div>
@@ -84,7 +84,7 @@ export function MecenatSuccess() {
       <div className="text-center max-w-lg">
         <p className="label-eyebrow text-or mb-6">Don confirmé</p>
         <h1 className="serif-display text-5xl mb-6">Merci infiniment.</h1>
-        <p className="text-sable">Votre engagement nourrit la fondation. Un reçu et un message personnel de Laurent vous parviennent.</p>
+        <p className="text-sable">Votre engagement nourrit la fondation. Un reçu et un message signé <em>Cook &amp; Food Gala by Factory Maker Studio &amp; CVLN Group</em> vous parviennent.</p>
       </div>
     </div>
   );

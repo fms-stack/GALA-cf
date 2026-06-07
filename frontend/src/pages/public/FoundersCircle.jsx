@@ -37,7 +37,7 @@ export default function FoundersCircle() {
 
         <div className="mt-20 pt-12 border-t border-ivoire/10 max-w-2xl">
           <p className="label-eyebrow text-or mb-4">Conseil dédié</p>
-          <p className="serif-display text-2xl mb-2">+33 6 00 00 00 00</p>
+          <p className="serif-display text-2xl mb-2">+596 696 78 89 86</p>
           <p className="text-sable text-sm italic opacity-70">WhatsApp Business · circle@cookandfood.gala · réponse sous 24h</p>
         </div>
       </div>

@@ -524,3 +524,17 @@ async def seed_ecosystem_nodes(db, audit):
     for n in nodes:
         n["created_at"] = datetime.now(timezone.utc).isoformat()
         await db.ecosystem_nodes.insert_one(n)
+
+
+async def seed_founders(db):
+    """Seed 3 placeholder founders — admin will replace/edit."""
+    if await db.founders_circle.count_documents({}) > 0:
+        return
+    founders = [
+        {"name": "Hôte inaugural", "title": "Fondateur · CVLN Holding", "bio": "Architecte de l'écosystème Cook & Food Gala et du standard CIP.", "kind": "Fondateur", "public_visible": False, "order": 1},
+        {"name": "Conseil culturel", "title": "Direction artistique", "bio": "Garant de la cohérence éditoriale du Chapter I.", "kind": "Conseil", "public_visible": False, "order": 2},
+        {"name": "Conseil gastronomique", "title": "CVL Culinary Innovations", "bio": "Référent CIP et normes culinaires afro contemporaines.", "kind": "Conseil", "public_visible": False, "order": 3},
+    ]
+    for f in founders:
+        f["created_at"] = datetime.now(timezone.utc).isoformat()
+        await db.founders_circle.insert_one(f)

@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/lib/auth";
+import { I18nProvider } from "@/lib/i18n";
 import { Toaster } from "@/components/ui/sonner";
 import { CustomCursor } from "@/components/CustomCursor";
 import { AmbientAudio } from "@/components/AmbientAudio";
@@ -42,6 +43,7 @@ function App() {
   return (
     <div className="App">
       <AuthProvider>
+        <I18nProvider>
         <BrowserRouter>
           <Routes>
             {/* PUBLIC — dark editorial */}
@@ -84,6 +86,7 @@ function App() {
           <CustomCursor />
           <AmbientAudio src={process.env.REACT_APP_AMBIENT_AUDIO_URL} />
         </BrowserRouter>
+        </I18nProvider>
       </AuthProvider>
     </div>
   );

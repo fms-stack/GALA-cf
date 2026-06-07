@@ -28,7 +28,7 @@ export default function CercleRestreint() {
         <p className="label-eyebrow text-or mb-6">Demande reçue</p>
         <h1 className="serif-display text-5xl mb-6">Merci.</h1>
         <p className="text-sable">Référence confidentielle <span className="text-or">#{ref}</span>. La direction reviendra vers vous personnellement.</p>
-        <p className="mt-10 text-xs italic opacity-60">+33 6 00 00 00 00 — WhatsApp dédié au Cercle</p>
+        <p className="mt-10 text-xs italic opacity-60">+596 696 78 89 86 — WhatsApp dédié au Cercle</p>
       </div>
     </div>
   );
@@ -52,7 +52,7 @@ export default function CercleRestreint() {
           <F l="Engagement philanthropique"><textarea rows={3} value={form.philanthropic_engagement} onChange={onChange("philanthropic_engagement")} className={`${inp} resize-none`} placeholder="Fondations, mécénat, causes soutenues…" /></F>
           <F l="Message"><textarea rows={3} value={form.message} onChange={onChange("message")} className={`${inp} resize-none`} /></F>
           <button type="submit" disabled={loading} data-testid="cercle-submit" className="w-full bg-or text-noir py-4 label-eyebrow hover:bg-ivoire transition-colors disabled:opacity-60">{loading ? "Envoi…" : "Soumettre ma demande →"}</button>
-          <p className="text-xs italic opacity-50 text-center">Examen sous 7 jours · réponse personnelle de Laurent</p>
+          <p className="text-xs italic opacity-50 text-center">Examen sous 7 jours · message signé Cook &amp; Food Gala by Factory Maker Studio &amp; CVLN Group</p>
         </form>
       </div>
     </div>

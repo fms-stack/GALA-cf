@@ -586,6 +586,15 @@ async def public_cercle(p: CercleInquiryIn, request: Request):
     doc["status"] = "pending_review"
     doc["source_ip"] = request.client.host if request.client else ""
     doc["created_at"] = datetime.now(timezone.utc).isoformat()
+    # also mark cooptation token used if provided in message field
+    msg = (doc.get("message") or "")
+    if "[coopte:" in msg:
+        try:
+            tok = msg.split("[coopte:")[1].split("]")[0]
+            await db.cooptation_tokens.update_one({"token": tok}, {"$set": {"used": True, "used_at": datetime.now(timezone.utc).isoformat()}})
+            doc["coopted_by_token"] = tok
+        except Exception:
+            pass
     res = await db.cercle_restreint_inquiries.insert_one(doc)
     return {"ok": True, "ref": str(res.inserted_id)[-6:].upper()}
 
@@ -632,6 +641,32 @@ async def list_mecenat(user: dict = Depends(require_role("admin", "production"))
 async def public_founders():
     items = await db.founders_circle.find({"public_visible": True}).sort("order", 1).to_list(50)
     return [{"name": x.get("name"), "title": x.get("title"), "bio": x.get("bio"), "kind": x.get("kind")} for x in items]
+
+
+@api_router.post("/cooptation/issue")
+async def issue_cooptation(body: dict, user: dict = Depends(require_role("admin", "production"))):
+    """Issue a unique cooptation token (7 days) — to be shared by a member with a prospect."""
+    sponsor = body.get("sponsor_name", user.get("name", "—"))
+    token = secrets.token_urlsafe(20)
+    await db.cooptation_tokens.insert_one({
+        "token": token,
+        "sponsor_user_id": user["id"],
+        "sponsor_name": sponsor,
+        "expires_at": (datetime.now(timezone.utc) + timedelta(days=7)).isoformat(),
+        "used": False,
+        "created_at": datetime.now(timezone.utc).isoformat(),
+    })
+    return {"token": token, "url": f"{FRONTEND_URL}/cercle-restreint?coopte={token}", "expires_in_days": 7}
+
+
+@api_router.get("/public/cooptation/{token}")
+async def check_cooptation(token: str):
+    rec = await db.cooptation_tokens.find_one({"token": token, "used": False})
+    if not rec:
+        return {"valid": False}
+    if datetime.fromisoformat(rec["expires_at"]) < datetime.now(timezone.utc):
+        return {"valid": False}
+    return {"valid": True, "sponsor": rec.get("sponsor_name", "")}
 
 
 @api_router.get("/applications")
@@ -1010,6 +1045,8 @@ async def on_startup():
     await seed_admin()
     await seed_positions()
     await seed_ecosystem_nodes(db, audit)
+    from phases import seed_founders
+    await seed_founders(db)
     logger.info("CVLN Gala OS API ready.")
 
 

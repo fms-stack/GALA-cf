@@ -2,6 +2,7 @@ import { Outlet, NavLink, Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Logo } from "@/components/Logo";
+import { LangSwitcher } from "@/lib/i18n";
 import { List, X } from "@phosphor-icons/react";
 
 const NAV = [
@@ -56,6 +57,7 @@ export default function PublicLayout() {
           >
             Confirmer
           </Link>
+          <LangSwitcher />
           <button
             onClick={() => setOpen(!open)}
             aria-label="Menu"
