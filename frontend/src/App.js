@@ -15,6 +15,10 @@ import Candidatures from "@/pages/public/Candidatures";
 import Casting from "@/pages/public/Casting";
 import Sponsoring from "@/pages/public/Sponsoring";
 import Billetterie, { BilletterieSuccess } from "@/pages/public/Billetterie";
+import SurInvitation from "@/pages/public/SurInvitation";
+import FoundersCircle from "@/pages/public/FoundersCircle";
+import CercleRestreint from "@/pages/public/CercleRestreint";
+import Mecenat, { MecenatSuccess } from "@/pages/public/Mecenat";
 import Login from "@/pages/admin/Login";
 import MagicLink from "@/pages/admin/MagicLink";
 import Dashboard from "@/pages/admin/Dashboard";
@@ -49,6 +53,11 @@ function App() {
               <Route path="/rsvp" element={<RSVP />} />
               <Route path="/billetterie" element={<Billetterie />} />
               <Route path="/billetterie/success" element={<BilletterieSuccess />} />
+              <Route path="/sur-invitation" element={<SurInvitation />} />
+              <Route path="/founders-circle" element={<FoundersCircle />} />
+              <Route path="/cercle-restreint" element={<CercleRestreint />} />
+              <Route path="/mecenat" element={<Mecenat />} />
+              <Route path="/mecenat/success" element={<MecenatSuccess />} />
               <Route path="/candidatures" element={<Candidatures />} />
               <Route path="/casting" element={<Casting />} />
               <Route path="/sponsoring" element={<Sponsoring />} />

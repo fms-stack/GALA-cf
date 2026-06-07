@@ -209,12 +209,33 @@ class SponsoringIn(BaseModel):
     honeypot: Optional[str] = ""
 
 
+class CercleInquiryIn(BaseModel):
+    """Pre-qualification for the inner Circle / VIP — no payment, no public price."""
+    full_name: str = Field(min_length=2, max_length=120)
+    email: EmailStr
+    phone: Optional[str] = ""
+    sector: str = Field(min_length=2, max_length=120)
+    recommended_by: Optional[str] = ""  # name of an existing member
+    philanthropic_engagement: Optional[str] = ""
+    message: Optional[str] = ""
+    honeypot: Optional[str] = ""
+
+
+class MecenatIn(BaseModel):
+    full_name: str = Field(min_length=2, max_length=120)
+    email: EmailStr
+    organisation: Optional[str] = ""
+    amount_eur: float = Field(ge=500.0)
+    purpose: Optional[str] = ""  # for which purpose: general, prizes, bible, casting
+    honeypot: Optional[str] = ""
+
+
 # Ticket packages — server-side definition (never trust frontend prices)
+# NOTE: VIP retiré de la billetterie publique — passage via /cercle-restreint sur dossier.
 TICKET_PACKAGES = {
     "gradin":  {"label": "Gradin face",            "amount": 50.0,   "currency": "eur", "tier": "public",  "order": 1},
     "lateral": {"label": "Zone latérale (debout)", "amount": 80.0,   "currency": "eur", "tier": "public",  "order": 2},
     "premium": {"label": "Gradin premium",         "amount": 120.0,  "currency": "eur", "tier": "public",  "order": 3},
-    "vip":     {"label": "Place VIP",              "amount": 1000.0, "currency": "eur", "tier": "vip",     "order": 4},
 }
 
 
@@ -554,6 +575,63 @@ async def public_sponsoring(p: SponsoringIn, request: Request):
     doc["created_at"] = datetime.now(timezone.utc).isoformat()
     res = await db.sponsoring_requests.insert_one(doc)
     return {"ok": True, "ref": str(res.inserted_id)[-6:].upper()}
+
+
+@api_router.post("/public/cercle-restreint")
+async def public_cercle(p: CercleInquiryIn, request: Request):
+    """Inner Circle pre-qualification — no payment, manual validation by Laurent."""
+    if p.honeypot:
+        return {"ok": True}
+    doc = p.model_dump(exclude={"honeypot"})
+    doc["status"] = "pending_review"
+    doc["source_ip"] = request.client.host if request.client else ""
+    doc["created_at"] = datetime.now(timezone.utc).isoformat()
+    res = await db.cercle_restreint_inquiries.insert_one(doc)
+    return {"ok": True, "ref": str(res.inserted_id)[-6:].upper()}
+
+
+@api_router.post("/public/mecenat")
+async def public_mecenat(p: MecenatIn, request: Request):
+    if p.honeypot:
+        return {"ok": True, "url": None}
+    api_key = os.environ.get("STRIPE_API_KEY", "")
+    host_url = str(request.base_url).rstrip("/")
+    webhook_url = f"{host_url}/api/webhook/stripe"
+    stripe_checkout = StripeCheckout(api_key=api_key, webhook_url=webhook_url)
+    origin = request.headers.get("origin") or FRONTEND_URL
+    success_url = f"{origin}/mecenat/success?session_id={{CHECKOUT_SESSION_ID}}"
+    cancel_url = f"{origin}/mecenat"
+    metadata = {"kind": "mecenat", "full_name": p.full_name, "email": p.email,
+                "organisation": p.organisation or "", "purpose": p.purpose or "general"}
+    req = CheckoutSessionRequest(amount=float(p.amount_eur), currency="eur",
+        success_url=success_url, cancel_url=cancel_url, metadata=metadata)
+    session = await stripe_checkout.create_checkout_session(req)
+    await db.mecenat_donations.insert_one({
+        "session_id": session.session_id, "amount": float(p.amount_eur),
+        "full_name": p.full_name, "email": p.email.lower(),
+        "organisation": p.organisation or "", "purpose": p.purpose or "general",
+        "payment_status": "initiated", "status": "open",
+        "created_at": datetime.now(timezone.utc).isoformat(),
+    })
+    return {"ok": True, "url": session.url}
+
+
+@api_router.get("/cercle-restreint-inquiries")
+async def list_cercle(user: dict = Depends(require_role("admin", "production"))):
+    items = await db.cercle_restreint_inquiries.find({}).sort("created_at", -1).to_list(500)
+    return [doc_out(x) for x in items]
+
+
+@api_router.get("/mecenat-donations")
+async def list_mecenat(user: dict = Depends(require_role("admin", "production"))):
+    items = await db.mecenat_donations.find({}).sort("created_at", -1).to_list(500)
+    return [doc_out(x) for x in items]
+
+
+@api_router.get("/public/founders-circle")
+async def public_founders():
+    items = await db.founders_circle.find({"public_visible": True}).sort("order", 1).to_list(50)
+    return [{"name": x.get("name"), "title": x.get("title"), "bio": x.get("bio"), "kind": x.get("kind")} for x in items]
 
 
 @api_router.get("/applications")
