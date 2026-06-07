@@ -783,6 +783,37 @@ async def health():
     return {"status": "ok", "service": "cvln-gala-os"}
 
 
+@api_router.get("/health/full")
+async def health_full():
+    """Full integration status — for monitoring on D-day."""
+    status = {"service": "cvln-gala-os", "checks": {}}
+    # MongoDB
+    try:
+        await db.command("ping")
+        status["checks"]["mongodb"] = {"ok": True}
+    except Exception as e:
+        status["checks"]["mongodb"] = {"ok": False, "error": str(e)[:80]}
+    # Stripe
+    status["checks"]["stripe"] = {"ok": bool(os.environ.get("STRIPE_API_KEY"))}
+    # Resend (mocked when key missing)
+    status["checks"]["resend"] = {"ok": bool(RESEND_API_KEY), "mode": "live" if RESEND_API_KEY else "mock"}
+    # Object Storage / Bible
+    from pathlib import Path as _P
+    bible_file = _P("/app/backend/storage/bible/GALA_COOK_FOOD_BIBLE.pdf")
+    status["checks"]["bible_storage"] = {"ok": bible_file.parent.exists(), "uploaded": bible_file.exists()}
+    # Yousign — not yet integrated
+    status["checks"]["yousign"] = {"ok": False, "mode": "mock"}
+    # Collections
+    status["checks"]["collections"] = {
+        "positions": await db.positions.count_documents({}),
+        "people": await db.people.count_documents({}),
+        "users": await db.users.count_documents({}),
+        "invitations_vip": await db.invitations_vip.count_documents({}),
+        "contracts": await db.contracts.count_documents({}),
+    }
+    return status
+
+
 # ============================================================================
 # Seed
 # ============================================================================

@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/lib/auth";
 import { Toaster } from "@/components/ui/sonner";
 import { CustomCursor } from "@/components/CustomCursor";
+import { AmbientAudio } from "@/components/AmbientAudio";
 import PublicLayout from "@/layouts/PublicLayout";
 import AdminLayout from "@/layouts/AdminLayout";
 import Home from "@/pages/public/Home";
@@ -72,6 +73,7 @@ function App() {
           </Routes>
           <Toaster richColors position="top-right" />
           <CustomCursor />
+          <AmbientAudio src={process.env.REACT_APP_AMBIENT_AUDIO_URL} />
         </BrowserRouter>
       </AuthProvider>
     </div>

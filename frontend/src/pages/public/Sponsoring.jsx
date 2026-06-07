@@ -3,10 +3,10 @@ import { api, formatApiError } from "@/lib/api";
 import { toast } from "sonner";
 
 const TIERS = [
-  { id: "titre", label: "Sponsor Titre", body: "Luxe · Spirits · Agro Premium · Catégorie unique" },
-  { id: "or", label: "Sponsor Or", body: "Technologie · Fintech · Médias" },
-  { id: "argent", label: "Sponsor Argent", body: "Hôtellerie · Tourisme · Mode" },
-  { id: "partenaire", label: "Partenaire", body: "Presse · Culture · Institutions" },
+  { id: "titre", label: "Sponsor Titre", body: "Luxe · Spirits · Agro Premium · Catégorie unique", img: "https://images.unsplash.com/photo-1734771771447-d943e2b5f4d5?auto=format&fit=crop&w=900&q=80", price: "Catégorie unique · sur dossier", perks: ["Naming droit Chapter I", "Cocktail nominatif privé", "5 places VIP + table d'honneur", "Mention TC'V broadcast"] },
+  { id: "or",    label: "Sponsor Or",     body: "Technologie · Fintech · Médias", img: "https://images.unsplash.com/photo-1670229712389-cbd53e848bbe?auto=format&fit=crop&w=900&q=80", price: "Sur dossier", perks: ["Visibilité scénographie", "3 places VIP", "Présence digitale", "Logo broadcast"] },
+  { id: "argent",label: "Sponsor Argent", body: "Hôtellerie · Tourisme · Mode",   img: "https://images.unsplash.com/photo-1570000569749-3a9f0c46d70c?auto=format&fit=crop&w=900&q=80", price: "Sur dossier", perks: ["Présence digitale", "2 places VIP", "Mention dans dossier presse"] },
+  { id: "partenaire", label: "Partenaire", body: "Presse · Culture · Institutions", img: "https://images.unsplash.com/photo-1663530761401-15eefb544889?auto=format&fit=crop&w=900&q=80", price: "Échange de visibilité", perks: ["Logo cfceremony.com", "2 places gradins", "Accès networking"] },
 ];
 
 export default function Sponsoring() {
@@ -60,10 +60,18 @@ export default function Sponsoring() {
               type="button"
               onClick={() => setForm({ ...form, tier_interest: t.id })}
               data-testid={`sponsor-tier-${t.id}`}
-              className={`bg-noir p-8 text-left transition-colors ${form.tier_interest === t.id ? "outline outline-1 outline-or" : "hover:bg-noir/50"}`}
+              className={`relative bg-noir text-left aspect-[3/4] overflow-hidden group transition-all ${form.tier_interest === t.id ? "outline outline-1 outline-or" : ""}`}
             >
-              <div className="label-eyebrow text-or mb-4">{t.label}</div>
-              <p className="text-sable text-sm">{t.body}</p>
+              <img src={t.img} alt="" className="absolute inset-0 w-full h-full object-cover opacity-25 group-hover:opacity-45 group-hover:scale-105 transition-all duration-700" />
+              <div className="absolute inset-0 bg-gradient-to-t from-noir via-noir/80 to-transparent" />
+              <div className="relative h-full flex flex-col justify-end p-7">
+                <div className="label-eyebrow text-or mb-4">{t.label}</div>
+                <p className="text-sable text-sm mb-4">{t.body}</p>
+                <ul className="space-y-1 mb-3">
+                  {t.perks.map((p, i) => <li key={i} className="text-ivoire/80 text-xs">— {p}</li>)}
+                </ul>
+                <div className="label-eyebrow opacity-50 mt-2 pt-3 border-t border-ivoire/10">{t.price}</div>
+              </div>
             </button>
           ))}
         </div>
