@@ -74,6 +74,8 @@
   .label-eyebrow {
     @apply uppercase tracking-[0.3em] text-[11px] font-medium;
   }
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
+  .scrollbar-hide { scrollbar-width: none; }
   .serif-display {
     font-family: "Cormorant Garamond", serif;
     font-weight: 300;

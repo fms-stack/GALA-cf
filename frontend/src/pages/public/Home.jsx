@@ -94,15 +94,16 @@ export default function Home() {
               L'événement se vit, se filme, se diffuse — chapitre I d'une série en construction.
             </p>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-px bg-ivoire/10">
+          <div className="flex md:overflow-x-auto md:snap-x md:snap-mandatory flex-col md:flex-row gap-px bg-ivoire/10 -mx-6 lg:-mx-12 px-6 lg:px-12 pb-4 scrollbar-hide">
             {DISCIPLINES.map((d) => (
-              <div key={d.num} className="bg-noir p-8 hover:bg-noir/50 transition-colors group">
+              <div key={d.num} className="bg-noir p-8 md:p-10 md:min-w-[340px] md:snap-start hover:bg-noir/50 transition-colors group flex-shrink-0">
                 <div className="label-eyebrow text-or mb-8">{d.num}</div>
-                <div className="serif-display text-3xl mb-2">{d.name}</div>
+                <div className="serif-display text-3xl md:text-4xl mb-2">{d.name}</div>
                 <div className="text-sable italic text-sm opacity-60 group-hover:opacity-100 transition-opacity">— {d.word}</div>
               </div>
             ))}
           </div>
+          <p className="md:block hidden mt-4 label-eyebrow opacity-40">← Faire défiler latéralement →</p>
         </div>
       </section>
 
