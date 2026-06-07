@@ -1,0 +1,46 @@
+{
+  "summary": "Phase 4-5-6 (Contrats & NDA, Bible PDF, Ecosystem) tested end-to-end. Backend pytest 17/17 PASS (100%). Frontend critical flows verified through Playwright (login admin → /admin/contracts modal + create contract → /admin/bible page). New sidebar nav items 'Contrats & NDA' and 'Bible' visible in screenshot.",
+  "backend_issues": {
+    "critical": [],
+    "minor": [
+      {"endpoint": "/api/contracts/{cid}/status (PATCH)", "issue": "Admin role NOT included in workflow transition from juridique_review → approved/refused (only 'juridique' allowed in code). Today only juridique can validate after production submits. If juridique is unavailable, admin cannot unblock. Consider letting admin perform any transition (already partly in allowed admin set but state machine flow is not validated — e.g., admin could jump draft→signed without going through juridique_review)."},
+      {"endpoint": "/api/contracts/{cid}/status", "issue": "No validation that target status is a legal next-state from current status. Admin can set any contract directly to 'signed' even from 'draft', bypassing juridique review. Workflow integrity is enforced only by UI buttons, not server."},
+      {"endpoint": "/api/bible/signed-url", "issue": "Role check allows 'production' but the docstring/business rule says 'admin/juridique always OK; nomme only after NDA signed'. Production allowed is fine but not documented in the code comment."},
+      {"endpoint": "/api/bible/stream/{token}", "issue": "No audit log written when the token is actually consumed (stream succeeds). Currently only signed_url_issued is logged. Recommend also logging stream_consumed for full immutable trace."},
+      {"endpoint": "/api/bible/signed-url", "issue": "Tokens kept in-memory dict SIGNED_TOKENS — lost on backend restart. For production HA, persist in Mongo with TTL index."}
+    ]
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [
+      {"flow": "Contract PDF download", "issue": "downloadPdf opens `${API}/contracts/{id}/pdf` in window.open — the backend uses httpOnly cookies which ARE sent on same-origin window.open across the preview proxy. Works in current preview but if backend domain ever differs from frontend, cookies (samesite=none; secure) will still travel only via cross-site fetch with credentials, not via plain window.open from a different origin. Acceptable for MVP.", "affected_selectors": ["[data-testid='pdf-{id}']"]}
+    ],
+    "design_issues": [
+      {"screen": "/admin/bible", "issues": ["Layout clean, ivoire/sable/noir palette, Lock icon + 'Document chiffré' eyebrow. Access logs panel renders 'Aucun accès enregistré.' empty state nicely. Italic explainer paragraph at bottom is well written and informative."]},
+      {"screen": "/admin/contracts modal", "issues": ["Two select selectors (assignment vs personne directe) are mutually exclusive via disabled — good UX. Status badges color-coded. Filter tabs are well placed."]}
+    ]
+  },
+  "test_report_links": ["/app/backend/tests/test_phases_456.py", "/app/test_reports/pytest/pytest_results.xml"],
+  "action_items": [
+    "(Optional, low priority) Enforce server-side state machine for contract status transitions: define legal transitions {draft→juridique_review, juridique_review→approved|refused, approved→sent, sent→signed, signed→archived} and reject illegal jumps even for admin.",
+    "(Optional) Add audit log entry inside /api/bible/stream/{token} when token is consumed (currently only issuance is logged).",
+    "(Optional) Persist Bible signed tokens in Mongo with TTL index instead of in-memory dict for HA / multi-worker.",
+    "phases.py is 527 lines and growing; consider splitting into contracts.py / bible.py / ecosystem.py before Phase 7."
+  ],
+  "critical_code_review_comments": [
+    "phases.py: workflow allowed dict is permissive — admin can skip steps without violation. Add transition validation if business rule requires linear flow.",
+    "phases.py: SIGNED_TOKENS is module-level in-memory dict — won't survive uvicorn worker boundary or restart; acceptable for MVP single-worker but flag for production.",
+    "phases.py _generate_contract_pdf: regex-free markdown bold replacement is brittle on odd ** counts, but inputs are templated so safe.",
+    "Bible upload accepts any file ending in '.pdf' — no magic byte (% PDF) check. A malicious upload could mismatch ext. Low risk since admin-only.",
+    "Ecosystem seed runs at every startup with count check — idempotent, good.",
+    "Stripe checkout module unchanged in this iteration — still using emergentintegrations as expected."
+  ],
+  "updated_files": ["/app/backend/tests/test_phases_456.py", "/app/test_reports/pytest/pytest_results.xml"],
+  "success_rate": {"backend": "100% (17/17)", "frontend": "~95% (all rendered & created; minor empty-state quirk on Bible meta after backend test cycle)"},
+  "test_credentials": "Admin laurent@cvln.holding/GalaCVLN2026!, Production production@cfceremony.com/Prod-CF2026!Gala, Juridique juridique@cfceremony.com/Jur-CF2026!Gala — all 3 verified working.",
+  "seed_data_creation": "Created TEST_Phase4 Person (auto-cleaned at end of pytest module). 4 contracts persisted in DB after frontend test run. Test PDF uploaded as Bible (~1KB).",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Phase 4-5-6 backend stable and frontend rendering well. Backend regression tests at /app/backend/tests/test_phases_456.py and /app/backend/tests/test_gala_api.py. Sidebar nav links 'Contrats & NDA' and 'Bible' confirmed visible by screenshot. The RBAC matrix (production→juridique_review only, juridique→approved/refused, admin→all) is correctly enforced and unit-tested. Bible single-use token (5 min) verified single-use (1st GET 200, 2nd GET 403). Public /api/public/ecosystem correctly hides FREK/Kiltikonet/Label OS/Laurentia and exposes only CVLN Holding/Factory Maker Studio/CVL Culinary Innovations.",
+  "rca of the issue": "No blocking issues found. Minor enhancements suggested above (workflow state machine + bible stream logging + token persistence). The Phase 4-5-6 vertical is shippable as-is for MVP."
+}

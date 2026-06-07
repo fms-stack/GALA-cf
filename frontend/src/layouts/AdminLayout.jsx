@@ -2,13 +2,15 @@ import { Outlet, NavLink, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useAuth } from "@/lib/auth";
 import { Logo } from "@/components/Logo";
-import { House, Users, IdentificationCard, Briefcase, Envelope, SignOut, Tray } from "@phosphor-icons/react";
+import { House, Users, IdentificationCard, Briefcase, Envelope, SignOut, Tray, FileText, BookOpen } from "@phosphor-icons/react";
 
 const NAV = [
   { to: "/admin", label: "Tableau de bord", icon: House, end: true },
   { to: "/admin/positions", label: "Postes", icon: Briefcase },
   { to: "/admin/people", label: "Personnes", icon: IdentificationCard },
   { to: "/admin/assignments", label: "Affectations", icon: Users },
+  { to: "/admin/contracts", label: "Contrats & NDA", icon: FileText },
+  { to: "/admin/bible", label: "Bible", icon: BookOpen },
   { to: "/admin/invitations", label: "Invitations VIP", icon: Envelope },
   { to: "/admin/submissions", label: "Réceptions publiques", icon: Tray },
 ];

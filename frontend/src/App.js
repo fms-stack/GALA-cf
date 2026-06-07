@@ -21,6 +21,8 @@ import People from "@/pages/admin/People";
 import Assignments from "@/pages/admin/Assignments";
 import Invitations from "@/pages/admin/Invitations";
 import Submissions from "@/pages/admin/Submissions";
+import Contracts from "@/pages/admin/Contracts";
+import Bible from "@/pages/admin/Bible";
 import "@/App.css";
 
 function Protected({ children }) {
@@ -61,6 +63,8 @@ function App() {
               <Route path="/admin/assignments" element={<Assignments />} />
               <Route path="/admin/invitations" element={<Invitations />} />
               <Route path="/admin/submissions" element={<Submissions />} />
+              <Route path="/admin/contracts" element={<Contracts />} />
+              <Route path="/admin/bible" element={<Bible />} />
             </Route>
 
             <Route path="*" element={<Navigate to="/" replace />} />

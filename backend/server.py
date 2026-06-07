@@ -683,6 +683,9 @@ async def dashboard_stats(user: dict = Depends(get_current_user)):
     people = await db.people.count_documents({})
     assignments = await db.assignments.count_documents({})
     inv_total = await db.invitations_vip.count_documents({})
+    contracts_signed = await db.contracts.count_documents({"status": "signed"})
+    contracts_pending = await db.contracts.count_documents({"status": {"$in": ["draft", "juridique_review", "approved", "sent"]}})
+    contracts_refused = await db.contracts.count_documents({"status": "refused"})
     inv_pending = await db.invitations_vip.count_documents({"status": "pending"})
     inv_confirmed = await db.invitations_vip.count_documents({"status": "confirmed"})
     apps_count = await db.applications.count_documents({})
@@ -701,7 +704,7 @@ async def dashboard_stats(user: dict = Depends(get_current_user)):
             "pending": inv_pending,
             "confirmed": inv_confirmed,
         },
-        "contracts": {"signed": 0, "pending": 0, "refused": 0},
+        "contracts": {"signed": contracts_signed, "pending": contracts_pending, "refused": contracts_refused},
         "applications": apps_count,
         "castings": castings_count,
         "sponsoring": sponsoring_count,
@@ -732,6 +735,13 @@ async def public_prizes():
         {"code": "CF-GAP-06", "title": "Prix de la Mode", "discipline": "Création textile & silhouette"},
         {"code": "CF-GAP-07", "title": "Prix de la Littérature", "discipline": "Écriture & édition"},
     ]
+
+
+@api_router.get("/public/ecosystem")
+async def public_ecosystem():
+    """Only nodes flagged public_visible=true are exposed."""
+    items = await db.ecosystem_nodes.find({"public_visible": True}).to_list(20)
+    return [{"name": x["name"], "kind": x["kind"]} for x in items]
 
 
 @api_router.get("/public/countdown")
@@ -836,6 +846,10 @@ async def seed_positions():
 # ============================================================================
 app.include_router(api_router)
 
+# Phase 4-5-6 modules
+from phases import create_phase4_router, seed_ecosystem_nodes
+app.include_router(create_phase4_router(db, get_current_user, require_role, audit, doc_out))
+
 
 @app.middleware("http")
 async def noindex_header(request: Request, call_next):
@@ -863,6 +877,7 @@ async def on_startup():
     await db.login_attempts.create_index("identifier")
     await seed_admin()
     await seed_positions()
+    await seed_ecosystem_nodes(db, audit)
     logger.info("CVLN Gala OS API ready.")
 
 

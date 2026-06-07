@@ -127,6 +127,19 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ECOSYSTEM — silencieux */}
+      <section className="py-20 px-6 lg:px-12 bg-noir border-t border-ivoire/10">
+        <div className="max-w-[1400px] mx-auto text-center">
+          <p className="label-eyebrow text-or mb-4">Écosystème</p>
+          <p className="serif-display text-3xl md:text-5xl italic max-w-3xl mx-auto leading-tight">
+            « Le Gala<br />présente l'écosystème. »
+          </p>
+          <p className="mt-8 text-sable text-sm opacity-60 max-w-md mx-auto leading-relaxed">
+            Cook &amp; Food Gala est l'un des chapitres d'une infrastructure culturelle plus large — qu'on dévoilera, pierre par pierre.
+          </p>
+        </div>
+      </section>
+
       {/* CTA FINAL */}
       <section className="py-40 px-6 lg:px-12 bg-noir border-t border-ivoire/10">
         <div className="max-w-3xl mx-auto text-center">
