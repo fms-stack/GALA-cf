@@ -772,8 +772,8 @@ async def seed_admin():
 
     # Seed additional system users
     others = [
-        ("miguel@cvln.holding", "Production2026!", "Miguel — Production", "production"),
-        ("hashtag@cvln.holding", "Juridique2026!", "Hashtag — Juridique", "juridique"),
+        ("production@cfceremony.com", "Prod-CF2026!Gala", "Production · CVLN", "production"),
+        ("juridique@cfceremony.com", "Jur-CF2026!Gala", "Juridique · CVLN", "juridique"),
     ]
     for em, pw, name, role in others:
         if not await db.users.find_one({"email": em}):
