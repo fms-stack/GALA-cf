@@ -637,6 +637,12 @@ async def list_mecenat(user: dict = Depends(require_role("admin", "production"))
     return [doc_out(x) for x in items]
 
 
+@api_router.get("/cooptation/list")
+async def list_cooptation(user: dict = Depends(require_role("admin", "production"))):
+    items = await db.cooptation_tokens.find({}).sort("created_at", -1).to_list(500)
+    return [doc_out(x) for x in items]
+
+
 @api_router.get("/public/founders-circle")
 async def public_founders():
     items = await db.founders_circle.find({"public_visible": True}).sort("order", 1).to_list(50)

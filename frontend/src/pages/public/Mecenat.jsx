@@ -34,7 +34,7 @@ export default function Mecenat() {
           <div className="space-y-6 mt-12 pt-12 border-t border-ivoire/10">
             <div>
               <p className="label-eyebrow text-or mb-2">Cadre fiscal</p>
-              <p className="text-sable text-sm leading-relaxed">CVLN Holding est en cours de reconnaissance d'utilité publique. Le récépissé fiscal sera transmis dès agrément (donations rétroactives possibles).</p>
+              <p className="text-sable text-sm leading-relaxed">Reçu fiscal délivré sur demande. Dons éligibles aux dispositifs prévus par les articles 200 et 238 bis du CGI dans le cadre de notre structure d'accueil partenaire reconnue d'utilité publique.</p>
             </div>
             <div>
               <p className="label-eyebrow text-or mb-2">Conseil dédié</p>
@@ -70,7 +70,7 @@ export default function Mecenat() {
           <F l="E-mail *"><input required type="email" value={form.email} onChange={onChange("email")} className={inp} data-testid="mecenat-email" /></F>
           <F l="Organisation (facultatif)"><input value={form.organisation} onChange={onChange("organisation")} className={inp} /></F>
           <button type="submit" disabled={loading} data-testid="mecenat-submit" className="w-full bg-or text-noir py-4 label-eyebrow hover:bg-ivoire transition-colors disabled:opacity-60">{loading ? "Stripe…" : "Verser mon don →"}</button>
-          <p className="text-xs italic opacity-50 text-center">Paiement Stripe sécurisé · reçu transmis sous 7 jours</p>
+          <mention className="text-xs italic opacity-50 text-center block">Paiement Stripe sécurisé · reçu fiscal sous 7 jours</mention>
         </form>
       </div>
     </div>

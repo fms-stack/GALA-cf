@@ -30,6 +30,7 @@ import Invitations from "@/pages/admin/Invitations";
 import Submissions from "@/pages/admin/Submissions";
 import Contracts from "@/pages/admin/Contracts";
 import Bible from "@/pages/admin/Bible";
+import Inner from "@/pages/admin/Inner";
 import "@/App.css";
 
 function Protected({ children }) {
@@ -78,6 +79,7 @@ function App() {
               <Route path="/admin/submissions" element={<Submissions />} />
               <Route path="/admin/contracts" element={<Contracts />} />
               <Route path="/admin/bible" element={<Bible />} />
+              <Route path="/admin/inner" element={<Inner />} />
             </Route>
 
             <Route path="*" element={<Navigate to="/" replace />} />
