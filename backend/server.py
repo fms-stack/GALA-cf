@@ -734,7 +734,7 @@ async def public_prizes():
          "intro": "Une recette qui raconte un territoire, transmet une mémoire et installe un standard.",
          "body": "Décerné à un chef ou autrice culinaire dont la création signe l'identité gastronomique afro contemporaine. Au-delà de la technique, le prix consacre la capacité à transformer la mémoire en geste, le geste en plat, et le plat en récit."},
         {"code": "CF-GAP-02", "title": "Artiste Afro le Plus Influent", "discipline": "Musique · Art · Scène",
-         "image": "https://images.unsplash.com/photo-1610851467843-fe4a65aea9c0?auto=format&fit=crop&w=1400&q=80",
+         "image": "https://images.unsplash.com/photo-1538819137474-ffa0ee381af6?auto=format&fit=crop&w=1400&q=80",
          "intro": "L'année 2026, regardée depuis la diaspora — l'artiste qui aura le plus déplacé les lignes.",
          "body": "Toutes disciplines confondues. Le prix distingue une figure dont l'impact culturel, commercial ou symbolique aura compté pour la diaspora cette année."},
         {"code": "CF-GAP-03", "title": "Action Artistique la Plus Forte", "discipline": "Toutes disciplines",
