@@ -4,18 +4,18 @@ import { Logo } from "@/components/Logo";
 import { Countdown } from "@/components/Countdown";
 import { useCinematics } from "@/lib/cinematics";
 
-const HERO_IMG = "https://images.pexels.com/photos/4997894/pexels-photo-4997894.jpeg";
-const PLATE_IMG = "https://images.pexels.com/photos/2403392/pexels-photo-2403392.jpeg";
-const BANQUET_IMG = "https://images.pexels.com/photos/29410669/pexels-photo-29410669.jpeg";
+const HERO_IMG = "https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=1920&q=80";
+const PLATE_IMG = "https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=1200&q=80";
+const BANQUET_IMG = "https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=1200&q=80";
 
 const DISCIPLINES = [
-  { num: "01", name: "Cuisine", word: "matière",     body: "Deux îlots cuisine, chefs invités, gestes en direct.", img: "https://images.pexels.com/photos/3992206/pexels-photo-3992206.jpeg" },
-  { num: "02", name: "Culture", word: "mémoire",     body: "Conversations, manifestes, lectures, transmissions.", img: "https://images.pexels.com/photos/3184405/pexels-photo-3184405.jpeg" },
-  { num: "03", name: "Musique", word: "souffle",     body: "Set live, compositions inédites, voix de la diaspora.", img: "https://images.pexels.com/photos/1190297/pexels-photo-1190297.jpeg" },
-  { num: "04", name: "Art",     word: "geste",       body: "Installations, performances, scénographie immersive.", img: "https://images.pexels.com/photos/3856027/pexels-photo-3856027.jpeg" },
-  { num: "05", name: "Mode",    word: "silhouette",  body: "Black Cultural Elegance — défilé éclair, signatures.", img: "https://images.pexels.com/photos/2065200/pexels-photo-2065200.jpeg" },
-  { num: "06", name: "Cinéma",  word: "image",       body: "Captation cinéma 360°, première série gastronomique.", img: "https://images.pexels.com/photos/3945683/pexels-photo-3945683.jpeg" },
-  { num: "07", name: "Littérature", word: "verbe",   body: "Lecture, manifeste fondateur, archive vivante.", img: "https://images.pexels.com/photos/590493/pexels-photo-590493.jpeg" },
+  { num: "01", name: "Cuisine", word: "matière",     body: "Deux îlots cuisine, chefs invités afro, gestes en direct.", img: "https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=900&q=80" },
+  { num: "02", name: "Culture", word: "mémoire",     body: "Conversations, manifestes, lectures, transmissions.",        img: "https://images.unsplash.com/photo-1580618672591-eb180b1a973f?auto=format&fit=crop&w=900&q=80" },
+  { num: "03", name: "Musique", word: "souffle",     body: "Set live, compositions inédites, voix de la diaspora.",       img: "https://images.unsplash.com/photo-1611532736597-de2d4265fba3?auto=format&fit=crop&w=900&q=80" },
+  { num: "04", name: "Art",     word: "geste",       body: "Installations, performances, scénographie immersive.",        img: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=900&q=80" },
+  { num: "05", name: "Mode",    word: "silhouette",  body: "Black Cultural Elegance — défilé éclair, signatures.",        img: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=900&q=80" },
+  { num: "06", name: "Cinéma",  word: "image",       body: "Captation cinéma 360°, première série gastronomique.",        img: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=900&q=80" },
+  { num: "07", name: "Littérature", word: "verbe",   body: "Lecture, manifeste fondateur, archive vivante.",              img: "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=900&q=80" },
 ];
 
 export default function Home() {
