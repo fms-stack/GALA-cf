@@ -1,0 +1,79 @@
+{
+  "theme_strategy": "Hybrid Fullstack - Public Site (Dark Theme) & Admin Back-Office (Light Theme)",
+  "archetype": "Public: Archetype 5 (Luxury, Cinematic) / Admin: Archetype 4 (Swiss & High-Contrast, Data-First)",
+  "colors": {
+    "noir_nuit": "#050505",
+    "ivoire_brut": "#EAE7E1",
+    "sable_mineral": "#CFC7BA",
+    "brun_terre": "#6B5646",
+    "vert_sauge_fume": "#556058",
+    "or_chaud": "#A98A5A",
+    "background_public": "#050505",
+    "text_public": "#EAE7E1",
+    "background_admin": "#EAE7E1",
+    "text_admin": "#050505"
+  },
+  "typography": {
+    "headings": "Cormorant Garamond, serif",
+    "body": "Switzer, sans-serif",
+    "imports": [
+      "@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap');",
+      "@import url('https://api.fontshare.com/v2/css?f[]=switzer@100,200,300,400,500,600,700,800,900&display=swap');"
+    ],
+    "hierarchy_rules": "H1 MAX text-6xl (clamp(2.5rem, 5vw, 4rem)) tracking-tighter leading-none. Subtitles/Labels MUST be uppercase tracking-[0.2em] text-xs or text-sm. Do not center everything; use left-alignment for long text and asymmetric grids."
+  },
+  "tailwind_config_extension": {
+    "colors": {
+      "noir": "#050505",
+      "ivoire": "#EAE7E1",
+      "sable": "#CFC7BA",
+      "brun": "#6B5646",
+      "sauge": "#556058",
+      "or": "#A98A5A",
+      "border": "#CFC7BA",
+      "background": "#050505"
+    },
+    "fontFamily": {
+      "serif": ["Cormorant Garamond", "serif"],
+      "sans": ["Switzer", "sans-serif"]
+    }
+  },
+  "logo_svg": "<svg xmlns=\"http://www.apache.org/2000/svg\" viewBox=\"0 0 100 100\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.2\"><circle cx=\"50\" cy=\"50\" r=\"2.5\" fill=\"currentColor\"/><path d=\"M50 30 C62 29, 71 38, 70 50 C69 62, 58 71, 50 70 C38 69, 29 58, 30 50 C31 38, 42 31, 50 30 Z\" /><path d=\"M50 20 C68 18, 82 32, 80 50 C78 68, 62 82, 50 80 C32 78, 18 62, 20 50 C22 32, 38 22, 50 20 Z\" /><path d=\"M50 10 C75 8, 92 25, 90 50 C88 75, 68 92, 50 90 C25 88, 8 68, 10 50 C12 25, 32 12, 50 10 Z\" /><path d=\"M50 2 C82 0, 99 18, 98 50 C97 82, 78 99, 50 98 C18 97, 1 78, 2 50 C3 18, 28 4, 50 2 Z\" /></svg>",
+  "image_urls": {
+    "hero_immersive": {
+      "url": "https://images.pexels.com/photos/4997894/pexels-photo-4997894.jpeg",
+      "description": "Candlelit dining scene under verdant plants for the immersive hero section"
+    },
+    "concept_plating": {
+      "url": "https://images.pexels.com/photos/2403392/pexels-photo-2403392.jpeg",
+      "description": "Gourmet dish being plated in dark moody kitchen"
+    },
+    "gala_event": {
+      "url": "https://images.pexels.com/photos/29410669/pexels-photo-29410669.jpeg",
+      "description": "Elegant banquet table set in a moody restaurant"
+    },
+    "rsvp_candlelight": {
+      "url": "https://images.pexels.com/photos/6728529/pexels-photo-6728529.jpeg",
+      "description": "Charming candlelit dinner table close up for the RSVP section"
+    }
+  },
+  "layout_and_spacing": {
+    "public_site": "Asymmetrical grids, generous vertical spacing (py-24, py-32). Images MUST NOT exceed 80vh on mobile. Use max bg-black/50 for hero overlay or gradient from black to transparent. Cinematic scroll storytelling. Use framer-motion for fade-in staggers.",
+    "admin_dashboard": "Strict grid hierarchy. Left sidebar (bg-ivoire border-r border-sable/30), 2-column or 3-column dense data views. 1px borders, NO soft shadows. Flat brutalist clarity, editorial warmth."
+  },
+  "components_strategy": {
+    "public_site": "Pure HTML/Tailwind containers for sections to allow full creative freedom. DO NOT use Shadcn basic Cards for the editorial public site.",
+    "admin_dashboard": "Heavily rely on Shadcn UI (Tables, Tabs, Dialogs, Selects, Inputs) customized with our tailwind config. Make inputs flat with 1px border-sable.",
+    "icons": "Use @phosphor-icons/react with weight='thin' or weight='light' to match the elegant serif typography."
+  },
+  "instructions_to_main_agent": [
+    "You MUST install @phosphor-icons/react and framer-motion.",
+    "Implement two layout routes: A dark-themed layout for the public site (bg-noir text-ivoire) and a light-themed layout for the back-office (bg-ivoire text-noir).",
+    "Configure Tailwind with the exact hex colors provided in tailwind_config_extension.",
+    "Import both Cormorant Garamond and Switzer fonts in index.css.",
+    "In the public site, build the RSVP VIP digital form with customized Shadcn Form components that use a dark theme (inputs with bg-transparent border-b border-sable text-ivoire placeholder:text-sable/50).",
+    "For the admin dashboard, implement CRUD tables for Positions/People/Assignments using standard HTML table or Shadcn Table, ensuring high density and readability.",
+    "CRITICAL: ALL interactive elements (buttons, inputs, links, forms) MUST have a data-testid attribute in kebab-case format based on their role.",
+    "Only use the gold/copper accent (#A98A5A) for very specific highlights like CTA buttons or signature wax seals (about 5% usage)."
+  ]
+}
