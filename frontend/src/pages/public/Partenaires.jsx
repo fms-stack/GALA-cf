@@ -2,7 +2,7 @@ const PARTNERS = [
   {
     name: "CVLN Holding",
     role: "IP Owner · Governance",
-    body: "Conglomérat culturel caribéen, propriétaire IP du Gala, trajectoire IPO 2028.",
+    body: "Conglomérat culturel afro, propriétaire IP du Gala — le Gala présente l'écosystème.",
   },
   {
     name: "Factory Maker Studio",

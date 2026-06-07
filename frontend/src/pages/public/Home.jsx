@@ -31,7 +31,7 @@ export default function Home() {
             transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
             className="max-w-3xl"
           >
-            <div className="label-eyebrow text-or mb-8">Chapitre I · Samedi 12 Décembre 2026 · Martinique</div>
+            <div className="label-eyebrow text-or mb-8">Chapitre I · Samedi 12 Décembre 2026 · Paris</div>
             <h1 className="serif-display text-[clamp(3rem,9vw,7.5rem)] mb-8">
               Cook &amp; Food<br />
               <span className="italic opacity-90">Gala.</span>
@@ -74,7 +74,7 @@ export default function Home() {
               <p className="label-eyebrow text-or mb-6">Phrase fondatrice</p>
               <p className="serif-display text-4xl lg:text-6xl leading-[1.05] italic">
                 « Ce Gala fonde le standard culturel<br />
-                de la diaspora caribéenne. »
+                de la diaspora afro mondiale. »
               </p>
             </div>
           </div>
@@ -91,7 +91,7 @@ export default function Home() {
             </div>
             <p className="text-sable max-w-md text-sm leading-relaxed">
               Scène circulaire, deux îlots cuisine, gradins panoramiques. La salle est un studio 360°.
-              L'événement se vit, se filme, se diffuse — chapitre I d'une série gastronomique en construction.
+              L'événement se vit, se filme, se diffuse — chapitre I d'une série en construction.
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-px bg-ivoire/10">

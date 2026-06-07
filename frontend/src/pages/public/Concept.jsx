@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 
 const POLES = [
-  { num: "I", title: "Vision & ADN", body: "Acte de fondation. Premier standard gastronomique culturel pour la diaspora caribéenne contemporaine." },
+  { num: "I", title: "Vision & ADN", body: "Acte de fondation. Premier standard gastronomique & culturel pour la diaspora afro mondiale contemporaine." },
   { num: "II", title: "Arène Studio 360°", body: "Décor pensé pour caméras et convives. Architecture double-produit : Gala live + Série TC'V." },
   { num: "III", title: "Plan de scène", body: "Scène centrale circulaire, deux îlots cuisine, 120 places VIP en arc, gradins, zones latérales, régie TC'V." },
   { num: "IV", title: "Run of Show", body: "18h30 ouverture publique → 22h00 cérémonie awards → 00h00 networking stratégique. Millimétré." },

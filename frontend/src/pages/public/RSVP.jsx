@@ -49,7 +49,7 @@ export default function RSVP() {
             <span className="italic">ma présence.</span>
           </h1>
           <p className="text-sable text-lg leading-relaxed mb-8 max-w-md">
-            Samedi 12 décembre 2026 · 19h00 · Martinique.<br />
+            Samedi 12 décembre 2026 · 19h00 · Paris.<br />
             Dress code : <span className="italic">Black Cultural Elegance</span>.
           </p>
           <p className="text-sable text-sm italic opacity-70 max-w-md">

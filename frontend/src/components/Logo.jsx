@@ -2,22 +2,27 @@ export function Logo({ size = 40, className = "" }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 100 100"
+      viewBox="0 0 200 200"
       width={size}
       height={size}
       fill="none"
       stroke="currentColor"
-      strokeWidth="1.4"
-      strokeLinejoin="round"
+      strokeWidth="3.5"
       strokeLinecap="round"
+      strokeLinejoin="round"
       className={className}
       aria-label="Cook & Food Gala"
     >
-      <path d="M50 32 C61 30, 70 39, 69 50 C68 61, 58 70, 50 69 C39 68, 30 58, 31 50 C32 39, 42 33, 50 32 Z" />
-      <path d="M50 22 C67 19, 81 33, 79 50 C77 67, 62 81, 50 79 C33 77, 19 62, 21 50 C23 33, 38 24, 50 22 Z" />
-      <path d="M50 13 C73 9, 91 27, 89 50 C87 73, 67 91, 50 89 C27 87, 9 67, 11 50 C13 27, 31 15, 50 13 Z" />
-      <path d="M50 4 C80 2, 98 20, 97 50 C96 80, 78 98, 50 97 C20 96, 2 78, 3 50 C4 20, 28 6, 50 4 Z" />
-      <circle cx="50" cy="50" r="3" fill="currentColor" />
+      {/* Outer wavy ring, open at bottom (sound-wave style) */}
+      <path d="M40 110 C42 60, 80 32, 110 32 C150 32, 175 70, 173 110 C171 140, 155 162, 130 168 C115 172, 95 172, 80 168 C60 162, 45 145, 40 110 Z" />
+      {/* 2nd ring */}
+      <path d="M55 110 C57 75, 88 50, 112 50 C142 50, 162 78, 160 110 C158 134, 145 152, 125 156 C112 159, 96 159, 84 156 C68 152, 58 138, 55 110 Z" />
+      {/* 3rd ring */}
+      <path d="M70 110 C72 88, 95 70, 113 70 C133 70, 148 88, 147 110 C146 127, 137 140, 122 143 C111 145, 100 145, 90 143 C78 140, 72 128, 70 110 Z" />
+      {/* 4th ring */}
+      <path d="M85 110 C86 96, 102 88, 113 88 C125 88, 134 98, 133 110 C133 120, 127 128, 118 130 C110 131, 102 131, 95 130 C88 128, 85 121, 85 110 Z" />
+      {/* central dot */}
+      <circle cx="110" cy="110" r="6" fill="currentColor" />
     </svg>
   );
 }
@@ -25,8 +30,8 @@ export function Logo({ size = 40, className = "" }) {
 export function Wordmark({ className = "" }) {
   return (
     <div className={`flex flex-col items-center ${className}`}>
-      <Logo size={48} />
-      <div className="mt-3 serif-display text-2xl tracking-wide">COOK &amp; FOOD</div>
+      <Logo size={56} />
+      <div className="mt-4 serif-display text-2xl tracking-wide">COOK &amp; FOOD</div>
       <div className="text-[10px] tracking-[0.45em] mt-1 opacity-80">GALA</div>
     </div>
   );

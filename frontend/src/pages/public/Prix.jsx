@@ -17,7 +17,7 @@ export default function Prix() {
         </h1>
         <p className="text-sable max-w-2xl text-lg leading-relaxed mb-20">
           Sept disciplines, sept consécrations. Une cérémonie pensée comme un acte de fondation —
-          chaque prix marque l'installation d'un nouveau standard pour la diaspora caribéenne.
+          chaque prix marque l'installation d'un nouveau standard pour la diaspora afro mondiale.
         </p>
 
         <div className="space-y-px bg-ivoire/10">

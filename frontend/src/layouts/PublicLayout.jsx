@@ -61,10 +61,10 @@ export default function PublicLayout() {
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12 py-16 grid md:grid-cols-3 gap-12">
           <div>
             <Logo size={36} />
-            <p className="mt-4 text-sable text-sm leading-relaxed max-w-xs">
+            <p className="mt-6 text-sable text-sm leading-relaxed max-w-xs">
               Cook &amp; Food Gala — plus qu'un événement, une empreinte culturelle.
             </p>
-            <p className="mt-6 label-eyebrow opacity-50">12 Décembre 2026 · Martinique</p>
+            <p className="mt-6 label-eyebrow opacity-50">12 Décembre 2026 · Paris</p>
           </div>
           <div>
             <div className="label-eyebrow opacity-60 mb-4">Propulsé par</div>

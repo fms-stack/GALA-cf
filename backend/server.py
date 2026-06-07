@@ -211,9 +211,10 @@ class SponsoringIn(BaseModel):
 
 # Ticket packages — server-side definition (never trust frontend prices)
 TICKET_PACKAGES = {
-    "gradin":  {"label": "Gradin face", "amount": 50.0, "currency": "eur"},
-    "lateral": {"label": "Zone latérale (debout)", "amount": 80.0, "currency": "eur"},
-    "premium": {"label": "Gradin premium", "amount": 120.0, "currency": "eur"},
+    "gradin":  {"label": "Gradin face",            "amount": 50.0,   "currency": "eur", "tier": "public",  "order": 1},
+    "lateral": {"label": "Zone latérale (debout)", "amount": 80.0,   "currency": "eur", "tier": "public",  "order": 2},
+    "premium": {"label": "Gradin premium",         "amount": 120.0,  "currency": "eur", "tier": "public",  "order": 3},
+    "vip":     {"label": "Place VIP",              "amount": 1000.0, "currency": "eur", "tier": "vip",     "order": 4},
 }
 
 
@@ -584,7 +585,9 @@ async def list_orders(user: dict = Depends(require_role("admin", "production")))
 # ============================================================================
 @api_router.get("/public/tickets")
 async def public_tickets():
-    return [{"id": k, **v} for k, v in TICKET_PACKAGES.items()]
+    items = [{"id": k, **v} for k, v in TICKET_PACKAGES.items()]
+    items.sort(key=lambda x: x.get("order", 0))
+    return items
 
 
 @api_router.post("/public/checkout/session")
