@@ -87,3 +87,17 @@
     mix-blend-mode: overlay;
   }
 }
+
+/* Hide platform badge */
+#emergent-badge,
+a[href*="emergent.sh"],
+a[href*="app.emergent"],
+[data-emergent-badge],
+[class*="emergent-badge"],
+[class*="EmergentBadge"],
+[id*="emergent-badge"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}

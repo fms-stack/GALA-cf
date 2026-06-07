@@ -83,8 +83,18 @@ export default function PublicLayout() {
             </Link>
           </div>
         </div>
-        <div className="border-t border-ivoire/5 py-6 text-center label-eyebrow opacity-40">
-          © 2026 CVLN Holding · Tous droits réservés
+        <div className="border-t border-ivoire/5 py-6 flex items-center justify-between px-6 lg:px-12 flex-wrap gap-4">
+          <div className="label-eyebrow opacity-40">© 2026 CVLN Holding · Tous droits réservés</div>
+          <a
+            href="https://www.factorymakerstudio.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-testid="powered-by-fms"
+            className="flex items-center gap-3 group"
+          >
+            <span className="label-eyebrow opacity-40 group-hover:opacity-70 transition-opacity">Powered by</span>
+            <span className="serif-display text-base text-or group-hover:text-ivoire transition-colors tracking-wide">Factory Maker Studio</span>
+          </a>
         </div>
       </footer>
     </div>
