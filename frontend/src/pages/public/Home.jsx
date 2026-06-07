@@ -9,13 +9,13 @@ const PLATE_IMG = "https://images.pexels.com/photos/2403392/pexels-photo-2403392
 const BANQUET_IMG = "https://images.pexels.com/photos/29410669/pexels-photo-29410669.jpeg";
 
 const DISCIPLINES = [
-  { num: "01", name: "Cuisine", word: "matière" },
-  { num: "02", name: "Culture", word: "mémoire" },
-  { num: "03", name: "Musique", word: "souffle" },
-  { num: "04", name: "Art", word: "geste" },
-  { num: "05", name: "Mode", word: "silhouette" },
-  { num: "06", name: "Cinéma", word: "image" },
-  { num: "07", name: "Littérature", word: "verbe" },
+  { num: "01", name: "Cuisine", word: "matière",     body: "Deux îlots cuisine, chefs invités, gestes en direct.", img: "https://images.pexels.com/photos/3992206/pexels-photo-3992206.jpeg" },
+  { num: "02", name: "Culture", word: "mémoire",     body: "Conversations, manifestes, lectures, transmissions.", img: "https://images.pexels.com/photos/3184405/pexels-photo-3184405.jpeg" },
+  { num: "03", name: "Musique", word: "souffle",     body: "Set live, compositions inédites, voix de la diaspora.", img: "https://images.pexels.com/photos/1190297/pexels-photo-1190297.jpeg" },
+  { num: "04", name: "Art",     word: "geste",       body: "Installations, performances, scénographie immersive.", img: "https://images.pexels.com/photos/3856027/pexels-photo-3856027.jpeg" },
+  { num: "05", name: "Mode",    word: "silhouette",  body: "Black Cultural Elegance — défilé éclair, signatures.", img: "https://images.pexels.com/photos/2065200/pexels-photo-2065200.jpeg" },
+  { num: "06", name: "Cinéma",  word: "image",       body: "Captation cinéma 360°, première série gastronomique.", img: "https://images.pexels.com/photos/3945683/pexels-photo-3945683.jpeg" },
+  { num: "07", name: "Littérature", word: "verbe",   body: "Lecture, manifeste fondateur, archive vivante.", img: "https://images.pexels.com/photos/590493/pexels-photo-590493.jpeg" },
 ];
 
 export default function Home() {
@@ -82,10 +82,17 @@ export default function Home() {
           </div>
           <div data-stagger className="flex md:overflow-x-auto md:snap-x md:snap-mandatory flex-col md:flex-row gap-px bg-ivoire/10 -mx-6 lg:-mx-12 px-6 lg:px-12 pb-4 scrollbar-hide">
             {DISCIPLINES.map((d) => (
-              <div key={d.num} data-stagger-item className="bg-noir p-7 md:p-10 md:min-w-[340px] md:snap-start hover:bg-noir/50 transition-colors group flex-shrink-0">
-                <div className="label-eyebrow text-or mb-6 md:mb-8">{d.num}</div>
-                <div className="serif-display text-3xl md:text-4xl mb-2">{d.name}</div>
-                <div className="text-sable italic text-sm opacity-60 group-hover:opacity-100 transition-opacity">— {d.word}</div>
+              <div key={d.num} data-stagger-item className="relative bg-noir md:min-w-[320px] md:snap-start flex-shrink-0 group overflow-hidden">
+                <div className="aspect-[4/3] md:aspect-[3/4] relative">
+                  <img src={d.img} alt={d.name} className="absolute inset-0 w-full h-full object-cover opacity-35 group-hover:opacity-55 group-hover:scale-105 transition-all duration-700" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-noir via-noir/70 to-transparent" />
+                  <div className="relative h-full flex flex-col justify-end p-6 md:p-8">
+                    <div className="label-eyebrow text-or mb-3">{d.num}</div>
+                    <div className="serif-display text-3xl md:text-4xl mb-2 group-hover:text-or transition-colors">{d.name}</div>
+                    <div className="text-sable italic text-sm mb-3">— {d.word}</div>
+                    <p className="text-ivoire/80 text-xs md:text-sm leading-relaxed">{d.body}</p>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
