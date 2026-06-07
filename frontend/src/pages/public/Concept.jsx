@@ -1,41 +1,51 @@
 import { motion } from "framer-motion";
+import { useRef } from "react";
+import { useCinematics } from "@/lib/cinematics";
+
+const HERO = "https://images.unsplash.com/photo-1709837167686-a2e33aad1bf0?auto=format&fit=crop&w=1600&q=80";
 
 const POLES = [
-  { num: "I", title: "Vision & ADN", body: "Acte de fondation. Premier standard gastronomique & culturel pour la diaspora afro mondiale contemporaine." },
-  { num: "II", title: "Arène Studio 360°", body: "Décor pensé pour caméras et convives. Architecture double-produit : Gala live + Série TC'V." },
-  { num: "III", title: "Plan de scène", body: "Scène centrale circulaire, deux îlots cuisine, 120 places VIP en arc, gradins, zones latérales, régie TC'V." },
-  { num: "IV", title: "Run of Show", body: "18h30 ouverture publique → 22h00 cérémonie awards → 00h00 networking stratégique. Millimétré." },
-  { num: "V", title: "Sept Pôles", body: "Direction · Artistique · Casting · Technique · Série · DataTech · Communication. 25 postes confirmés." },
-  { num: "VI", title: "Trajectoire", body: "Chapter I (2026) · Chapter II (2027) · Chapter III (2028) — IPO trajectory." },
+  { num: "I",   title: "Vision & ADN", body: "Acte de fondation. Premier standard gastronomique & culturel pour la diaspora afro mondiale contemporaine.", img: "https://images.unsplash.com/photo-1670229712389-cbd53e848bbe?auto=format&fit=crop&w=900&q=80" },
+  { num: "II",  title: "Arène Studio 360°", body: "Décor pensé pour caméras et convives. Architecture double-produit : Gala live + Série TC'V.", img: "https://images.unsplash.com/photo-1663530761401-15eefb544889?auto=format&fit=crop&w=900&q=80" },
+  { num: "III", title: "Plan de scène", body: "Scène centrale circulaire, deux îlots cuisine, 120 places VIP en arc, gradins, zones latérales, régie TC'V.", img: "https://images.unsplash.com/photo-1720630351938-1233133223f4?auto=format&fit=crop&w=900&q=80" },
+  { num: "IV",  title: "Run of Show", body: "18h30 ouverture publique → 22h00 cérémonie awards → 00h00 networking stratégique. Millimétré.", img: "https://images.unsplash.com/photo-1734771771447-d943e2b5f4d5?auto=format&fit=crop&w=900&q=80" },
+  { num: "V",   title: "Sept Pôles", body: "Direction · Artistique · Casting · Technique · Série · DataTech · Communication. 25 postes confirmés.", img: "https://images.unsplash.com/photo-1610851467843-fe4a65aea9c0?auto=format&fit=crop&w=900&q=80" },
+  { num: "VI",  title: "Trajectoire", body: "Chapter I (2026) · Chapter II (2027) · Chapter III (2028) — IPO trajectory.", img: "https://images.unsplash.com/photo-1570000569749-3a9f0c46d70c?auto=format&fit=crop&w=900&q=80" },
 ];
 
 export default function Concept() {
+  const rootRef = useRef(null);
+  useCinematics(rootRef);
   return (
-    <div data-testid="public-concept" className="text-ivoire min-h-screen px-6 lg:px-12 py-24">
-      <div className="max-w-[1400px] mx-auto">
-        <p className="label-eyebrow text-or mb-6">Concept &amp; ADN</p>
-        <h1 className="serif-display text-5xl lg:text-7xl mb-16 max-w-4xl">
-          Cuisine, culture, image —<br />
-          <span className="italic">une seule nuit.</span>
-        </h1>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-ivoire/10 mt-24">
-          {POLES.map((p, i) => (
-            <motion.div
-              key={p.num}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.08 }}
-              className="bg-noir p-10"
-            >
-              <div className="serif-display text-6xl text-or mb-4">{p.num}</div>
-              <div className="serif-display text-2xl mb-4">{p.title}</div>
-              <p className="text-sable text-sm leading-relaxed">{p.body}</p>
-            </motion.div>
-          ))}
+    <div ref={rootRef} data-testid="public-concept" className="text-ivoire">
+      <section className="relative min-h-[70vh] flex items-end overflow-hidden">
+        <img src={HERO} alt="" data-parallax className="absolute inset-0 w-full h-full object-cover opacity-40" />
+        <div className="absolute inset-0 bg-gradient-to-t from-noir via-noir/70 to-noir/30" />
+        <div className="relative max-w-[1400px] mx-auto px-6 lg:px-12 pb-16 pt-32 w-full">
+          <p className="label-eyebrow text-or mb-6" data-reveal>Concept &amp; ADN</p>
+          <h1 data-hero-title className="serif-display text-4xl md:text-7xl max-w-4xl">
+            Cuisine, culture, image — une seule nuit.
+          </h1>
         </div>
-      </div>
+      </section>
+
+      <section className="px-6 lg:px-12 py-20 md:py-24">
+        <div className="max-w-[1400px] mx-auto">
+          <div data-stagger className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-ivoire/10">
+            {POLES.map((p) => (
+              <div key={p.num} data-stagger-item className="relative bg-noir aspect-[4/5] group overflow-hidden">
+                <img src={p.img} alt="" className="absolute inset-0 w-full h-full object-cover opacity-30 group-hover:opacity-50 group-hover:scale-105 transition-all duration-700" />
+                <div className="absolute inset-0 bg-gradient-to-t from-noir via-noir/80 to-transparent" />
+                <div className="relative h-full flex flex-col justify-end p-8 lg:p-10">
+                  <div className="serif-display text-6xl text-or mb-4">{p.num}</div>
+                  <div className="serif-display text-2xl md:text-3xl mb-3 group-hover:text-or transition-colors">{p.title}</div>
+                  <p className="text-sable text-sm leading-relaxed">{p.body}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

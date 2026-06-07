@@ -1,5 +1,6 @@
-import { Outlet, NavLink, Link } from "react-router-dom";
+import { Outlet, NavLink, Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Logo } from "@/components/Logo";
 import { List, X } from "@phosphor-icons/react";
 
@@ -82,7 +83,7 @@ export default function PublicLayout() {
         )}
       </header>
       <main className="pt-20">
-        <Outlet />
+        <AnimatedOutlet />
       </main>
       <footer className="border-t border-ivoire/10 mt-32">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12 py-16 grid md:grid-cols-3 gap-12">
@@ -125,5 +126,22 @@ export default function PublicLayout() {
         </div>
       </footer>
     </div>
+  );
+}
+
+function AnimatedOutlet() {
+  const location = useLocation();
+  return (
+    <AnimatePresence mode="wait">
+      <motion.div
+        key={location.pathname}
+        initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
+        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+        exit={{ opacity: 0, y: -10, filter: "blur(4px)" }}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <Outlet />
+      </motion.div>
+    </AnimatePresence>
   );
 }

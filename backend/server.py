@@ -726,36 +726,35 @@ async def get_audit_logs(user: dict = Depends(require_role("admin"))):
 @api_router.get("/public/prizes")
 async def public_prizes():
     """7 CF-GAP awards — public, no sensitive data.
-    Note: images are dark/moody abstract scenes (no identifiable faces).
-    To be replaced by official CVLN Cook & Food Gala photoshoot when available.
+    Images: Unsplash 'black chef/portrait' search results — featuring Black/Afro subjects.
     """
     return [
         {"code": "CF-GAP-01", "title": "Recette Gastronomique Diaspora", "discipline": "Excellence culinaire afro",
-         "image": "https://images.unsplash.com/photo-1606756790138-261d2b21cd75?auto=format&fit=crop&w=1400&q=80",
+         "image": "https://images.unsplash.com/photo-1709837167686-a2e33aad1bf0?auto=format&fit=crop&w=1400&q=80",
          "intro": "Une recette qui raconte un territoire, transmet une mémoire et installe un standard.",
          "body": "Décerné à un chef ou autrice culinaire dont la création signe l'identité gastronomique afro contemporaine. Au-delà de la technique, le prix consacre la capacité à transformer la mémoire en geste, le geste en plat, et le plat en récit."},
         {"code": "CF-GAP-02", "title": "Artiste Afro le Plus Influent", "discipline": "Musique · Art · Scène",
-         "image": "https://images.unsplash.com/photo-1518972559570-7cc1309f3229?auto=format&fit=crop&w=1400&q=80",
+         "image": "https://images.unsplash.com/photo-1610851467843-fe4a65aea9c0?auto=format&fit=crop&w=1400&q=80",
          "intro": "L'année 2026, regardée depuis la diaspora — l'artiste qui aura le plus déplacé les lignes.",
          "body": "Toutes disciplines confondues. Le prix distingue une figure dont l'impact culturel, commercial ou symbolique aura compté pour la diaspora cette année."},
         {"code": "CF-GAP-03", "title": "Action Artistique la Plus Forte", "discipline": "Toutes disciplines",
-         "image": "https://images.unsplash.com/photo-1518998053901-5348d3961a04?auto=format&fit=crop&w=1400&q=80",
+         "image": "https://images.unsplash.com/photo-1720630351938-1233133223f4?auto=format&fit=crop&w=1400&q=80",
          "intro": "Un acte. Une œuvre. Une trace.",
          "body": "Ce prix récompense une action — performance, intervention, manifeste, exposition — qui aura marqué un territoire, déplacé un public, fait événement."},
         {"code": "CF-GAP-04", "title": "Prix de la Culture", "discipline": "Transmission · Mémoire · Patrimoine",
-         "image": "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=1400&q=80",
+         "image": "https://images.unsplash.com/photo-1670229712389-cbd53e848bbe?auto=format&fit=crop&w=1400&q=80",
          "intro": "Tenir la mémoire. Transmettre le geste. Inventer la suite.",
          "body": "Décerné à un acteur — institution, collectif, individu — dont l'œuvre installe ou préserve un patrimoine culturel afro pour les générations à venir."},
         {"code": "CF-GAP-05", "title": "Prix du Cinéma", "discipline": "Image en mouvement",
-         "image": "https://images.unsplash.com/photo-1485095329183-d0797cdc5676?auto=format&fit=crop&w=1400&q=80",
+         "image": "https://images.unsplash.com/photo-1663530761401-15eefb544889?auto=format&fit=crop&w=1400&q=80",
          "intro": "Le cinéma comme architecture de l'imaginaire afro.",
          "body": "Long-métrage, court-métrage, documentaire, série ou format hybride. Le prix consacre une œuvre cinématographique de l'année qui aura compté pour le récit collectif."},
         {"code": "CF-GAP-06", "title": "Prix de la Mode", "discipline": "Création textile & silhouette",
-         "image": "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1400&q=80",
+         "image": "https://images.unsplash.com/photo-1570000569749-3a9f0c46d70c?auto=format&fit=crop&w=1400&q=80",
          "intro": "La silhouette comme manifeste politique et esthétique.",
          "body": "Décerné à une maison, un.e créateur.rice ou une marque dont les collections 2026 auront installé une signature reconnaissable et un langage propre."},
         {"code": "CF-GAP-07", "title": "Prix de la Littérature", "discipline": "Écriture & édition",
-         "image": "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=1400&q=80",
+         "image": "https://images.unsplash.com/photo-1734771771447-d943e2b5f4d5?auto=format&fit=crop&w=1400&q=80",
          "intro": "Le verbe, dernier sanctuaire de la liberté.",
          "body": "Roman, essai, poésie, théâtre, BD. Le prix consacre un.e auteur.rice de l'année dont le travail aura ouvert un horizon nouveau pour la littérature afro contemporaine."},
     ]

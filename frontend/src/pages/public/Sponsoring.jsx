@@ -37,16 +37,22 @@ export default function Sponsoring() {
   );
 
   return (
-    <div data-testid="public-sponsoring" className="min-h-screen text-ivoire px-6 lg:px-12 py-24">
-      <div className="max-w-[1400px] mx-auto">
-        <p className="label-eyebrow text-or mb-6">Devenir partenaire</p>
-        <h1 className="serif-display text-5xl lg:text-7xl mb-8 max-w-3xl">
-          Inscrire votre marque<br /><span className="italic">dans la fondation.</span>
-        </h1>
-        <p className="text-sable max-w-2xl text-lg leading-relaxed mb-16">
-          Cook &amp; Food Gala — Chapter I s'adresse à 800–1000 convives, dont 120 VIP. Audience digitale &amp; broadcast TC'V à venir.
-          Le partenariat ouvre l'accès à un capital culturel sans équivalent dans la région.
-        </p>
+    <div data-testid="public-sponsoring" className="min-h-screen text-ivoire">
+      <section className="relative min-h-[60vh] flex items-end overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1734771771447-d943e2b5f4d5?auto=format&fit=crop&w=1920&q=80" alt="" className="absolute inset-0 w-full h-full object-cover opacity-35" />
+        <div className="absolute inset-0 bg-gradient-to-t from-noir via-noir/70 to-noir/40" />
+        <div className="relative max-w-[1400px] mx-auto px-6 lg:px-12 pb-12 pt-24 w-full">
+          <p className="label-eyebrow text-or mb-4">Devenir partenaire</p>
+          <h1 className="serif-display text-4xl md:text-7xl mb-6 max-w-3xl">
+            Inscrire votre marque<br /><span className="italic">dans la fondation.</span>
+          </h1>
+          <p className="text-sable max-w-2xl text-base md:text-lg leading-relaxed">
+            Cook &amp; Food Gala — Chapter I s'adresse à 800–1000 convives, dont 120 VIP. Audience digitale &amp; broadcast TC'V à venir.
+            Le partenariat ouvre l'accès à un capital culturel sans équivalent.
+          </p>
+        </div>
+      </section>
+      <section className="max-w-[1400px] mx-auto px-6 lg:px-12 py-20">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-px bg-ivoire/10 mb-16">
           {TIERS.map((t) => (
             <button
@@ -72,7 +78,7 @@ export default function Sponsoring() {
           <div className="md:col-span-2"><Field label="Message *"><textarea required rows={4} value={form.message} onChange={onChange("message")} className={`${inp} resize-none`} data-testid="spon-msg" /></Field></div>
           <button type="submit" disabled={loading} data-testid="spon-submit" className="md:col-span-2 bg-or text-noir py-4 label-eyebrow hover:bg-ivoire transition-colors disabled:opacity-60">{loading ? "Envoi…" : "Envoyer ma demande →"}</button>
         </form>
-      </div>
+      </section>
     </div>
   );
 }

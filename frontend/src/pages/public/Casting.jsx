@@ -32,16 +32,23 @@ export default function Casting() {
   );
 
   return (
-    <div data-testid="public-casting" className="min-h-screen text-ivoire px-6 lg:px-12 py-24">
-      <div className="max-w-[1100px] mx-auto grid lg:grid-cols-2 gap-20">
-        <div>
-          <p className="label-eyebrow text-or mb-6">Rejoindre la scène</p>
-          <h1 className="serif-display text-5xl lg:text-7xl mb-8">Casting.</h1>
-          <p className="text-sable text-lg leading-relaxed max-w-md">
-            Chefs, artistes, performers, maîtres de cérémonie. Les talents qui font la différence ne se trouvent pas dans les annuaires.
-          </p>
+    <div data-testid="public-casting" className="min-h-screen text-ivoire">
+      <div className="grid lg:grid-cols-2 min-h-screen">
+        <div className="relative overflow-hidden hidden lg:block order-2">
+          <img src="https://images.unsplash.com/photo-1570000569749-3a9f0c46d70c?auto=format&fit=crop&w=1200&q=80" alt="" className="absolute inset-0 w-full h-full object-cover opacity-50" />
+          <div className="absolute inset-0 bg-gradient-to-bl from-noir/30 via-noir/60 to-noir" />
+          <div className="relative h-full flex flex-col justify-end p-12">
+            <p className="label-eyebrow text-or mb-6">Rejoindre la scène</p>
+            <h1 className="serif-display text-5xl xl:text-7xl mb-6">Casting.</h1>
+            <p className="text-sable text-lg max-w-md leading-relaxed">Chefs, artistes, performers, maîtres de cérémonie. Les talents qui font la différence ne se trouvent pas dans les annuaires.</p>
+          </div>
         </div>
-        <form onSubmit={submit} className="space-y-6">
+        <div className="px-6 lg:px-12 py-20 md:py-24 order-1">
+          <div className="lg:hidden mb-10">
+            <p className="label-eyebrow text-or mb-4">Rejoindre la scène</p>
+            <h1 className="serif-display text-4xl">Casting.</h1>
+          </div>
+          <form onSubmit={submit} className="space-y-6 max-w-md">
           <input type="text" value={form.honeypot} onChange={onChange("honeypot")} className="hidden" tabIndex={-1} autoComplete="off" />
           <Field label="Nom & Prénom *"><input required value={form.full_name} onChange={onChange("full_name")} className={inp} data-testid="cast-name" /></Field>
           <Field label="E-mail *"><input required type="email" value={form.email} onChange={onChange("email")} className={inp} data-testid="cast-email" /></Field>
@@ -51,6 +58,7 @@ export default function Casting() {
           <Field label="Lien démo / portfolio"><input value={form.demo_url} onChange={onChange("demo_url")} className={inp} placeholder="https://…" data-testid="cast-demo" /></Field>
           <button type="submit" disabled={loading} data-testid="cast-submit" className="w-full bg-or text-noir py-4 label-eyebrow hover:bg-ivoire transition-colors disabled:opacity-60">{loading ? "Envoi…" : "Postuler →"}</button>
         </form>
+        </div>
       </div>
     </div>
   );

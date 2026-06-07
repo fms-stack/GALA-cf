@@ -32,16 +32,23 @@ export default function Candidatures() {
   );
 
   return (
-    <div data-testid="public-applications" className="min-h-screen text-ivoire px-6 lg:px-12 py-24">
-      <div className="max-w-[1100px] mx-auto grid lg:grid-cols-2 gap-20">
-        <div>
-          <p className="label-eyebrow text-or mb-6">Proposer une création</p>
-          <h1 className="serif-display text-5xl lg:text-7xl mb-8">Soumettre<br /><span className="italic">un projet.</span></h1>
-          <p className="text-sable text-lg leading-relaxed max-w-md">
-            Une recette, un set, une pièce, une œuvre, un texte. Si votre proposition résonne avec l'ADN du Gala, nous reviendrons vers vous.
-          </p>
+    <div data-testid="public-applications" className="min-h-screen text-ivoire">
+      <div className="grid lg:grid-cols-2 min-h-screen">
+        <div className="relative overflow-hidden hidden lg:block">
+          <img src="https://images.unsplash.com/photo-1610851467843-fe4a65aea9c0?auto=format&fit=crop&w=1200&q=80" alt="" className="absolute inset-0 w-full h-full object-cover opacity-50" />
+          <div className="absolute inset-0 bg-gradient-to-br from-noir/30 via-noir/60 to-noir" />
+          <div className="relative h-full flex flex-col justify-end p-12">
+            <p className="label-eyebrow text-or mb-6">Proposer une création</p>
+            <h1 className="serif-display text-5xl xl:text-7xl mb-6">Soumettre<br/><span className="italic">un projet.</span></h1>
+            <p className="text-sable text-lg max-w-md leading-relaxed">Une recette, un set, une pièce, une œuvre, un texte. Si votre proposition résonne avec l'ADN du Gala, nous reviendrons vers vous.</p>
+          </div>
         </div>
-        <form onSubmit={submit} className="space-y-6">
+        <div className="px-6 lg:px-12 py-20 md:py-24">
+          <div className="lg:hidden mb-10">
+            <p className="label-eyebrow text-or mb-4">Proposer une création</p>
+            <h1 className="serif-display text-4xl">Soumettre <span className="italic">un projet.</span></h1>
+          </div>
+          <form onSubmit={submit} className="space-y-6 max-w-md">
           <input type="text" value={form.honeypot} onChange={onChange("honeypot")} className="hidden" tabIndex={-1} autoComplete="off" />
           <Field label="Nom & Prénom *" testid="app-name"><input required value={form.full_name} onChange={onChange("full_name")} className={inp} /></Field>
           <Field label="E-mail *" testid="app-email"><input required type="email" value={form.email} onChange={onChange("email")} className={inp} /></Field>
@@ -51,6 +58,7 @@ export default function Candidatures() {
           <Field label="Lien portfolio" testid="app-portfolio"><input value={form.portfolio_url} onChange={onChange("portfolio_url")} className={inp} placeholder="https://…" /></Field>
           <button type="submit" disabled={loading} data-testid="app-submit" className="w-full bg-or text-noir py-4 label-eyebrow hover:bg-ivoire transition-colors disabled:opacity-60">{loading ? "Envoi…" : "Envoyer ma proposition →"}</button>
         </form>
+        </div>
       </div>
     </div>
   );
