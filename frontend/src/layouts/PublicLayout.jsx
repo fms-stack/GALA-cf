@@ -2,23 +2,25 @@ import { Outlet, NavLink, Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Logo } from "@/components/Logo";
-import { LangSwitcher } from "@/lib/i18n";
+import { LangSwitcher, useI18n } from "@/lib/i18n";
 import { List, X } from "@phosphor-icons/react";
 
-const NAV = [
-  { to: "/", label: "Accueil", end: true },
-  { to: "/concept", label: "Concept" },
-  { to: "/prix", label: "Les 7 Prix" },
-  { to: "/billetterie", label: "Billetterie" },
-  { to: "/founders-circle", label: "Cercle" },
-  { to: "/mecenat", label: "Mécénat" },
-  { to: "/sponsoring", label: "Partenaires" },
-  { to: "/candidatures", label: "Soumettre" },
-  { to: "/casting", label: "Casting" },
+const NAV_KEYS = [
+  { to: "/", key: "home", end: true },
+  { to: "/concept", key: "concept" },
+  { to: "/prix", key: "prix" },
+  { to: "/billetterie", key: "billetterie" },
+  { to: "/founders-circle", key: "cercle" },
+  { to: "/mecenat", key: "mecenat" },
+  { to: "/sponsoring", key: "partenaires" },
+  { to: "/candidatures", key: "soumettre" },
+  { to: "/casting", key: "casting" },
 ];
 
 export default function PublicLayout() {
   const [open, setOpen] = useState(false);
+  const { t } = useI18n();
+  const NAV = NAV_KEYS.map((n) => ({ ...n, label: t(`nav.${n.key}`) }));
   useEffect(() => {
     document.documentElement.classList.add("dark");
     return () => document.documentElement.classList.remove("dark");
@@ -55,7 +57,7 @@ export default function PublicLayout() {
             data-testid="public-cta-rsvp"
             className="hidden md:inline-flex border border-or px-5 py-2 text-or label-eyebrow hover:bg-or hover:text-noir transition-colors"
           >
-            Confirmer
+            {t("cta.confirm")}
           </Link>
           <LangSwitcher />
           <button

@@ -19,6 +19,7 @@ const NAV = [
 export default function AdminLayout() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     document.documentElement.classList.remove("dark");
@@ -30,9 +31,20 @@ export default function AdminLayout() {
   };
 
   return (
-    <div className="min-h-screen bg-ivoire text-noir flex">
-      <aside className="w-64 bg-ivoire border-r border-sable/40 flex flex-col fixed inset-y-0 left-0">
-        <div className="px-6 py-7 border-b border-sable/40">
+    <div className="min-h-screen bg-ivoire text-noir lg:flex">
+      {/* Mobile top bar */}
+      <header className="lg:hidden sticky top-0 z-40 bg-ivoire border-b border-sable flex items-center justify-between px-4 py-3">
+        <div className="flex items-center gap-2">
+          <Logo size={26} />
+          <div className="serif-display text-lg">Gala OS</div>
+        </div>
+        <button onClick={() => setOpen(!open)} aria-label="Menu" data-testid="admin-mobile-burger" className="p-2">
+          {open ? <X size={22} /> : <List size={22} />}
+        </button>
+      </header>
+
+      <aside className={`${open ? "block" : "hidden"} lg:block lg:w-64 bg-ivoire border-r border-sable/40 lg:fixed lg:inset-y-0 lg:left-0 flex flex-col`}>
+        <div className="hidden lg:block px-6 py-7 border-b border-sable/40">
           <div className="flex items-center gap-3">
             <Logo size={32} />
             <div className="leading-tight">
@@ -42,12 +54,13 @@ export default function AdminLayout() {
           </div>
         </div>
 
-        <nav className="flex-1 px-3 py-6 space-y-1">
+        <nav className="flex-1 px-3 py-4 lg:py-6 space-y-1 overflow-y-auto max-h-[calc(100vh-200px)]">
           {NAV.map((n) => (
             <NavLink
               key={n.to}
               to={n.to}
               end={n.end}
+              onClick={() => setOpen(false)}
               data-testid={`admin-nav-${n.to.replace("/admin/", "").replace("/admin", "dashboard") || "dashboard"}`}
               className={({ isActive }) =>
                 `flex items-center gap-3 px-3 py-2.5 text-sm transition-colors ${
@@ -61,21 +74,21 @@ export default function AdminLayout() {
           ))}
         </nav>
 
-        <div className="px-6 py-5 border-t border-sable/40">
+        <div className="px-4 lg:px-6 py-4 lg:py-5 border-t border-sable/40">
           <div className="label-eyebrow opacity-60 mb-1">Connecté</div>
           <div className="text-sm font-medium truncate" data-testid="admin-current-user">{user?.name}</div>
           <div className="text-xs opacity-60 capitalize">{user?.role}</div>
           <button
             onClick={handleLogout}
             data-testid="admin-logout-btn"
-            className="mt-4 w-full flex items-center justify-center gap-2 border border-noir/30 px-3 py-2 text-xs uppercase tracking-[0.2em] hover:bg-noir hover:text-ivoire transition-colors"
+            className="mt-3 w-full flex items-center justify-center gap-2 border border-noir/30 px-3 py-2 text-xs uppercase tracking-[0.2em] hover:bg-noir hover:text-ivoire transition-colors"
           >
             <SignOut size={14} /> Déconnexion
           </button>
         </div>
       </aside>
 
-      <main className="flex-1 ml-64">
+      <main className="flex-1 lg:ml-64 overflow-x-auto">
         <Outlet />
       </main>
     </div>

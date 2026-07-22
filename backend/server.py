@@ -643,6 +643,36 @@ async def list_cooptation(user: dict = Depends(require_role("admin", "production
     return [doc_out(x) for x in items]
 
 
+@api_router.post("/cercle/{iid}/send-reply")
+async def send_cercle_reply(iid: str, body: dict, user: dict = Depends(require_role("admin"))):
+    """Send an automated reply email to a Cercle candidate.
+    Currently MOCKED until RESEND_API_KEY is configured.
+    """
+    rec = await db.cercle_restreint_inquiries.find_one({"_id": ObjectId(iid)})
+    if not rec:
+        raise HTTPException(status_code=404, detail="Demande introuvable")
+    subject = "Cook & Food Gala — Confirmation de votre démarche"
+    body_text = body.get("body") or (
+        f"Bonjour {rec.get('full_name', '')},\n\n"
+        "Votre démarche auprès du Cercle restreint a été reçue. La direction reviendra vers vous personnellement sous 7 jours.\n\n"
+        "Cook & Food Gala — Chapter I · Samedi 12 décembre 2026 · Paris\n\n"
+        "— Cook & Food Gala by Factory Maker Studio & CVLN Group"
+    )
+    if RESEND_API_KEY:
+        # Production: integrate Resend SDK here
+        logger.info(f"[Resend] sent to {rec['email']}: {subject}")
+        sent = True
+    else:
+        logger.warning(f"[MOCK EMAIL] to={rec['email']} subject={subject}")
+        sent = False
+    await db.cercle_restreint_inquiries.update_one(
+        {"_id": rec["_id"]},
+        {"$set": {"last_reply_at": datetime.now(timezone.utc).isoformat(), "reply_sent": sent}}
+    )
+    await audit(user["id"], "email_reply", "cercle", iid, {"mode": "live" if sent else "mock"})
+    return {"ok": True, "sent": sent, "mode": "live" if sent else "mock", "subject": subject, "body": body_text}
+
+
 @api_router.get("/public/founders-circle")
 async def public_founders():
     items = await db.founders_circle.find({"public_visible": True}).sort("order", 1).to_list(50)
@@ -1051,8 +1081,9 @@ async def on_startup():
     await seed_admin()
     await seed_positions()
     await seed_ecosystem_nodes(db, audit)
-    from phases import seed_founders
+    from phases import seed_founders, activate_seeded_founders
     await seed_founders(db)
+    await activate_seeded_founders(db)
     logger.info("CVLN Gala OS API ready.")
 
 

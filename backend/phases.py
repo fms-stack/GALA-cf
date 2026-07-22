@@ -527,14 +527,28 @@ async def seed_ecosystem_nodes(db, audit):
 
 
 async def seed_founders(db):
-    """Seed 3 placeholder founders — admin will replace/edit."""
+    """Seed Laurent as founder of all CVLN ecosystem brands."""
     if await db.founders_circle.count_documents({}) > 0:
         return
     founders = [
-        {"name": "Hôte inaugural", "title": "Fondateur · CVLN Holding", "bio": "Architecte de l'écosystème Cook & Food Gala et du standard CIP.", "kind": "Fondateur", "public_visible": False, "order": 1},
-        {"name": "Conseil culturel", "title": "Direction artistique", "bio": "Garant de la cohérence éditoriale du Chapter I.", "kind": "Conseil", "public_visible": False, "order": 2},
-        {"name": "Conseil gastronomique", "title": "CVL Culinary Innovations", "bio": "Référent CIP et normes culinaires afro contemporaines.", "kind": "Conseil", "public_visible": False, "order": 3},
+        {"name": "Laurent", "title": "Founder · CVLN Holding · Factory Maker Studio · CVL Culinary Innovations", "bio": "Fondateur de l'écosystème CVLN. Architecte du Cook & Food Gala Chapter I et du standard CIP (Cultural Impact Protocol).", "kind": "Founder", "public_visible": True, "order": 1},
     ]
     for f in founders:
         f["created_at"] = datetime.now(timezone.utc).isoformat()
         await db.founders_circle.insert_one(f)
+
+
+async def activate_seeded_founders(db):
+    # Replace generic placeholders with Laurent as sole founder
+    await db.founders_circle.delete_many({"name": {"$in": ["Hôte inaugural", "Conseil culturel", "Conseil gastronomique"]}})
+    if await db.founders_circle.count_documents({}) == 0:
+        await db.founders_circle.insert_one({
+            "name": "Laurent",
+            "title": "Founder · CVLN Holding · Factory Maker Studio · CVL Culinary Innovations",
+            "bio": "Fondateur de l'écosystème CVLN. Architecte du Cook & Food Gala Chapter I et du standard CIP (Cultural Impact Protocol).",
+            "kind": "Founder",
+            "public_visible": True,
+            "order": 1,
+            "created_at": datetime.now(timezone.utc).isoformat(),
+        })
+    await db.founders_circle.update_many({"public_visible": False}, {"$set": {"public_visible": True}})

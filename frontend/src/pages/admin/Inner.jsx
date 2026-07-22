@@ -33,19 +33,45 @@ export default function Inner() {
     } catch (err) { toast.error(formatApiError(err.response?.data?.detail)); }
   };
 
+  const exportCsv = () => {
+    if (items.length === 0) { toast.error("Rien à exporter"); return; }
+    const cols = [...tab.cols, "created_at"];
+    const escape = (v) => {
+      if (v == null) return "";
+      const s = String(v).replace(/"/g, '""');
+      return /[,;"\n]/.test(s) ? `"${s}"` : s;
+    };
+    const rows = [
+      cols.map((c) => HEADERS[c] || c).join(";"),
+      ...items.map((it) => cols.map((c) => escape(it[c])).join(";")),
+    ];
+    const blob = new Blob(["\uFEFF" + rows.join("\n")], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    const date = new Date().toISOString().slice(0, 10);
+    a.href = url;
+    a.download = `cookfood_${tab.key}_${date}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+    toast.success("CSV exporté");
+  };
+
   return (
     <div className="p-10" data-testid="admin-inner">
       <div className="mb-10">
         <p className="label-eyebrow opacity-60">Tiers premium</p>
         <h1 className="serif-display text-5xl mt-2">Cercle, Mécénat &amp; Cooptation.</h1>
       </div>
-      <div className="flex gap-2 mb-6 border-b border-sable">
+      <div className="flex gap-2 mb-6 border-b border-sable items-center">
         {TABS.map((t) => (
           <button key={t.key} onClick={() => setTab(t)} data-testid={`inner-tab-${t.key}`}
             className={`px-4 py-3 label-eyebrow border-b-2 transition-colors ${tab.key === t.key ? "border-noir text-noir" : "border-transparent opacity-60 hover:opacity-100"}`}>
             {t.label}
           </button>
         ))}
+        <button onClick={exportCsv} data-testid="export-csv-btn" className="ml-auto mb-2 flex items-center gap-2 border border-noir/30 px-3 py-1.5 label-eyebrow hover:bg-noir hover:text-ivoire transition-colors text-xs">
+          <DownloadSimple size={14} /> Exporter CSV
+        </button>
       </div>
 
       {tab.key === "cooptation" && (
