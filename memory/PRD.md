@@ -53,5 +53,11 @@ Portail Privé Cook & Food Gala 2026 — plateforme à 2 couches strictement sé
 - Multi-langue (FR / EN)
 - Billetterie premium (post-MVP)
 
+## Audit technique & dossier IP — DONE (2026-06, ce fork)
+- Dossier complet `/app/docs/` (18 fichiers) : code source, architecture C4/Mermaid, 45+ endpoints, RULE-001→030, ALG-001→012, 20 collections + ERD, dépendances modules, prompts IA (aucun LLM en prod), specs fonctionnelles, tests, export Git, guide dev, cybersécurité (SEC-01→16 + OWASP), performance (PERF-01→08), IP (12 actifs + stratégie dépôt), matrice de couverture.
+- `/app/README.md` développeur créé ; `.gitignore` durci (exclusion `.env` + Bible PDF).
+- **Bug corrigé** : crash runtime `/admin` — imports `useState`, `List`, `X` manquants dans `AdminLayout.jsx`. Vérifié par screenshot desktop + mobile (login admin OK).
+- Constats clés à traiter (voir docs/14) : SEC-01 fallback JWT_SECRET, SEC-02 mots de passe seed en dur dans server.py, SEC-03 Bible non chiffrée locale, SEC-16 workflow contrats sans machine à états ; Resend/Yousign toujours MOCKÉS ; i18n partielle (nav/CTA/héro).
+
 ## Test credentials
-Voir `/app/memory/test_credentials.md` — admin Laurent, production Miguel, juridique Hashtag.
+Voir `/app/memory/test_credentials.md` — admin Laurent, production, juridique.

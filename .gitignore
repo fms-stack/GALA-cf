@@ -81,3 +81,12 @@ memory/test_credentials.md
 # Mobile development
 android-sdk/frontend/node_modules/.cache/default-development/0.pack
 frontend/node_modules/.cache/default-development/0.pack
+
+# Secrets — ne jamais versionner (ajout audit 2026-06)
+.env
+*/.env
+**/.env.*
+!**/.env.example
+
+# Documents confidentiels
+backend/storage/bible/*.pdf

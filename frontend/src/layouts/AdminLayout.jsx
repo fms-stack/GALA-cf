@@ -1,8 +1,8 @@
 import { Outlet, NavLink, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "@/lib/auth";
 import { Logo } from "@/components/Logo";
-import { House, Users, IdentificationCard, Briefcase, Envelope, SignOut, Tray, FileText, BookOpen, Crown } from "@phosphor-icons/react";
+import { House, Users, IdentificationCard, Briefcase, Envelope, SignOut, Tray, FileText, BookOpen, Crown, List, X } from "@phosphor-icons/react";
 
 const NAV = [
   { to: "/admin", label: "Tableau de bord", icon: House, end: true },
