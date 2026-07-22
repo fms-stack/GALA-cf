@@ -31,11 +31,12 @@ mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
 
-JWT_SECRET = os.environ.get('JWT_SECRET', 'changeme-dev-secret')
+JWT_SECRET = os.environ['JWT_SECRET']
 JWT_ALGORITHM = "HS256"
 APP_NAME = os.environ.get('APP_NAME', 'cvln-gala-os')
 FRONTEND_URL = os.environ.get('FRONTEND_URL', 'http://localhost:3000')
 RESEND_API_KEY = os.environ.get('RESEND_API_KEY', '')
+EXPOSE_DEV_LINKS = os.environ.get('EXPOSE_DEV_LINKS', 'false').lower() == 'true'
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
@@ -365,8 +366,8 @@ async def magic_link_request(payload: MagicLinkRequest, request: Request):
         link = f"{FRONTEND_URL}/portail?token={token}"
         await send_magic_link_email(email, link)
         await audit(str(user["_id"]), "magic_link_request", "user", str(user["_id"]))
-        # Return link in dev (when no Resend key)
-        return {"ok": True, "dev_link": link if not RESEND_API_KEY else None}
+        # Return link only when explicitly enabled (dev/preview)
+        return {"ok": True, "dev_link": link if EXPOSE_DEV_LINKS else None}
     return {"ok": True}
 
 
@@ -933,7 +934,7 @@ async def health():
 
 
 @api_router.get("/health/full")
-async def health_full():
+async def health_full(user: dict = Depends(require_role("admin"))):
     """Full integration status — for monitoring on D-day."""
     status = {"service": "cvln-gala-os", "checks": {}}
     # MongoDB
@@ -946,10 +947,10 @@ async def health_full():
     status["checks"]["stripe"] = {"ok": bool(os.environ.get("STRIPE_API_KEY"))}
     # Resend (mocked when key missing)
     status["checks"]["resend"] = {"ok": bool(RESEND_API_KEY), "mode": "live" if RESEND_API_KEY else "mock"}
-    # Object Storage / Bible
+    # Object Storage / Bible (chiffrée au repos)
     from pathlib import Path as _P
-    bible_file = _P("/app/backend/storage/bible/GALA_COOK_FOOD_BIBLE.pdf")
-    status["checks"]["bible_storage"] = {"ok": bible_file.parent.exists(), "uploaded": bible_file.exists()}
+    bible_file = _P("/app/backend/storage/bible/GALA_COOK_FOOD_BIBLE.pdf.enc")
+    status["checks"]["bible_storage"] = {"ok": bible_file.parent.exists(), "uploaded": bible_file.exists(), "encrypted": True}
     # Yousign — not yet integrated
     status["checks"]["yousign"] = {"ok": False, "mode": "mock"}
     # Collections
@@ -967,8 +968,8 @@ async def health_full():
 # Seed
 # ============================================================================
 async def seed_admin():
-    admin_email = os.environ.get("ADMIN_EMAIL", "admin@cvln.holding").lower()
-    admin_password = os.environ.get("ADMIN_PASSWORD", "admin123")
+    admin_email = os.environ['ADMIN_EMAIL'].lower()
+    admin_password = os.environ['ADMIN_PASSWORD']
     existing = await db.users.find_one({"email": admin_email})
     if existing is None:
         await db.users.insert_one({
@@ -983,18 +984,24 @@ async def seed_admin():
         await db.users.update_one({"email": admin_email}, {"$set": {"password_hash": hash_password(admin_password)}})
         logger.info(f"Admin password refreshed: {admin_email}")
 
-    # Seed additional system users
+    # Staff system users — passwords from env only (never hardcoded)
     others = [
-        ("production@cfceremony.com", "Prod-CF2026!Gala", "Production · CVLN", "production"),
-        ("juridique@cfceremony.com", "Jur-CF2026!Gala", "Juridique · CVLN", "juridique"),
+        ("production@cfceremony.com", os.environ.get("STAFF_PRODUCTION_PASSWORD", ""), "Production · CVLN", "production"),
+        ("juridique@cfceremony.com", os.environ.get("STAFF_JURIDIQUE_PASSWORD", ""), "Juridique · CVLN", "juridique"),
     ]
     for em, pw, name, role in others:
-        if not await db.users.find_one({"email": em}):
+        if not pw:
+            continue
+        existing = await db.users.find_one({"email": em})
+        if existing is None:
             await db.users.insert_one({
                 "email": em, "password_hash": hash_password(pw),
                 "name": name, "role": role,
                 "created_at": datetime.now(timezone.utc).isoformat(),
             })
+        elif not verify_password(pw, existing.get("password_hash", "")):
+            await db.users.update_one({"email": em}, {"$set": {"password_hash": hash_password(pw)}})
+            logger.info(f"Staff password rotated: {em}")
 
 
 SEED_POSITIONS = [

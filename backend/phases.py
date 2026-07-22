@@ -19,6 +19,20 @@ from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.units import cm
 from reportlab.lib.enums import TA_LEFT, TA_CENTER, TA_JUSTIFY
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, PageBreak
+from cryptography.fernet import Fernet
+
+_BIBLE_FERNET = Fernet(os.environ['BIBLE_ENC_KEY'].encode())
+
+# Contract workflow state machine — no legal step can be skipped, whatever the role
+CONTRACT_TRANSITIONS = {
+    "draft": {"juridique_review"},
+    "juridique_review": {"approved", "refused"},
+    "approved": {"sent"},
+    "refused": {"draft"},
+    "sent": {"signed"},
+    "signed": {"archived"},
+    "archived": set(),
+}
 
 
 # ============================================================================
@@ -378,8 +392,17 @@ def create_phase4_router(db, get_current_user, require_role, audit, doc_out):
         role = user.get("role", "")
         if payload.status not in allowed.get(role, set()):
             raise HTTPException(status_code=403, detail="Action non autorisée pour votre rôle")
+        c = await db.contracts.find_one({"_id": ObjectId(cid)})
+        if not c:
+            raise HTTPException(status_code=404, detail="Contrat introuvable")
+        current = c.get("status", "draft")
+        if payload.status not in CONTRACT_TRANSITIONS.get(current, set()):
+            raise HTTPException(
+                status_code=409,
+                detail=f"Transition interdite : {current} → {payload.status}. Le workflow juridique ne peut pas être contourné.",
+            )
         await db.contracts.update_one({"_id": ObjectId(cid)}, {"$set": {"status": payload.status, "status_at": datetime.now(timezone.utc).isoformat()}})
-        await audit(user["id"], "status", "contract", cid, {"to": payload.status})
+        await audit(user["id"], "status", "contract", cid, {"from": current, "to": payload.status})
         return doc_out(await db.contracts.find_one({"_id": ObjectId(cid)}))
 
     @router.get("/contracts/{cid}/pdf")
@@ -404,7 +427,12 @@ def create_phase4_router(db, get_current_user, require_role, audit, doc_out):
     # ============================================================================
     BIBLE_DIR = Path("/app/backend/storage/bible")
     BIBLE_DIR.mkdir(parents=True, exist_ok=True)
-    BIBLE_FILE = BIBLE_DIR / "GALA_COOK_FOOD_BIBLE.pdf"
+    BIBLE_FILE = BIBLE_DIR / "GALA_COOK_FOOD_BIBLE.pdf.enc"   # chiffrée au repos (Fernet/AES)
+    _LEGACY_PLAIN = BIBLE_DIR / "GALA_COOK_FOOD_BIBLE.pdf"
+    # Migration : chiffre l'ancien PDF en clair puis le supprime
+    if _LEGACY_PLAIN.exists() and not BIBLE_FILE.exists():
+        BIBLE_FILE.write_bytes(_BIBLE_FERNET.encrypt(_LEGACY_PLAIN.read_bytes()))
+        _LEGACY_PLAIN.unlink()
     SIGNED_TOKENS = {}  # token -> {user_id, expires_at}
 
     @router.post("/bible/upload")
@@ -412,7 +440,7 @@ def create_phase4_router(db, get_current_user, require_role, audit, doc_out):
         if not file.filename.lower().endswith(".pdf"):
             raise HTTPException(status_code=400, detail="Fichier PDF requis")
         content = await file.read()
-        BIBLE_FILE.write_bytes(content)
+        BIBLE_FILE.write_bytes(_BIBLE_FERNET.encrypt(content))
         await db.bible_meta.update_one(
             {"_id": "current"},
             {"$set": {
@@ -472,8 +500,13 @@ def create_phase4_router(db, get_current_user, require_role, audit, doc_out):
             raise HTTPException(status_code=404, detail="Bible introuvable")
         # Single-use: pop the token
         SIGNED_TOKENS.pop(token, None)
+        await db.bible_access_logs.insert_one({
+            "user_id": rec["user_id"],
+            "at": datetime.now(timezone.utc).isoformat(),
+            "action": "stream_consumed",
+        })
         return StreamingResponse(
-            io.BytesIO(BIBLE_FILE.read_bytes()),
+            io.BytesIO(_BIBLE_FERNET.decrypt(BIBLE_FILE.read_bytes())),
             media_type="application/pdf",
             headers={"Content-Disposition": 'inline; filename="GALA_COOK_FOOD_BIBLE.pdf"'},
         )
