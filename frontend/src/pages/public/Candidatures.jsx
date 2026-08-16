@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { api, formatApiError } from "@/lib/api";
 import { toast } from "sonner";
+import { useI18n } from "@/lib/i18n";
 
 const DISCIPLINES = ["cuisine", "musique", "art", "mode", "cinema", "litterature", "culture"];
 
@@ -8,6 +9,8 @@ export default function Candidatures() {
   const [form, setForm] = useState({ full_name: "", email: "", discipline: "cuisine", project_title: "", description: "", portfolio_url: "", honeypot: "" });
   const [ref, setRef] = useState(null);
   const [loading, setLoading] = useState(false);
+  const { t } = useI18n();
+  const [titleA, titleB] = String(t("cand.title")).split("|");
   const onChange = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
 
   const submit = async (e) => {
@@ -16,7 +19,7 @@ export default function Candidatures() {
     try {
       const { data } = await api.post("/public/applications", form);
       setRef(data.ref);
-      toast.success("Votre proposition est arrivée.");
+      toast.success(t("cand.sent_toast"));
     } catch (err) { toast.error(formatApiError(err.response?.data?.detail)); }
     finally { setLoading(false); }
   };
@@ -24,9 +27,9 @@ export default function Candidatures() {
   if (ref) return (
     <div data-testid="public-applications-success" className="min-h-[70vh] text-ivoire flex items-center justify-center px-6 py-24">
       <div className="text-center max-w-lg">
-        <p className="label-eyebrow text-or mb-6">Proposition reçue</p>
-        <h1 className="serif-display text-5xl mb-6">Merci.</h1>
-        <p className="text-sable">Référence <span className="text-or">#{ref}</span>. La direction artistique reviendra vers vous après lecture.</p>
+        <p className="label-eyebrow text-or mb-6">{t("cand.s_label")}</p>
+        <h1 className="serif-display text-5xl mb-6">{t("common.thanks")}</h1>
+        <p className="text-sable">{t("common.ref")} <span className="text-or">#{ref}</span>. {t("cand.s_body")}</p>
       </div>
     </div>
   );
@@ -38,25 +41,25 @@ export default function Candidatures() {
           <img src="https://images.unsplash.com/photo-1610851467843-fe4a65aea9c0?auto=format&fit=crop&w=1200&q=80" alt="" className="absolute inset-0 w-full h-full object-cover opacity-50" />
           <div className="absolute inset-0 bg-gradient-to-br from-noir/30 via-noir/60 to-noir" />
           <div className="relative h-full flex flex-col justify-end p-12">
-            <p className="label-eyebrow text-or mb-6">Proposer une création</p>
-            <h1 className="serif-display text-5xl xl:text-7xl mb-6">Soumettre<br/><span className="italic">un projet.</span></h1>
-            <p className="text-sable text-lg max-w-md leading-relaxed">Une recette, un set, une pièce, une œuvre, un texte. Si votre proposition résonne avec l'ADN du Gala, nous reviendrons vers vous.</p>
+            <p className="label-eyebrow text-or mb-6">{t("cand.eyebrow")}</p>
+            <h1 className="serif-display text-5xl xl:text-7xl mb-6">{titleA}<br/><span className="italic">{titleB}</span></h1>
+            <p className="text-sable text-lg max-w-md leading-relaxed">{t("cand.intro")}</p>
           </div>
         </div>
         <div className="px-6 lg:px-12 py-20 md:py-24">
           <div className="lg:hidden mb-10">
-            <p className="label-eyebrow text-or mb-4">Proposer une création</p>
-            <h1 className="serif-display text-4xl">Soumettre <span className="italic">un projet.</span></h1>
+            <p className="label-eyebrow text-or mb-4">{t("cand.eyebrow")}</p>
+            <h1 className="serif-display text-4xl">{titleA} <span className="italic">{titleB}</span></h1>
           </div>
           <form onSubmit={submit} className="space-y-6 max-w-md">
           <input type="text" value={form.honeypot} onChange={onChange("honeypot")} className="hidden" tabIndex={-1} autoComplete="off" />
-          <Field label="Nom & Prénom *" testid="app-name"><input required value={form.full_name} onChange={onChange("full_name")} className={inp} /></Field>
-          <Field label="E-mail *" testid="app-email"><input required type="email" value={form.email} onChange={onChange("email")} className={inp} /></Field>
-          <Field label="Discipline *"><select value={form.discipline} onChange={onChange("discipline")} className={inp} data-testid="app-discipline">{DISCIPLINES.map((d) => <option key={d} value={d}>{d}</option>)}</select></Field>
-          <Field label="Titre du projet *" testid="app-title"><input required value={form.project_title} onChange={onChange("project_title")} className={inp} /></Field>
-          <Field label="Description *" testid="app-desc"><textarea required rows={4} value={form.description} onChange={onChange("description")} className={`${inp} resize-none`} /></Field>
-          <Field label="Lien portfolio" testid="app-portfolio"><input value={form.portfolio_url} onChange={onChange("portfolio_url")} className={inp} placeholder="https://…" /></Field>
-          <button type="submit" disabled={loading} data-testid="app-submit" className="w-full bg-or text-noir py-4 label-eyebrow hover:bg-ivoire transition-colors disabled:opacity-60">{loading ? "Envoi…" : "Envoyer ma proposition →"}</button>
+          <Field label={t("common.name")} testid="app-name"><input required value={form.full_name} onChange={onChange("full_name")} className={inp} /></Field>
+          <Field label={t("common.email")} testid="app-email"><input required type="email" value={form.email} onChange={onChange("email")} className={inp} /></Field>
+          <Field label={t("cand.discipline")}><select value={form.discipline} onChange={onChange("discipline")} className={inp} data-testid="app-discipline">{DISCIPLINES.map((d) => <option key={d} value={d}>{d}</option>)}</select></Field>
+          <Field label={t("cand.project")} testid="app-title"><input required value={form.project_title} onChange={onChange("project_title")} className={inp} /></Field>
+          <Field label={t("cand.desc")} testid="app-desc"><textarea required rows={4} value={form.description} onChange={onChange("description")} className={`${inp} resize-none`} /></Field>
+          <Field label={t("cand.portfolio")} testid="app-portfolio"><input value={form.portfolio_url} onChange={onChange("portfolio_url")} className={inp} placeholder="https://…" /></Field>
+          <button type="submit" disabled={loading} data-testid="app-submit" className="w-full bg-or text-noir py-4 label-eyebrow hover:bg-ivoire transition-colors disabled:opacity-60">{loading ? t("common.sending") : t("cand.submit")}</button>
         </form>
         </div>
       </div>

@@ -2,6 +2,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { api } from "@/lib/api";
 import { Logo } from "@/components/Logo";
+import { useI18n } from "@/lib/i18n";
 
 export default function SurInvitation() {
   const [params] = useSearchParams();
@@ -10,6 +11,7 @@ export default function SurInvitation() {
   const [tokenValid, setTokenValid] = useState(false);
   const [email, setEmail] = useState("");
   const [sent, setSent] = useState(false);
+  const { t } = useI18n();
 
   useEffect(() => {
     if (cooptToken) {
@@ -40,33 +42,33 @@ export default function SurInvitation() {
 
         {tokenValid && sponsor && (
           <div className="border border-or/40 px-6 py-4 mb-12 max-w-md mx-auto" data-testid="cooptation-banner">
-            <p className="label-eyebrow text-or mb-2">Cooptation</p>
-            <p className="serif-display text-2xl italic">Vous êtes coopté(e) par<br/><span className="text-or not-italic">{sponsor}</span>.</p>
+            <p className="label-eyebrow text-or mb-2">{t("surinv.coopt_label")}</p>
+            <p className="serif-display text-2xl italic">{t("surinv.coopt_line")}<br/><span className="text-or not-italic">{sponsor}</span>.</p>
           </div>
         )}
 
-        <p className="label-eyebrow text-or mb-8">Cercle restreint</p>
-        <h1 className="serif-display text-5xl md:text-7xl mb-10 leading-tight">120 sièges à la table.</h1>
-        <p className="text-sable text-lg md:text-xl max-w-lg mx-auto leading-relaxed mb-16 italic">
-          {tokenValid ? "Votre place vous a été ouverte. Confirmez votre intérêt." : "Les invitations partent en septembre 2026.\nSur cooptation uniquement."}
+        <p className="label-eyebrow text-or mb-8">{t("surinv.eyebrow")}</p>
+        <h1 className="serif-display text-5xl md:text-7xl mb-10 leading-tight">{t("invitation.title")}</h1>
+        <p className="text-sable text-lg md:text-xl max-w-lg mx-auto leading-relaxed mb-16 italic whitespace-pre-line">
+          {tokenValid ? t("surinv.body_coopted") : t("invitation.body")}
         </p>
 
         {sent ? (
-          <p className="label-eyebrow text-or" data-testid="signal-confirmed">Signal reçu. La direction reviendra vers vous.</p>
+          <p className="label-eyebrow text-or" data-testid="signal-confirmed">{t("invitation.signal_ok")}</p>
         ) : (
           <form onSubmit={submit} className="max-w-sm mx-auto">
-            <p className="label-eyebrow opacity-50 mb-4">{tokenValid ? "Votre e-mail de confirmation" : "Manifester son intérêt — confidentiel"}</p>
+            <p className="label-eyebrow opacity-50 mb-4">{tokenValid ? t("surinv.email_coopted") : t("invitation.manifest")}</p>
             <div className="flex gap-0 border-b border-or/40 focus-within:border-or transition-colors">
               <input required type="email" value={email} onChange={(e) => setEmail(e.target.value)}
-                placeholder="votre.email@discret.com" data-testid="signal-email"
+                placeholder={t("surinv.email_ph")} data-testid="signal-email"
                 className="flex-1 bg-transparent outline-none py-3 text-base text-ivoire placeholder:text-sable/30" />
               <button type="submit" data-testid="signal-submit" className="text-or hover:text-ivoire transition-colors label-eyebrow px-3">→</button>
             </div>
-            <p className="mt-8 text-xs opacity-40 italic">{tokenValid ? `Token actif · expire dans 7 jours.` : "Aucun nom n'est exposé. Aucun montant n'est demandé."}</p>
+            <p className="mt-8 text-xs opacity-40 italic">{tokenValid ? t("surinv.token_note") : t("surinv.anon_note")}</p>
           </form>
         )}
 
-        <Link to="/" className="mt-20 inline-block label-eyebrow opacity-30 hover:opacity-100 transition-opacity">↩ Retour</Link>
+        <Link to="/" className="mt-20 inline-block label-eyebrow opacity-30 hover:opacity-100 transition-opacity">{t("surinv.back")}</Link>
       </div>
     </div>
   );

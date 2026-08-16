@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { api, formatApiError } from "@/lib/api";
 import { toast } from "sonner";
+import { useI18n } from "@/lib/i18n";
 
 const TYPES = ["chef", "artiste", "performer", "mc"];
 
@@ -8,6 +9,7 @@ export default function Casting() {
   const [form, setForm] = useState({ full_name: "", email: "", phone: "", profile_type: "chef", bio: "", demo_url: "", honeypot: "" });
   const [ref, setRef] = useState(null);
   const [loading, setLoading] = useState(false);
+  const { t } = useI18n();
   const onChange = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
 
   const submit = async (e) => {
@@ -16,7 +18,7 @@ export default function Casting() {
     try {
       const { data } = await api.post("/public/casting", form);
       setRef(data.ref);
-      toast.success("Candidature enregistrée.");
+      toast.success(t("casting.sent_toast"));
     } catch (err) { toast.error(formatApiError(err.response?.data?.detail)); }
     finally { setLoading(false); }
   };
@@ -24,9 +26,9 @@ export default function Casting() {
   if (ref) return (
     <div data-testid="public-casting-success" className="min-h-[70vh] text-ivoire flex items-center justify-center px-6 py-24">
       <div className="text-center max-w-lg">
-        <p className="label-eyebrow text-or mb-6">Casting</p>
-        <h1 className="serif-display text-5xl mb-6">Reçu.</h1>
-        <p className="text-sable">Référence <span className="text-or">#{ref}</span>. La directrice de casting vous contacte si votre profil correspond.</p>
+        <p className="label-eyebrow text-or mb-6">{t("casting.s_label")}</p>
+        <h1 className="serif-display text-5xl mb-6">{t("casting.s_title")}</h1>
+        <p className="text-sable">{t("common.ref")} <span className="text-or">#{ref}</span>. {t("casting.s_body")}</p>
       </div>
     </div>
   );
@@ -38,25 +40,25 @@ export default function Casting() {
           <img src="https://images.unsplash.com/photo-1570000569749-3a9f0c46d70c?auto=format&fit=crop&w=1200&q=80" alt="" className="absolute inset-0 w-full h-full object-cover opacity-50" />
           <div className="absolute inset-0 bg-gradient-to-bl from-noir/30 via-noir/60 to-noir" />
           <div className="relative h-full flex flex-col justify-end p-12">
-            <p className="label-eyebrow text-or mb-6">Rejoindre la scène</p>
-            <h1 className="serif-display text-5xl xl:text-7xl mb-6">Casting.</h1>
-            <p className="text-sable text-lg max-w-md leading-relaxed">Chefs, artistes, performers, maîtres de cérémonie. Les talents qui font la différence ne se trouvent pas dans les annuaires.</p>
+            <p className="label-eyebrow text-or mb-6">{t("casting.eyebrow")}</p>
+            <h1 className="serif-display text-5xl xl:text-7xl mb-6">{t("casting.title")}</h1>
+            <p className="text-sable text-lg max-w-md leading-relaxed">{t("casting.intro")}</p>
           </div>
         </div>
         <div className="px-6 lg:px-12 py-20 md:py-24 order-1">
           <div className="lg:hidden mb-10">
-            <p className="label-eyebrow text-or mb-4">Rejoindre la scène</p>
-            <h1 className="serif-display text-4xl">Casting.</h1>
+            <p className="label-eyebrow text-or mb-4">{t("casting.eyebrow")}</p>
+            <h1 className="serif-display text-4xl">{t("casting.title")}</h1>
           </div>
           <form onSubmit={submit} className="space-y-6 max-w-md">
           <input type="text" value={form.honeypot} onChange={onChange("honeypot")} className="hidden" tabIndex={-1} autoComplete="off" />
-          <Field label="Nom & Prénom *"><input required value={form.full_name} onChange={onChange("full_name")} className={inp} data-testid="cast-name" /></Field>
-          <Field label="E-mail *"><input required type="email" value={form.email} onChange={onChange("email")} className={inp} data-testid="cast-email" /></Field>
-          <Field label="Téléphone"><input value={form.phone} onChange={onChange("phone")} className={inp} data-testid="cast-phone" /></Field>
-          <Field label="Profil *"><select value={form.profile_type} onChange={onChange("profile_type")} className={inp} data-testid="cast-type">{TYPES.map((t) => <option key={t} value={t}>{t}</option>)}</select></Field>
-          <Field label="Bio courte *"><textarea required rows={4} value={form.bio} onChange={onChange("bio")} className={`${inp} resize-none`} data-testid="cast-bio" /></Field>
-          <Field label="Lien démo / portfolio"><input value={form.demo_url} onChange={onChange("demo_url")} className={inp} placeholder="https://…" data-testid="cast-demo" /></Field>
-          <button type="submit" disabled={loading} data-testid="cast-submit" className="w-full bg-or text-noir py-4 label-eyebrow hover:bg-ivoire transition-colors disabled:opacity-60">{loading ? "Envoi…" : "Postuler →"}</button>
+          <Field label={t("common.name")}><input required value={form.full_name} onChange={onChange("full_name")} className={inp} data-testid="cast-name" /></Field>
+          <Field label={t("common.email")}><input required type="email" value={form.email} onChange={onChange("email")} className={inp} data-testid="cast-email" /></Field>
+          <Field label={t("common.phone")}><input value={form.phone} onChange={onChange("phone")} className={inp} data-testid="cast-phone" /></Field>
+          <Field label={t("casting.profile")}><select value={form.profile_type} onChange={onChange("profile_type")} className={inp} data-testid="cast-type">{TYPES.map((ty) => <option key={ty} value={ty}>{ty}</option>)}</select></Field>
+          <Field label={t("casting.bio")}><textarea required rows={4} value={form.bio} onChange={onChange("bio")} className={`${inp} resize-none`} data-testid="cast-bio" /></Field>
+          <Field label={t("casting.demo")}><input value={form.demo_url} onChange={onChange("demo_url")} className={inp} placeholder="https://…" data-testid="cast-demo" /></Field>
+          <button type="submit" disabled={loading} data-testid="cast-submit" className="w-full bg-or text-noir py-4 label-eyebrow hover:bg-ivoire transition-colors disabled:opacity-60">{loading ? t("common.sending") : t("casting.submit")}</button>
         </form>
         </div>
       </div>
