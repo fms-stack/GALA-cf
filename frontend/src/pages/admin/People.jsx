@@ -58,8 +58,8 @@ export default function People() {
           {items.map((it) => (
             <tr key={it.id} className="border-b border-sable/40 hover:bg-sable/20">
               <td className="py-3 px-4 serif-display text-lg">{it.full_name}</td>
-              <td className="py-3 px-4 text-sm opacity-70">{it.email || "—"}</td>
-              <td className="py-3 px-4 text-sm opacity-70">{it.company || "—"}</td>
+              <td className="py-3 px-4 text-sm opacity-70">{it.email || "·"}</td>
+              <td className="py-3 px-4 text-sm opacity-70">{it.company || "·"}</td>
               <td className="py-3 px-4 text-right">
                 <button onClick={() => openEdit(it)} className="p-2 hover:bg-sable"><PencilSimple size={16} /></button>
                 <button onClick={() => remove(it)} className="p-2 hover:bg-destructive hover:text-destructive-foreground"><Trash size={16} /></button>

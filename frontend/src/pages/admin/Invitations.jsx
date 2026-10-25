@@ -72,7 +72,7 @@ export default function Invitations() {
             <tr key={it.id} className="border-b border-sable/40 hover:bg-sable/20" data-testid={`invitation-row-${it.id}`}>
               <td className="py-3 px-4 serif-display text-lg">{it.full_name}</td>
               <td className="py-3 px-4 text-sm">{it.email}</td>
-              <td className="py-3 px-4 text-sm opacity-70">{it.phone || "—"}</td>
+              <td className="py-3 px-4 text-sm opacity-70">{it.phone || "·"}</td>
               <td className="py-3 px-4 text-center font-medium">{it.seats}</td>
               <td className="py-3 px-4">
                 <span className={`px-2 py-1 text-xs uppercase tracking-wider ${

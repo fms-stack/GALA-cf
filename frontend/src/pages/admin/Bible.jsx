@@ -65,7 +65,7 @@ export default function Bible() {
             <>
               <div className="serif-display text-2xl mb-2">{meta.meta?.original_filename || "Bible PDF"}</div>
               <div className="text-xs opacity-60 mb-6">
-                Uploadée le {meta.meta?.uploaded_at ? new Date(meta.meta.uploaded_at).toLocaleDateString("fr-FR") : "—"} ·
+                Uploadée le {meta.meta?.uploaded_at ? new Date(meta.meta.uploaded_at).toLocaleDateString("fr-FR") : "·"} ·
                 {meta.meta?.size ? ` ${(meta.meta.size / 1024).toFixed(0)} KB` : ""}
               </div>
               <button onClick={openBible} data-testid="bible-open" className="flex items-center gap-2 bg-noir text-ivoire px-5 py-3 label-eyebrow hover:bg-brun transition-colors">

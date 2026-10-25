@@ -1,5 +1,5 @@
 """
-Phase 4-5-6 modules — Contrats & NDA / Bible PDF / Ecosystem nodes
+Phase 4-5-6 modules · Contrats & NDA / Bible PDF / Ecosystem nodes
 Imported and wired by server.py
 """
 import os
@@ -23,7 +23,7 @@ from cryptography.fernet import Fernet
 
 _BIBLE_FERNET = Fernet(os.environ['BIBLE_ENC_KEY'].encode())
 
-# Contract workflow state machine — no legal step can be skipped, whatever the role
+# Contract workflow state machine · no legal step can be skipped, whatever the role
 CONTRACT_TRANSITIONS = {
     "draft": {"juridique_review"},
     "juridique_review": {"approved", "refused"},
@@ -41,7 +41,7 @@ CONTRACT_TRANSITIONS = {
 CONTRACT_TEMPLATES = {
     "nda": {
         "id": "nda",
-        "title": "NDA — Accord de Confidentialité",
+        "title": "NDA · Accord de Confidentialité",
         "kind": "nda",
         "body": """Entre les soussignés :
 
@@ -53,21 +53,21 @@ d'autre part,
 
 **IL A ÉTÉ EXPOSÉ CE QUI SUIT :**
 
-Dans le cadre de la préparation et de la réalisation du Cook & Food Gala — Chapter I, prévu le 12 décembre 2026 à Paris, CVLN est amenée à transmettre au Récipiendaire des informations strictement confidentielles relatives à la production, aux talents, aux montants, aux contrats partenaires, à la Bible technique ainsi qu'à l'ensemble de l'écosystème CVLN.
+Dans le cadre de la préparation et de la réalisation du Cook & Food Gala · Chapter I, prévu le 12 décembre 2026 à Paris, CVLN est amenée à transmettre au Récipiendaire des informations strictement confidentielles relatives à la production, aux talents, aux montants, aux contrats partenaires, à la Bible technique ainsi qu'à l'ensemble de l'écosystème CVLN.
 
-**ARTICLE 1 — Objet**
+**ARTICLE 1 · Objet**
 Le Récipiendaire s'engage à garder strictement confidentielles toutes les informations transmises, sous quelque forme que ce soit (orale, écrite, numérique, visuelle).
 
-**ARTICLE 2 — Durée**
+**ARTICLE 2 · Durée**
 Le présent engagement de confidentialité prend effet à la date de signature et reste en vigueur pendant cinq (5) années suivant la dernière communication d'information confidentielle.
 
-**ARTICLE 3 — Propriété intellectuelle**
+**ARTICLE 3 · Propriété intellectuelle**
 Toute information transmise reste la propriété exclusive de CVLN. Aucun droit de propriété intellectuelle n'est cédé au Récipiendaire au titre du présent accord.
 
-**ARTICLE 4 — Sanction**
+**ARTICLE 4 · Sanction**
 Tout manquement engage la responsabilité civile et pénale du Récipiendaire et donne droit à CVLN à des dommages et intérêts.
 
-**ARTICLE 5 — Droit applicable**
+**ARTICLE 5 · Droit applicable**
 Le présent accord est soumis au droit français. Tout litige relèvera des juridictions compétentes de Paris.
 
 Fait à Paris, le {today}.
@@ -84,25 +84,25 @@ Entre :
 **CVLN Holding**, ci-après dénommée « le Client »,
 Et **{full_name}**, intervenant en qualité de {role_title}, ci-après dénommé(e) « le Prestataire ».
 
-**ARTICLE 1 — Objet**
+**ARTICLE 1 · Objet**
 Le Prestataire s'engage à réaliser la mission suivante pour le compte du Client dans le cadre du Cook & Food Gala 2026 : {role_title}.
 
 **Livrables attendus :**
 {deliverables}
 
-**ARTICLE 2 — Durée**
+**ARTICLE 2 · Durée**
 Du {start_date} au {end_date}.
 
-**ARTICLE 3 — Rémunération**
+**ARTICLE 3 · Rémunération**
 La prestation est rémunérée à hauteur de **{fee_amount} € HT**, payable en deux fois : 50 % à la signature, 50 % à la livraison finale.
 
-**ARTICLE 4 — Propriété intellectuelle**
+**ARTICLE 4 · Propriété intellectuelle**
 Toutes les productions réalisées dans le cadre du présent contrat sont la propriété exclusive de CVLN Holding et de Factory Maker Studio (clause IP forte).
 
-**ARTICLE 5 — Confidentialité**
+**ARTICLE 5 · Confidentialité**
 Le Prestataire est tenu à une obligation stricte de confidentialité, conformément à l'accord NDA signé préalablement.
 
-**ARTICLE 6 — Résiliation**
+**ARTICLE 6 · Résiliation**
 En cas de manquement grave, le contrat peut être résilié de plein droit avec préavis de 8 jours.
 
 Fait à Paris, le {today}.
@@ -117,19 +117,19 @@ Le Prestataire : ________________________     Pour CVLN : ______________________
 
 Entre **CVLN Holding** (« le Cessionnaire ») et **{full_name}** (« l'Auteur »), il est convenu :
 
-**ARTICLE 1 — Œuvre concernée**
+**ARTICLE 1 · Œuvre concernée**
 Toute œuvre originale créée par l'Auteur dans le cadre du Cook & Food Gala 2026, au titre de sa mission de {role_title}.
 
-**ARTICLE 2 — Droits cédés**
+**ARTICLE 2 · Droits cédés**
 L'Auteur cède au Cessionnaire, à titre exclusif et pour le monde entier, l'intégralité de ses droits patrimoniaux : reproduction, représentation, adaptation, traduction, exploitation commerciale, sous tous formats et supports connus ou à venir.
 
-**ARTICLE 3 — Durée**
+**ARTICLE 3 · Durée**
 La cession est consentie pour toute la durée légale de protection des droits d'auteur.
 
-**ARTICLE 4 — Rémunération**
+**ARTICLE 4 · Rémunération**
 La cession est consentie en contrepartie d'un montant forfaitaire de **{fee_amount} € HT**.
 
-**ARTICLE 5 — Garanties**
+**ARTICLE 5 · Garanties**
 L'Auteur garantit l'originalité de l'œuvre et l'absence de contrefaçon. Il garantit le Cessionnaire contre toute revendication.
 
 Fait à Paris, le {today}.
@@ -140,27 +140,27 @@ L'Auteur : ________________________     Pour CVLN : ________________________""",
         "id": "chef_invite_cip",
         "title": "Contrat Chef Invité + CIP",
         "kind": "contrat",
-        "body": """**CONTRAT CHEF INVITÉ — CIP (Cultural Impact Protocol)**
+        "body": """**CONTRAT CHEF INVITÉ · CIP (Cultural Impact Protocol)**
 
 Entre **CVLN Holding** / **CVL Culinary Innovations** et **{full_name}** (« le Chef Invité »).
 
-**ARTICLE 1 — Mission**
+**ARTICLE 1 · Mission**
 Le Chef Invité participe au Cook & Food Gala 2026 en qualité de chef performeur sur les îlots cuisine de l'arène studio 360°.
 Livrables : {deliverables}
 
-**ARTICLE 2 — Standard CIP**
+**ARTICLE 2 · Standard CIP**
 Le Chef Invité s'engage à respecter le Cultural Impact Protocol défini par CVL Culinary Innovations : sourcing, traçabilité, mémoire culinaire afro mondiale, narration culturelle de chaque plat.
 
-**ARTICLE 3 — Période**
+**ARTICLE 3 · Période**
 Du {start_date} au {end_date}.
 
-**ARTICLE 4 — Rémunération**
+**ARTICLE 4 · Rémunération**
 **{fee_amount} € HT** versés en deux tranches.
 
-**ARTICLE 5 — Droits image et captation**
+**ARTICLE 5 · Droits image et captation**
 Le Chef Invité cède son droit à l'image dans le cadre des captations TC'V et de la diffusion ultérieure série/broadcast.
 
-**ARTICLE 6 — Propriété intellectuelle**
+**ARTICLE 6 · Propriété intellectuelle**
 Toute recette créée pour le Gala devient propriété co-exploitée CVLN / CVL Culinary Innovations dans le cadre du standard CIP.
 
 Fait à Paris, le {today}.
@@ -175,16 +175,16 @@ Le Chef : ________________________     Pour CVL Culinary Innovations : _________
 
 Entre **CVLN Holding** et **{full_name}** (« l'Artiste »), au titre de sa mission de {role_title}.
 
-**ARTICLE 1 — Droits voisins**
+**ARTICLE 1 · Droits voisins**
 L'Artiste cède à CVLN ses droits voisins relatifs à toute interprétation, performance, captation sonore ou visuelle réalisée dans le cadre du Cook & Food Gala 2026.
 
-**ARTICLE 2 — Droit à l'image**
+**ARTICLE 2 · Droit à l'image**
 L'Artiste autorise CVLN, Factory Maker Studio et leurs partenaires à fixer, reproduire et diffuser son image pour toute exploitation liée au Gala, à la série TC'V et aux supports promotionnels, pour une durée de 10 ans.
 
-**ARTICLE 3 — Territoire**
+**ARTICLE 3 · Territoire**
 Monde entier, tous médias connus ou à venir.
 
-**ARTICLE 4 — Rémunération**
+**ARTICLE 4 · Rémunération**
 Forfait global de **{fee_amount} € HT**.
 
 Fait à Paris, le {today}.
@@ -199,22 +199,22 @@ L'Artiste : ________________________     Pour CVLN : ________________________"""
 
 Entre **CVLN Holding** et **{full_name}** (« le Partenaire »).
 
-**ARTICLE 1 — Objet**
+**ARTICLE 1 · Objet**
 Le Partenaire s'associe au Cook & Food Gala 2026 en qualité de partenaire officiel selon les modalités définies dans l'annexe sponsoring.
 
-**ARTICLE 2 — Engagements du Partenaire**
+**ARTICLE 2 · Engagements du Partenaire**
 {deliverables}
 
-**ARTICLE 3 — Contreparties accordées**
+**ARTICLE 3 · Contreparties accordées**
 Visibilité logo · présence sur le site cfceremony.com · mentions broadcast TC'V · cocktail privé · réseautage VIP.
 
-**ARTICLE 4 — Contribution**
+**ARTICLE 4 · Contribution**
 **{fee_amount} € HT**.
 
-**ARTICLE 5 — Exclusivité**
+**ARTICLE 5 · Exclusivité**
 Le Partenaire bénéficie d'une exclusivité sectorielle.
 
-**ARTICLE 6 — Image et communication**
+**ARTICLE 6 · Image et communication**
 Toute communication conjointe est soumise à validation préalable de CVLN.
 
 Fait à Paris, le {today}.
@@ -223,7 +223,7 @@ Le Partenaire : ________________________     Pour CVLN : _______________________
     },
     "droit_image_public": {
         "id": "droit_image_public",
-        "title": "Cession droit à l'image — Public/Convive",
+        "title": "Cession droit à l'image · Public/Convive",
         "kind": "contrat",
         "body": """**AUTORISATION DE FIXATION ET D'EXPLOITATION DE L'IMAGE**
 
@@ -231,9 +231,9 @@ Je soussigné(e) **{full_name}**, présent(e) au Cook & Food Gala 2026 le 12 dé
 
 Autorise **CVLN Holding** et **Factory Maker Studio** à :
 
-— Me filmer et me photographier durant l'événement ;
-— Reproduire et diffuser mon image dans tous les supports liés au Gala (TC'V série, broadcast, communication digitale, presse, supports promotionnels) ;
-— Sur tous territoires et pour une durée de 10 ans à compter du présent accord.
+· Me filmer et me photographier durant l'événement ;
+· Reproduire et diffuser mon image dans tous les supports liés au Gala (TC'V série, broadcast, communication digitale, presse, supports promotionnels) ;
+· Sur tous territoires et pour une durée de 10 ans à compter du présent accord.
 
 Cette autorisation est consentie à titre gracieux dans le cadre de ma présence en qualité de convive.
 
@@ -283,7 +283,7 @@ def _generate_contract_pdf(title: str, body: str) -> bytes:
     eyebrow     = ParagraphStyle("eb", parent=styles["BodyText"], fontSize=8, alignment=TA_CENTER, textColor="#A98A5A", spaceAfter=24, leading=10)
 
     story = []
-    story.append(Paragraph("COOK &amp; FOOD GALA — CHAPTER I · PARIS · 12.12.2026", eyebrow))
+    story.append(Paragraph("COOK &amp; FOOD GALA · CHAPTER I · PARIS · 12.12.2026", eyebrow))
     story.append(Paragraph(title, title_style))
     for raw in body.split("\n"):
         line = raw.strip()
@@ -302,7 +302,7 @@ def _generate_contract_pdf(title: str, body: str) -> bytes:
 
 
 # ============================================================================
-# Router factory — receives db + helpers from main server
+# Router factory · receives db + helpers from main server
 # ============================================================================
 def create_phase4_router(db, get_current_user, require_role, audit, doc_out):
     router = APIRouter(prefix="/api")
@@ -352,12 +352,12 @@ def create_phase4_router(db, get_current_user, require_role, audit, doc_out):
             raise HTTPException(status_code=400, detail="Personne introuvable")
 
         rendered = tmpl["body"].format(
-            full_name=person.get("full_name", "—"),
-            role_title=position_title or "—",
+            full_name=person.get("full_name", "·"),
+            role_title=position_title or "·",
             deliverables=payload.deliverables or "À définir",
             fee_amount=f"{(payload.fee_amount or 0):,.2f}".replace(",", " "),
-            start_date=payload.start_date or "—",
-            end_date=payload.end_date or "—",
+            start_date=payload.start_date or "·",
+            end_date=payload.end_date or "·",
             today=datetime.now(timezone.utc).strftime("%d/%m/%Y"),
         )
 
@@ -423,7 +423,7 @@ def create_phase4_router(db, get_current_user, require_role, audit, doc_out):
         )
 
     # ============================================================================
-    # PHASE 5 — Bible PDF
+    # PHASE 5 · Bible PDF
     # ============================================================================
     BIBLE_DIR = Path("/app/backend/storage/bible")
     BIBLE_DIR.mkdir(parents=True, exist_ok=True)
@@ -517,7 +517,7 @@ def create_phase4_router(db, get_current_user, require_role, audit, doc_out):
         return [doc_out(x) for x in items]
 
     # ============================================================================
-    # PHASE 6 — Ecosystem nodes (silent)
+    # PHASE 6 · Ecosystem nodes (silent)
     # ============================================================================
     @router.get("/ecosystem")
     async def list_ecosystem(user: dict = Depends(require_role("admin"))):
@@ -542,7 +542,7 @@ def create_phase4_router(db, get_current_user, require_role, audit, doc_out):
 
 
 async def seed_ecosystem_nodes(db, audit):
-    """Seed silent ecosystem nodes — never displayed publicly."""
+    """Seed silent ecosystem nodes · never displayed publicly."""
     if await db.ecosystem_nodes.count_documents({}) > 0:
         return
     nodes = [

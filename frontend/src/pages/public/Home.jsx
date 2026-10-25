@@ -85,7 +85,7 @@ export default function Home() {
                   <div className="relative h-full flex flex-col justify-end p-6 md:p-8">
                     <div className="label-eyebrow text-or mb-3">{d.num}</div>
                     <div className="serif-display text-3xl md:text-4xl mb-2 group-hover:text-or transition-colors">{d.name}</div>
-                    <div className="text-sable italic text-sm mb-3">— {d.word}</div>
+                    <div className="text-sable italic text-sm mb-3">· {d.word}</div>
                     <p className="text-ivoire/80 text-xs md:text-sm leading-relaxed">{d.body}</p>
                   </div>
                 </div>

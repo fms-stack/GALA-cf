@@ -28,7 +28,7 @@ export default function SurInvitation() {
     try {
       await api.post("/public/cercle-restreint", {
         full_name: tokenValid ? `Coopté par ${sponsor}` : "Manifestation d'intérêt",
-        email, sector: "—", recommended_by: sponsor || "", message,
+        email, sector: "·", recommended_by: sponsor || "", message,
         philanthropic_engagement: "", honeypot: "",
       });
       setSent(true);

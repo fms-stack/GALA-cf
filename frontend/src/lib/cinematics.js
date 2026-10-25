@@ -5,7 +5,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 /**
- * Cinematic scroll animations — call once per page mount.
+ * Cinematic scroll animations · call once per page mount.
  * - Hero parallax background
  * - Staggered text reveal on intersection
  * - Marquee-style discipline scroller acceleration on scroll-in

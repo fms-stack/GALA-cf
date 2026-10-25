@@ -211,7 +211,7 @@ class SponsoringIn(BaseModel):
 
 
 class CercleInquiryIn(BaseModel):
-    """Pre-qualification for the inner Circle / VIP — no payment, no public price."""
+    """Pre-qualification for the inner Circle / VIP · no payment, no public price."""
     full_name: str = Field(min_length=2, max_length=120)
     email: EmailStr
     phone: Optional[str] = ""
@@ -231,8 +231,8 @@ class MecenatIn(BaseModel):
     honeypot: Optional[str] = ""
 
 
-# Ticket packages — server-side definition (never trust frontend prices)
-# NOTE: VIP retiré de la billetterie publique — passage via /cercle-restreint sur dossier.
+# Ticket packages · server-side definition (never trust frontend prices)
+# NOTE: VIP retiré de la billetterie publique · passage via /cercle-restreint sur dossier.
 TICKET_PACKAGES = {
     "gradin":  {"label": "Gradin face",            "amount": 50.0,   "currency": "eur", "tier": "public",  "order": 1},
     "lateral": {"label": "Zone latérale (debout)", "amount": 80.0,   "currency": "eur", "tier": "public",  "order": 2},
@@ -279,7 +279,8 @@ async def login(payload: LoginInput, request: Request, response: Response):
     email = payload.email.lower().strip()
     fwd = request.headers.get("x-forwarded-for", "")
     ip = fwd.split(",")[0].strip() if fwd else (request.client.host if request.client else "unknown")
-    identifier = f"{ip}:{email}"
+    # Brute force: keyed on email only (X-Forwarded-For is client-spoofable)
+    identifier = email
 
     # brute force check
     attempt = await db.login_attempts.find_one({"identifier": identifier})
@@ -494,7 +495,7 @@ async def delete_assignment(aid: str, user: dict = Depends(require_role("admin")
 
 
 # ============================================================================
-# INVITATIONS VIP — public POST write-only, private GET
+# INVITATIONS VIP · public POST write-only, private GET
 # ============================================================================
 @api_router.post("/public/rsvp")
 async def public_rsvp(payload: InvitationVIPIn, request: Request):
@@ -540,7 +541,7 @@ async def update_invitation_status(iid: str, body: dict, user: dict = Depends(re
 
 
 # ============================================================================
-# PUBLIC FORMS — Candidatures · Casting · Sponsoring (write-only)
+# PUBLIC FORMS · Candidatures · Casting · Sponsoring (write-only)
 # ============================================================================
 @api_router.post("/public/applications")
 async def public_application(p: ApplicationIn, request: Request):
@@ -580,7 +581,7 @@ async def public_sponsoring(p: SponsoringIn, request: Request):
 
 @api_router.post("/public/cercle-restreint")
 async def public_cercle(p: CercleInquiryIn, request: Request):
-    """Inner Circle pre-qualification — no payment, manual validation by Laurent."""
+    """Inner Circle pre-qualification · no payment, manual validation by Laurent."""
     if p.honeypot:
         return {"ok": True}
     doc = p.model_dump(exclude={"honeypot"})
@@ -652,12 +653,12 @@ async def send_cercle_reply(iid: str, body: dict, user: dict = Depends(require_r
     rec = await db.cercle_restreint_inquiries.find_one({"_id": ObjectId(iid)})
     if not rec:
         raise HTTPException(status_code=404, detail="Demande introuvable")
-    subject = "Cook & Food Gala — Confirmation de votre démarche"
+    subject = "Cook & Food Gala · Confirmation de votre démarche"
     body_text = body.get("body") or (
         f"Bonjour {rec.get('full_name', '')},\n\n"
         "Votre démarche auprès du Cercle restreint a été reçue. La direction reviendra vers vous personnellement sous 7 jours.\n\n"
-        "Cook & Food Gala — Chapter I · Samedi 12 décembre 2026 · Paris\n\n"
-        "— Cook & Food Gala by Factory Maker Studio & CVLN Group"
+        "Cook & Food Gala · Chapter I · Samedi 12 décembre 2026 · Paris\n\n"
+        "· Cook & Food Gala by Factory Maker Studio & CVLN Group"
     )
     if RESEND_API_KEY:
         # Production: integrate Resend SDK here
@@ -682,8 +683,8 @@ async def public_founders():
 
 @api_router.post("/cooptation/issue")
 async def issue_cooptation(body: dict, user: dict = Depends(require_role("admin", "production"))):
-    """Issue a unique cooptation token (7 days) — to be shared by a member with a prospect."""
-    sponsor = body.get("sponsor_name", user.get("name", "—"))
+    """Issue a unique cooptation token (7 days) · to be shared by a member with a prospect."""
+    sponsor = body.get("sponsor_name", user.get("name", "·"))
     token = secrets.token_urlsafe(20)
     await db.cooptation_tokens.insert_one({
         "token": token,
@@ -731,7 +732,7 @@ async def list_orders(user: dict = Depends(require_role("admin", "production")))
 
 
 # ============================================================================
-# BILLETTERIE — Stripe Checkout (public)
+# BILLETTERIE · Stripe Checkout (public)
 # ============================================================================
 @api_router.get("/public/tickets")
 async def public_tickets():
@@ -875,8 +876,8 @@ async def get_audit_logs(user: dict = Depends(require_role("admin"))):
 # ============================================================================
 @api_router.get("/public/prizes")
 async def public_prizes():
-    """7 CF-GAP awards — public, no sensitive data.
-    Images: Unsplash 'black chef/portrait' search results — featuring Black/Afro subjects.
+    """7 CF-GAP awards · public, no sensitive data.
+    Images: Unsplash 'black chef/portrait' search results · featuring Black/Afro subjects.
     """
     return [
         {"code": "CF-GAP-01", "title": "Recette Gastronomique Diaspora", "discipline": "Excellence culinaire afro",
@@ -885,16 +886,16 @@ async def public_prizes():
          "body": "Décerné à un chef ou autrice culinaire dont la création signe l'identité gastronomique afro contemporaine. Au-delà de la technique, le prix consacre la capacité à transformer la mémoire en geste, le geste en plat, et le plat en récit."},
         {"code": "CF-GAP-02", "title": "Artiste Afro le Plus Influent", "discipline": "Musique · Art · Scène",
          "image": "https://images.unsplash.com/photo-1538819137474-ffa0ee381af6?auto=format&fit=crop&w=1400&q=80",
-         "intro": "L'année 2026, regardée depuis la diaspora — l'artiste qui aura le plus déplacé les lignes.",
+         "intro": "L'année 2026, regardée depuis la diaspora · l'artiste qui aura le plus déplacé les lignes.",
          "body": "Toutes disciplines confondues. Le prix distingue une figure dont l'impact culturel, commercial ou symbolique aura compté pour la diaspora cette année."},
         {"code": "CF-GAP-03", "title": "Action Artistique la Plus Forte", "discipline": "Toutes disciplines",
          "image": "https://images.unsplash.com/photo-1720630351938-1233133223f4?auto=format&fit=crop&w=1400&q=80",
          "intro": "Un acte. Une œuvre. Une trace.",
-         "body": "Ce prix récompense une action — performance, intervention, manifeste, exposition — qui aura marqué un territoire, déplacé un public, fait événement."},
+         "body": "Ce prix récompense une action · performance, intervention, manifeste, exposition · qui aura marqué un territoire, déplacé un public, fait événement."},
         {"code": "CF-GAP-04", "title": "Prix de la Culture", "discipline": "Transmission · Mémoire · Patrimoine",
          "image": "https://images.unsplash.com/photo-1670229712389-cbd53e848bbe?auto=format&fit=crop&w=1400&q=80",
          "intro": "Tenir la mémoire. Transmettre le geste. Inventer la suite.",
-         "body": "Décerné à un acteur — institution, collectif, individu — dont l'œuvre installe ou préserve un patrimoine culturel afro pour les générations à venir."},
+         "body": "Décerné à un acteur · institution, collectif, individu · dont l'œuvre installe ou préserve un patrimoine culturel afro pour les générations à venir."},
         {"code": "CF-GAP-05", "title": "Prix du Cinéma", "discipline": "Image en mouvement",
          "image": "https://images.unsplash.com/photo-1663530761401-15eefb544889?auto=format&fit=crop&w=1400&q=80",
          "intro": "Le cinéma comme architecture de l'imaginaire afro.",
@@ -935,7 +936,7 @@ async def health():
 
 @api_router.get("/health/full")
 async def health_full(user: dict = Depends(require_role("admin"))):
-    """Full integration status — for monitoring on D-day."""
+    """Full integration status · for monitoring on D-day."""
     status = {"service": "cvln-gala-os", "checks": {}}
     # MongoDB
     try:
@@ -951,7 +952,7 @@ async def health_full(user: dict = Depends(require_role("admin"))):
     from pathlib import Path as _P
     bible_file = _P("/app/backend/storage/bible/GALA_COOK_FOOD_BIBLE.pdf.enc")
     status["checks"]["bible_storage"] = {"ok": bible_file.parent.exists(), "uploaded": bible_file.exists(), "encrypted": True}
-    # Yousign — not yet integrated
+    # Yousign · not yet integrated
     status["checks"]["yousign"] = {"ok": False, "mode": "mock"}
     # Collections
     status["checks"]["collections"] = {
@@ -975,7 +976,7 @@ async def seed_admin():
         await db.users.insert_one({
             "email": admin_email,
             "password_hash": hash_password(admin_password),
-            "name": "Laurent — Admin",
+            "name": "Laurent · Admin",
             "role": "admin",
             "created_at": datetime.now(timezone.utc).isoformat(),
         })
@@ -984,7 +985,7 @@ async def seed_admin():
         await db.users.update_one({"email": admin_email}, {"$set": {"password_hash": hash_password(admin_password)}})
         logger.info(f"Admin password refreshed: {admin_email}")
 
-    # Staff system users — passwords from env only (never hardcoded)
+    # Staff system users · passwords from env only (never hardcoded)
     others = [
         ("production@cfceremony.com", os.environ.get("STAFF_PRODUCTION_PASSWORD", ""), "Production · CVLN", "production"),
         ("juridique@cfceremony.com", os.environ.get("STAFF_JURIDIQUE_PASSWORD", ""), "Juridique · CVLN", "juridique"),
@@ -1005,38 +1006,38 @@ async def seed_admin():
 
 
 SEED_POSITIONS = [
-    # Pôle I — Direction & Stratégie
-    ("POS-01", "Showrunner / Producteur Exécutif", "Pôle I — Direction & Stratégie"),
-    ("POS-02", "Line Producer", "Pôle I — Direction & Stratégie"),
-    ("POS-03", "Responsable Sponsoring", "Pôle I — Direction & Stratégie"),
-    ("POS-04", "Juriste Audiovisuel", "Pôle I — Direction & Stratégie"),
-    ("POS-05", "Compliance Officer", "Pôle I — Direction & Stratégie"),
-    # Pôle II — Artistique & Narratif
-    ("POS-06", "Réalisateur TV / Directeur Production", "Pôle II — Artistique & Narratif"),
-    ("POS-07", "Script Doctor", "Pôle II — Artistique & Narratif"),
-    ("POS-08", "Directeur Musical", "Pôle II — Artistique & Narratif"),
-    ("POS-09", "Maître de Cérémonie (Host)", "Pôle II — Artistique & Narratif"),
-    ("POS-10", "Conseillère Artistique", "Pôle II — Artistique & Narratif"),
-    # Pôle III — Casting & Talents
-    ("POS-11", "Directrice de Casting VIP", "Pôle III — Casting & Talents"),
-    ("POS-12", "Talent Scout Chefs", "Pôle III — Casting & Talents"),
-    # Pôle IV — Technique & Opérations
-    ("POS-13", "Directeur Technique", "Pôle IV — Technique & Opérations"),
-    ("POS-14", "Régisseur Général", "Pôle IV — Technique & Opérations"),
-    ("POS-15", "Directeur de la Photographie", "Pôle IV — Technique & Opérations"),
-    ("POS-16", "Maître d'Hôtel", "Pôle IV — Technique & Opérations"),
-    ("POS-17", "Sécurité & Protocole", "Pôle IV — Technique & Opérations"),
-    # Pôle V — Série & Post-Production
-    ("POS-18", "Chef Monteur", "Pôle V — Série & Post-Production"),
-    ("POS-19", "Responsable Backstage", "Pôle V — Série & Post-Production"),
-    ("POS-20", "Digital Asset Manager", "Pôle V — Série & Post-Production"),
-    # Pôle VI — DataTech & Digital
-    ("POS-21", "Data Architect & FREK", "Pôle VI — DataTech & Digital"),
-    ("POS-22", "Dev Emergent / cfceremony.com", "Pôle VI — DataTech & Digital"),
-    ("POS-23", "Community Manager", "Pôle VI — DataTech & Digital"),
-    # Pôle VII — Communication & Image
-    ("POS-24", "Attaché(e) de Presse", "Pôle VII — Communication & Image"),
-    ("POS-25", "Food Stylist", "Pôle VII — Communication & Image"),
+    # Pôle I · Direction & Stratégie
+    ("POS-01", "Showrunner / Producteur Exécutif", "Pôle I · Direction & Stratégie"),
+    ("POS-02", "Line Producer", "Pôle I · Direction & Stratégie"),
+    ("POS-03", "Responsable Sponsoring", "Pôle I · Direction & Stratégie"),
+    ("POS-04", "Juriste Audiovisuel", "Pôle I · Direction & Stratégie"),
+    ("POS-05", "Compliance Officer", "Pôle I · Direction & Stratégie"),
+    # Pôle II · Artistique & Narratif
+    ("POS-06", "Réalisateur TV / Directeur Production", "Pôle II · Artistique & Narratif"),
+    ("POS-07", "Script Doctor", "Pôle II · Artistique & Narratif"),
+    ("POS-08", "Directeur Musical", "Pôle II · Artistique & Narratif"),
+    ("POS-09", "Maître de Cérémonie (Host)", "Pôle II · Artistique & Narratif"),
+    ("POS-10", "Conseillère Artistique", "Pôle II · Artistique & Narratif"),
+    # Pôle III · Casting & Talents
+    ("POS-11", "Directrice de Casting VIP", "Pôle III · Casting & Talents"),
+    ("POS-12", "Talent Scout Chefs", "Pôle III · Casting & Talents"),
+    # Pôle IV · Technique & Opérations
+    ("POS-13", "Directeur Technique", "Pôle IV · Technique & Opérations"),
+    ("POS-14", "Régisseur Général", "Pôle IV · Technique & Opérations"),
+    ("POS-15", "Directeur de la Photographie", "Pôle IV · Technique & Opérations"),
+    ("POS-16", "Maître d'Hôtel", "Pôle IV · Technique & Opérations"),
+    ("POS-17", "Sécurité & Protocole", "Pôle IV · Technique & Opérations"),
+    # Pôle V · Série & Post-Production
+    ("POS-18", "Chef Monteur", "Pôle V · Série & Post-Production"),
+    ("POS-19", "Responsable Backstage", "Pôle V · Série & Post-Production"),
+    ("POS-20", "Digital Asset Manager", "Pôle V · Série & Post-Production"),
+    # Pôle VI · DataTech & Digital
+    ("POS-21", "Data Architect & FREK", "Pôle VI · DataTech & Digital"),
+    ("POS-22", "Dev Emergent / cfceremony.com", "Pôle VI · DataTech & Digital"),
+    ("POS-23", "Community Manager", "Pôle VI · DataTech & Digital"),
+    # Pôle VII · Communication & Image
+    ("POS-24", "Attaché(e) de Presse", "Pôle VII · Communication & Image"),
+    ("POS-25", "Food Stylist", "Pôle VII · Communication & Image"),
 ]
 
 
@@ -1055,6 +1056,12 @@ async def seed_positions():
 # App lifecycle
 # ============================================================================
 app.include_router(api_router)
+
+from bson.errors import InvalidId
+
+@app.exception_handler(InvalidId)
+async def invalid_objectid_handler(request, exc):
+    return JSONResponse(status_code=404, content={"detail": "Identifiant invalide"})
 
 # Phase 4-5-6 modules
 from phases import create_phase4_router, seed_ecosystem_nodes

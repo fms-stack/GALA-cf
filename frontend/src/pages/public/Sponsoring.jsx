@@ -71,7 +71,7 @@ export default function Sponsoring() {
                 <div className="label-eyebrow text-or mb-4">{tr.label}</div>
                 <p className="text-sable text-sm mb-4">{tr.body}</p>
                 <ul className="space-y-1 mb-3">
-                  {(tr.perks || []).map((p, i) => <li key={i} className="text-ivoire/80 text-xs">— {p}</li>)}
+                  {(tr.perks || []).map((p, i) => <li key={i} className="text-ivoire/80 text-xs">· {p}</li>)}
                 </ul>
                 <div className="label-eyebrow opacity-50 mt-2 pt-3 border-t border-ivoire/10">{tr.price}</div>
               </div>

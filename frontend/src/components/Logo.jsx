@@ -13,7 +13,7 @@ export function Logo({ size = 40, className = "" }) {
       className={className}
       aria-label="Cook & Food Gala"
     >
-      {/* Ring 1 — outermost, top half circular, bottom 3-wave scallop */}
+      {/* Ring 1 · outermost, top half circular, bottom 3-wave scallop */}
       <path d="M 100 28
                C 145 28, 178 60, 178 100
                C 178 122, 170 138, 160 148
@@ -55,7 +55,7 @@ export function Logo({ size = 40, className = "" }) {
                Q 72 130, 68 126
                C 62 120, 58 112, 58 100
                C 58 78, 76 62, 100 62 Z" />
-      {/* Ring 4 — innermost */}
+      {/* Ring 4 · innermost */}
       <path d="M 100 78
                C 113 78, 122 87, 122 100
                C 122 108, 119 113, 115 117

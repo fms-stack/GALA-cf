@@ -101,12 +101,12 @@ export default function Inner() {
                 <td key={c} className="py-3 px-4 text-sm">
                   {c === "amount" ? `${it[c]?.toLocaleString("fr-FR") || 0} €` :
                    c === "token" ? <code className="text-xs">{(it[c] || "").slice(0, 12)}…</code> :
-                   c === "used" ? (it[c] ? "✓" : "—") :
+                   c === "used" ? (it[c] ? "✓" : "·") :
                    c === "expires_at" ? new Date(it[c]).toLocaleDateString("fr-FR") :
-                   (it[c] || "—")}
+                   (it[c] || "·")}
                 </td>
               ))}
-              <td className="py-3 px-4 text-xs opacity-60">{it.created_at ? new Date(it.created_at).toLocaleDateString("fr-FR") : "—"}</td>
+              <td className="py-3 px-4 text-xs opacity-60">{it.created_at ? new Date(it.created_at).toLocaleDateString("fr-FR") : "·"}</td>
               {tab.key === "cooptation" && (
                 <td className="py-3 px-4">
                   <button onClick={() => { navigator.clipboard.writeText(`${window.location.origin}/cercle-restreint?coopte=${it.token}`); toast.success("URL copiée"); }} className="p-2 hover:bg-sable" data-testid={`copy-${it.token}`}>

@@ -65,14 +65,14 @@ export default function Assignments() {
           {items.map((it) => (
             <tr key={it.id} className="border-b border-sable/40 hover:bg-sable/20">
               <td className="py-3 px-4">
-                <div className="serif-display text-lg">{it.position?.title || "—"}</div>
+                <div className="serif-display text-lg">{it.position?.title || "·"}</div>
                 <div className="text-xs opacity-60">{it.position?.code} · {it.position?.pole}</div>
               </td>
-              <td className="py-3 px-4 serif-display text-lg">{it.person?.full_name || "—"}</td>
+              <td className="py-3 px-4 serif-display text-lg">{it.person?.full_name || "·"}</td>
               <td className="py-3 px-4 text-sm">
                 <span className={`px-2 py-1 text-xs uppercase tracking-wider ${it.status === "active" ? "bg-sauge text-ivoire" : "bg-sable"}`}>{it.status}</span>
               </td>
-              <td className="py-3 px-4 text-sm opacity-70">{it.fee_amount ? `${Number(it.fee_amount).toLocaleString("fr-FR")} €` : "—"}</td>
+              <td className="py-3 px-4 text-sm opacity-70">{it.fee_amount ? `${Number(it.fee_amount).toLocaleString("fr-FR")} €` : "·"}</td>
               <td className="py-3 px-4 text-right">
                 <button onClick={() => remove(it)} className="p-2 hover:bg-destructive hover:text-destructive-foreground"><Trash size={16} /></button>
               </td>
@@ -89,12 +89,12 @@ export default function Assignments() {
             <div className="space-y-4">
               <div><label className="label-eyebrow opacity-60 block mb-2">Poste *</label>
                 <select required value={form.position_id} onChange={(e) => setForm({ ...form, position_id: e.target.value })} className="w-full border border-sable bg-white px-4 py-2" data-testid="assignment-form-position">
-                  <option value="">— Sélectionner —</option>
+                  <option value="">· Sélectionner ·</option>
                   {positions.map((p) => <option key={p.id} value={p.id}>{p.code} · {p.title}</option>)}
                 </select></div>
               <div><label className="label-eyebrow opacity-60 block mb-2">Personne *</label>
                 <select required value={form.person_id} onChange={(e) => setForm({ ...form, person_id: e.target.value })} className="w-full border border-sable bg-white px-4 py-2" data-testid="assignment-form-person">
-                  <option value="">— Sélectionner —</option>
+                  <option value="">· Sélectionner ·</option>
                   {people.map((p) => <option key={p.id} value={p.id}>{p.full_name}</option>)}
                 </select></div>
               <div className="grid grid-cols-2 gap-4">

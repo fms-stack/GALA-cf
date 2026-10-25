@@ -29,7 +29,7 @@ export default function Positions() {
   };
 
   const remove = async (it) => {
-    if (!window.confirm(`Supprimer ${it.code} — ${it.title} ?`)) return;
+    if (!window.confirm(`Supprimer ${it.code} · ${it.title} ?`)) return;
     try { await api.delete(`/positions/${it.id}`); toast.success("Supprimé."); load(); }
     catch (err) { toast.error(formatApiError(err.response?.data?.detail)); }
   };

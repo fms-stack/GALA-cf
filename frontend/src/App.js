@@ -47,7 +47,7 @@ function App() {
         <I18nProvider>
         <BrowserRouter>
           <Routes>
-            {/* PUBLIC — dark editorial */}
+            {/* PUBLIC · dark editorial */}
             <Route element={<PublicLayout />}>
               <Route path="/" element={<Home />} />
               <Route path="/concept" element={<Concept />} />
@@ -67,7 +67,7 @@ function App() {
               <Route path="/contact" element={<Contact />} />
             </Route>
 
-            {/* BACK-OFFICE — light dense */}
+            {/* BACK-OFFICE · light dense */}
             <Route path="/login" element={<Login />} />
             <Route path="/portail" element={<MagicLink />} />
             <Route element={<Protected><AdminLayout /></Protected>}>

@@ -69,8 +69,7 @@ export default function Billetterie() {
                     data-testid={`ticket-${tk.id}`}
                     className="bg-noir p-10 text-left transition-all hover:bg-noir/40 group relative overflow-hidden"
                   >
-                    <div className="label-eyebrow text-or mb-6">{copy.eyebrow}</div>
-                    <div className="serif-display text-4xl mb-4 group-hover:text-or transition-colors">{tk.label}</div>
+                    <div className="serif-display text-4xl mb-6 group-hover:text-or transition-colors">{copy.eyebrow}</div>
                     <p className="text-sable text-sm leading-relaxed">{copy.body}</p>
                     <div className="mt-8 label-eyebrow opacity-60 group-hover:opacity-100 group-hover:text-or transition-all">{t("common.choose")}</div>
                   </motion.button>
@@ -91,8 +90,8 @@ export default function Billetterie() {
             >
               <button type="button" onClick={() => { setStep(1); setPkg(null); }} className="label-eyebrow text-or mb-10 opacity-70 hover:opacity-100" data-testid="bill-back">{t("billetterie.back")}</button>
               <div className="border-l-2 border-or pl-6 mb-10">
-                <div className="label-eyebrow text-or mb-2">{(typeof tierCopy(pkg.id) === "object" && tierCopy(pkg.id).eyebrow) || pkg.label}</div>
-                <div className="serif-display text-4xl">{pkg.label}</div>
+                <div className="label-eyebrow text-or mb-2">{t("billetterie.eyebrow")}</div>
+                <div className="serif-display text-4xl">{(typeof tierCopy(pkg.id) === "object" && tierCopy(pkg.id).eyebrow) || pkg.label}</div>
               </div>
               <div className="grid grid-cols-2 gap-6">
                 <Field wide label={t("common.name")}><input required value={name} onChange={(e) => setName(e.target.value)} className={inp} data-testid="bill-name" /></Field>

@@ -52,7 +52,7 @@ export default function Submissions() {
             <tr key={it.id} className="border-b border-sable/40 hover:bg-sable/20">
               {tab.cols.map((c) => (
                 <td key={c} className="py-3 px-4 text-sm">
-                  {c === "amount" ? `${it[c]} €` : (it[c] || "—")}
+                  {c === "amount" ? `${it[c]} €` : (it[c] || "·")}
                 </td>
               ))}
               <td className="py-3 px-4 text-xs opacity-60">{new Date(it.created_at).toLocaleDateString("fr-FR")}</td>

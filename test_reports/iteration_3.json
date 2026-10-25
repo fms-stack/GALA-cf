@@ -1,0 +1,52 @@
+{
+  "summary": "Iteration 3 tested the P0 security hardening, the contract state machine, the encrypted Bible, payment validation, 9-language i18n and mobile burgers. Backend: test_gala.py passes 19/19 on localhost. The new test file test_iter3_public.py, run against the public URL, passes 14/16. The 2 failures are a spoofed X-Forwarded-For header that gets around the brute-force lockout, and an invalid ObjectId on PATCH /contracts/{id}/status that returns 500. Every requested flow works: health/full gives 401 without auth, 403 for production and 200 for admin (encrypted=true). The contract workflow returns the expected 409 and 403 codes. Bible signed URL streams a PDF starting with %PDF and the second GET returns 403. Brute force returns 429 on the 6th try. Checkout: unknown package 400, quantity 99 422, valid session 200 with a Stripe URL. Mecenat with 100 EUR returns 422. Frontend: on the home page in ZH the hero and disciplines are translated. On /prix in RU all 7 cards and the CF-GAP-01 modal are translated. /billetterie shows 3 categories with no prices, and gradin gives 50.00 € (100.00 € for quantity 2). The RSVP form in ES works and the success screen shows ref #30CA1E. Admin login works, and a stale illegal transition shows the French 409 message as a toast. Mobile burgers (public and admin) work with no horizontal overflow. Some leftover untranslated strings were found (see ui_bugs).",
+  "backend_issues": {
+    "critical": [
+      {"endpoint": "POST /api/auth/login", "issue": "The brute-force identifier is built from the FIRST X-Forwarded-For entry, which the client can set freely. After 5 failures, a request with the header 'X-Forwarded-For: 1.2.3.4' returns 401 instead of 429, so the lockout can be bypassed without limit. login_attempts also shows several ingress IPs (10.231.129.113 and .124) for the same client, so the counters are split across ingress pods. Fix: key on the email only (or email plus the last trusted hop), or use the right-most untrusted XFF hop.", "priority": "HIGH"}
+    ],
+    "minor": [
+      {"endpoint": "PATCH /api/contracts/{cid}/status (and other ObjectId(cid) routes, e.g. /contracts/{cid}/pdf, /people, /positions)", "issue": "A non-ObjectId id such as 'not-an-id' raises bson InvalidId and returns 500. It should return 400 or 404."},
+      {"endpoint": "Bible SIGNED_TOKENS", "issue": "Signed tokens are kept in an in-process dict, so they are lost on restart or hot reload and do not work with several workers. Consider storing them in MongoDB with a TTL index."}
+    ]
+  },
+  "frontend_issues": {
+    "ui_bugs": [
+      {"component": "PublicLayout footer", "issue": "The footer is hardcoded in French in every language ('plus qu'un événement...', '12 Décembre 2026 · Paris', 'Propulsé par', 'Accès équipe ↗', 'Tous droits réservés'), even though footer.* keys exist in all 9 translation files.", "selector": "footer", "priority": "MEDIUM"},
+      {"component": "Countdown.jsx (Home, hero)", "issue": "The labels 'Jours' and 'Heures' are hardcoded in French and do not change with the language.", "selector": "components/Countdown.jsx lines 18 and 23", "priority": "MEDIUM"},
+      {"component": "Billetterie tickets", "issue": "The ticket titles 'Gradin face', 'Zone latérale (debout)' and 'Gradin premium' come from the backend tk.label and stay in French in EN/JA (step 1 and step 2). The eyebrow and body text are translated.", "selector": "[data-testid=ticket-gradin] .serif-display", "priority": "MEDIUM"},
+      {"component": "Candidatures / Casting selects", "issue": "The option labels show raw codes ('cuisine', 'litterature', 'cinema', 'chef', 'artiste'...) with no translation and no accents.", "selector": "[data-testid=app-discipline], [data-testid=cast-type]", "priority": "LOW"},
+      {"component": "FoundersCircle", "issue": "The founder bio ('Fondateur de l'écosystème CVLN...') stays in French in JA.", "selector": "/founders-circle", "priority": "LOW"},
+      {"component": "Admin Contracts", "issue": "After an action fails (409), the list is not refreshed: the row still shows VALIDÉ and 'Envoyer' while the server is already at 'sent'. Also, admin has no UI button for draft→juridique_review or refused→draft (the backend allows them), and the status action buttons have no data-testid.", "selector": "[data-testid=contracts-table] button", "priority": "LOW"}
+    ],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "Public header at 1920px in RU/ES", "issues": ["The longer nav labels make the header overflow: the 'Cook & Food' logo wraps onto 2–3 lines, '7 ПРЕМИЙ' / 'LOS 7 PREMIOS' wrap, and 'КАСТИНГ' runs into the CTA button. The language button gets pushed or is hidden behind the toast in ES. Reduce the tracking or gap, or collapse to the burger earlier for long languages."]}
+    ]
+  },
+  "test_report_links": ["/app/backend/tests/test_gala.py", "/app/backend/tests/test_iter3_public.py", "/app/test_reports/pytest/pytest_iter3.xml"],
+  "action_items": [
+    "Fix the brute-force lockout bypass via X-Forwarded-For in server.py login (use a trusted hop or key on the email)",
+    "Return 400/404 on an invalid ObjectId instead of 500 (contracts status, pdf and other ObjectId(cid) routes)",
+    "Use t('footer.*') in PublicLayout footer",
+    "Translate the Countdown labels Jours/Heures",
+    "Translate the billetterie ticket titles (map tk.id to translation keys instead of the backend label)",
+    "Translate the discipline and casting profile option labels",
+    "Fix the header overflow at desktop width for RU/ES/PT",
+    "Contracts page: reload the list on error, add data-testid to the status buttons, and add admin buttons for draft→juridique_review and refused→draft"
+  ],
+  "critical_code_review_comments": [
+    "server.py login: ip = x-forwarded-for.split(',')[0] can be spoofed by the client, so the lockout does nothing against a scripted attacker",
+    "phases.py: SIGNED_TOKENS is an in-memory dict, so tokens are not shared across workers and are lost on reload",
+    "phases.py update_status: ObjectId(cid) is called before validation; an InvalidId becomes a 500",
+    "The i18n key parity check is OK: all 8 languages have exactly the same keys as fr (verified with a node script)",
+    "Old test data from earlier iterations is still in the contracts collection ('Test Person' drafts, contracts with no person)"
+  ],
+  "updated_files": ["/app/backend/tests/test_iter3_public.py"],
+  "success_rate": {"backend": "87.5% (14/16 public, 19/19 local suite)", "frontend": "~85% (all requested flows pass; i18n has leftover strings)"},
+  "test_credentials": "From /app/memory/test_credentials.md: admin laurent@cvln.holding / GalaCVLN2026!, production / Prod-3yLQCJT19Tb739oU, juridique / Jur-Oy04JvtXuqFIPFNV. All work, and the old Prod-CF2026!Gala password is rejected.",
+  "seed_data_creation": "Test data (TEST_ people and contracts, RSVP test_iter3, the 'TEST U' payment transaction, bf-* login attempts) was cleaned up with pymongo.",
+  "retest_needed": true,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "Run pytest tests/test_gala.py (localhost) and tests/test_iter3_public.py (public URL). test_bruteforce_xff_bypass and test_contract_invalid_id are expected to fail until they are fixed. To check i18n, set localStorage cvln_lang and look for Latin-only lines in main. Public routes include /founders-circle and /cercle-restreint (not /founders or /cercle).",
+  "rca of the issue": "XFF bypass: login builds identifier = first XFF entry + email. Kubernetes ingress appends the real IP after any value the client sends, so the client controls the first entry. Reproduce with 5 bad logins, then one more with the header X-Forwarded-For: 1.2.3.4 → 401 instead of 429. Fix: limit by email (plus IP as a secondary key) or take the last hop."
+}

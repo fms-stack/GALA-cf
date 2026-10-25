@@ -106,9 +106,9 @@ export default function Contracts() {
                 <div className="serif-display text-lg">{c.template_title}</div>
                 <div className="text-xs opacity-60">{c.kind}</div>
               </td>
-              <td className="py-3 px-4 text-sm">{c.person?.full_name || "—"}</td>
-              <td className="py-3 px-4 text-sm opacity-70">{c.position_title || "—"}</td>
-              <td className="py-3 px-4 text-sm">{c.fee_amount ? `${Number(c.fee_amount).toLocaleString("fr-FR")} €` : "—"}</td>
+              <td className="py-3 px-4 text-sm">{c.person?.full_name || "·"}</td>
+              <td className="py-3 px-4 text-sm opacity-70">{c.position_title || "·"}</td>
+              <td className="py-3 px-4 text-sm">{c.fee_amount ? `${Number(c.fee_amount).toLocaleString("fr-FR")} €` : "·"}</td>
               <td className="py-3 px-4">
                 <span className={`px-2 py-1 text-xs uppercase tracking-wider ${STATUS_COLOR[c.status] || "bg-sable"}`}>{STATUS_LABEL[c.status] || c.status}</span>
               </td>
@@ -142,12 +142,12 @@ export default function Contracts() {
                 </select></div>
               <div><label className="label-eyebrow opacity-60 block mb-2">Affectation (poste + personne)</label>
                 <select value={form.assignment_id} onChange={(e) => setForm({ ...form, assignment_id: e.target.value, person_id: "" })} className="w-full border border-sable bg-white px-4 py-2">
-                  <option value="">— Aucune (utiliser personne directe ci-dessous) —</option>
+                  <option value="">· Aucune (utiliser personne directe ci-dessous) ·</option>
                   {assignments.map((a) => <option key={a.id} value={a.id}>{a.position?.code} · {a.position?.title} → {a.person?.full_name}</option>)}
                 </select></div>
               <div><label className="label-eyebrow opacity-60 block mb-2">Ou personne directe</label>
                 <select value={form.person_id} onChange={(e) => setForm({ ...form, person_id: e.target.value, assignment_id: "" })} disabled={!!form.assignment_id} className="w-full border border-sable bg-white px-4 py-2 disabled:opacity-50">
-                  <option value="">— Sélectionner —</option>
+                  <option value="">· Sélectionner ·</option>
                   {people.map((p) => <option key={p.id} value={p.id}>{p.full_name}</option>)}
                 </select></div>
               <div className="grid grid-cols-2 gap-4">

@@ -94,13 +94,11 @@ export default function PublicLayout() {
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12 py-16 grid md:grid-cols-3 gap-12">
           <div>
             <Logo size={36} />
-            <p className="mt-6 text-sable text-sm leading-relaxed max-w-xs">
-              Cook &amp; Food Gala — plus qu'un événement, une empreinte culturelle.
-            </p>
-            <p className="mt-6 label-eyebrow opacity-50">12 Décembre 2026 · Paris</p>
+            <p className="mt-6 text-sable text-sm leading-relaxed max-w-xs">{t("footer.baseline")}</p>
+            <p className="mt-6 label-eyebrow opacity-50">{t("footer.date_place")}</p>
           </div>
           <div>
-            <div className="label-eyebrow opacity-60 mb-4">Propulsé par</div>
+            <div className="label-eyebrow opacity-60 mb-4">{t("footer.powered_by_label")}</div>
             <ul className="space-y-2 text-sm">
               <li>CVLN Holding</li>
               <li>Factory Maker Studio</li>
@@ -108,16 +106,16 @@ export default function PublicLayout() {
             </ul>
           </div>
           <div>
-            <div className="label-eyebrow opacity-60 mb-4">Contact</div>
+            <div className="label-eyebrow opacity-60 mb-4">{t("footer.contact")}</div>
             <p className="text-sm">contact@cookandfood.gala</p>
-            <p className="text-sm mt-1 opacity-70">Martinique — France</p>
+            <p className="text-sm mt-1 opacity-70">Martinique · France</p>
             <Link to="/login" className="text-xs opacity-50 hover:opacity-100 mt-6 inline-block" data-testid="public-staff-login">
-              Accès équipe ↗
+              {t("footer.staff_access")}
             </Link>
           </div>
         </div>
         <div className="border-t border-ivoire/5 py-6 flex items-center justify-between px-6 lg:px-12 flex-wrap gap-4">
-          <div className="label-eyebrow opacity-40">© 2026 CVLN Holding · Tous droits réservés</div>
+          <div className="label-eyebrow opacity-40">© 2026 CVLN Holding · {t("footer.rights")}</div>
           <a
             href="https://www.factorymakerstudio.com"
             target="_blank"
