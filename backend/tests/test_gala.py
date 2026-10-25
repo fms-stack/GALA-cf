@@ -156,12 +156,18 @@ def test_full_legal_workflow(admin, juridique, production, contract):
 
 # ---------- Bible chiffrée + URL signée single-use ----------
 
-def test_bible_encrypted_on_disk():
-    enc = "/app/backend/storage/bible/GALA_COOK_FOOD_BIBLE.pdf.enc"
-    if not os.path.exists(enc):
+def test_bible_encrypted_at_rest():
+    # Stockée en GridFS (Mongo), chiffrée Fernet au repos
+    from pymongo import MongoClient
+    from dotenv import dotenv_values
+    env = dotenv_values("/app/backend/.env")
+    db = MongoClient(env["MONGO_URL"])[env["DB_NAME"]]
+    f = db["bible.files"].find_one({"filename": "GALA_COOK_FOOD_BIBLE.pdf.enc"})
+    if not f:
         pytest.skip("Bible non uploadée")
-    head = open(enc, "rb").read(5)
-    assert head != b"%PDF-"  # chiffré, pas un PDF en clair
+    chunk = db["bible.chunks"].find_one({"files_id": f["_id"], "n": 0})
+    assert bytes(chunk["data"])[:5] != b"%PDF-"  # chiffré, pas un PDF en clair
+    assert not os.path.exists("/app/backend/storage/bible/GALA_COOK_FOOD_BIBLE.pdf.enc")  # plus de stockage pod
 
 
 def test_bible_signed_url_single_use(juridique):

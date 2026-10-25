@@ -59,5 +59,13 @@ Portail Privé Cook & Food Gala 2026 — plateforme à 2 couches strictement sé
 - **Bug corrigé** : crash runtime `/admin` — imports `useState`, `List`, `X` manquants dans `AdminLayout.jsx`. Vérifié par screenshot desktop + mobile (login admin OK).
 - Constats clés à traiter (voir docs/14) : SEC-01 fallback JWT_SECRET, SEC-02 mots de passe seed en dur dans server.py, SEC-03 Bible non chiffrée locale, SEC-16 workflow contrats sans machine à états ; Resend/Yousign toujours MOCKÉS ; i18n partielle (nav/CTA/héro).
 
+## Durcissement P0 + i18n complète + machine à états + tests — DONE (2026-06, testé iterations 3 & 4)
+- Sécurité P0 : JWT_SECRET sans fallback ; mots de passe staff via env (rotés, plus rien en dur) ; /api/health/full admin-only ; dev_link gaté par EXPOSE_DEV_LINKS ; Bible chiffrée Fernet stockée en **GridFS (MongoDB)** — persistante en production, plus aucun fichier pod-local ; brute-force indexé sur email (bypass XFF fermé) ; handler global ObjectId invalide → 404.
+- Machine à états contrats serveur : draft→juridique_review→(approved|refused), approved→sent→signed→archived, refused→draft ; transition illégale → 409 même admin.
+- i18n COMPLÈTE 9 langues : /frontend/src/lib/translations/{fr,en,es,pt,ru,zh,ja,hi,ht}.js — 14 pages publiques, footer, countdown, billetterie, prix (+modales) traduits. Tous les « — » supprimés des textes visibles (remplacés par « · »).
+- Suite pytest versionnée : backend/tests/test_gala.py (19 tests) + test_iter3_public.py (16) + test_iter4_fixes.py (4) — tous verts.
+- Accès équipe : /login (lien footer « Accès équipe »), 3 rôles (admin/production/juridique, credentials dans memory/test_credentials.md) ; nommés via /portail (magic link).
+- Limitations connues avant production réelle : Resend/Yousign MOCKÉS ; Stripe en mode test ; tokens Bible in-memory (perdus au restart).
+
 ## Test credentials
-Voir `/app/memory/test_credentials.md` — admin Laurent, production, juridique.
+Voir `/app/memory/test_credentials.md` — admin Laurent, production, juridique (mots de passe rotés 2026-06).

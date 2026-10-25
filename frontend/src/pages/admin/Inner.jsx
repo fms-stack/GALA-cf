@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { api, formatApiError } from "@/lib/api";
 import { toast } from "sonner";
-import { Copy, Plus } from "@phosphor-icons/react";
+import { Copy, Plus, DownloadSimple } from "@phosphor-icons/react";
 
 const TABS = [
   { key: "cercle", label: "Cercle restreint", endpoint: "/cercle-restreint-inquiries", cols: ["full_name", "email", "sector", "recommended_by", "status"] },

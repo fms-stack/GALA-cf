@@ -1,0 +1,29 @@
+{
+  "summary": "Targeted retest of the 6 iteration_3 fixes plus a quick regression check. All 6 fixes pass. Backend: test_iter4_fixes.py 4/4, test_gala.py 19/19, test_iter3_public.py 16/16 (was 14/16). Frontend: footer and countdown are translated in FR, EN, JA and ZH. Billetterie step 1 shows the EN titles Stand/Side/Premium with no price, and step 2 shows the translated title with a 50.00 EUR total. No em-dash on home (scrolled), /prix (all 7 modals, FR and EN), /mecenat, the footer, or /api/public/prizes, /config and /event.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "/billetterie step 1 (desktop)", "issues": ["The grid uses lg:grid-cols-4 but only 3 tier cards render, so the 4th column is an empty grey cell (bg-ivoire/10 gap background) on the right. Use lg:grid-cols-3 (Billetterie.jsx ~l.57)."]},
+      {"screen": "Public header FR at 1920px", "issues": ["The FR nav is too wide: the logo 'Cook & Food' and 'GALA · 2026' wrap onto 3-4 lines, 'LES 7 PRIX' wraps onto 2 lines, and 'CASTING' touches the CONFIRMER button. EN fits on one line. Reduce the tracking/gap or add whitespace-nowrap."]},
+      {"screen": "Footer bottom bar", "issues": ["The copyright / 'POWERED BY Factory Maker Studio' bar is full-bleed (starts at x≈40px) while the footer columns use the centered container (x≈250px), so they are misaligned. The 'POWERED BY' badge also stays in English in every language. Minor, likely intentional branding."]}
+    ]
+  },
+  "test_report_links": ["/app/backend/tests/test_iter4_fixes.py", "/app/backend/tests/test_gala.py", "/app/backend/tests/test_iter3_public.py", "/app/test_reports/pytest/iter4.xml"],
+  "action_items": [
+    "Billetterie.jsx: change the tier grid to lg:grid-cols-3 to remove the empty 4th cell",
+    "PublicLayout header: stop the FR nav and logo wrapping at 1920px (whitespace-nowrap, smaller gap)",
+    "Optional: align the footer bottom bar with the container"
+  ],
+  "critical_code_review_comments": [
+    "The login brute-force lock is now keyed on email only. This is correct for the bypass, but anyone can lock out a known staff email (including the admin) for 15 minutes with 5 bad attempts. Consider an additional ip:email counter or a CAPTCHA, or an admin unlock.",
+    "test_credentials.md still says 'par ip:email'. Update it to 'par email'."
+  ],
+  "updated_files": ["/app/backend/tests/test_iter4_fixes.py"],
+  "success_rate": {"backend": "100%", "frontend": "100% (6/6 fixes verified); 3 minor design issues"},
+  "seed_data_creation": "None. The fake brute-force email login_attempts row is cleaned up in the test finally block.",
+  "retest_needed": false,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "Iteration 4 verified: email-keyed brute-force lock (XFF bypass closed), InvalidId returns 404, footer/countdown/billetterie i18n, no em-dash on public pages or APIs. Language is set via localStorage 'cvln_lang' or the [data-testid=lang-current] then lang-option-{code} switcher. Prize cards are [data-testid=prize-CF-GAP-0X] and the modal is [data-testid=prize-detail]; scroll the card into view before clicking (GSAP stagger)."
+}

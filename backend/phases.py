@@ -425,14 +425,32 @@ def create_phase4_router(db, get_current_user, require_role, audit, doc_out):
     # ============================================================================
     # PHASE 5 · Bible PDF
     # ============================================================================
-    BIBLE_DIR = Path("/app/backend/storage/bible")
-    BIBLE_DIR.mkdir(parents=True, exist_ok=True)
-    BIBLE_FILE = BIBLE_DIR / "GALA_COOK_FOOD_BIBLE.pdf.enc"   # chiffrée au repos (Fernet/AES)
-    _LEGACY_PLAIN = BIBLE_DIR / "GALA_COOK_FOOD_BIBLE.pdf"
-    # Migration : chiffre l'ancien PDF en clair puis le supprime
-    if _LEGACY_PLAIN.exists() and not BIBLE_FILE.exists():
-        BIBLE_FILE.write_bytes(_BIBLE_FERNET.encrypt(_LEGACY_PLAIN.read_bytes()))
-        _LEGACY_PLAIN.unlink()
+    # Stockage GridFS (MongoDB) : persistant en production, chiffré Fernet au repos
+    from motor.motor_asyncio import AsyncIOMotorGridFSBucket
+    _bible_fs = AsyncIOMotorGridFSBucket(db, bucket_name="bible")
+    _BIBLE_NAME = "GALA_COOK_FOOD_BIBLE.pdf.enc"
+
+    async def _bible_doc():
+        return await db["bible.files"].find_one({"filename": _BIBLE_NAME}, sort=[("uploadDate", -1)])
+
+    async def _bible_store(encrypted: bytes):
+        async for old in db["bible.files"].find({"filename": _BIBLE_NAME}):
+            await _bible_fs.delete(old["_id"])
+        await _bible_fs.upload_from_stream(_BIBLE_NAME, encrypted)
+
+    async def _bible_migrate_legacy():
+        # Migre un éventuel fichier local (ancien stockage pod) vers GridFS
+        if await _bible_doc():
+            return
+        legacy_dir = Path("/app/backend/storage/bible")
+        for name, already_enc in ((_BIBLE_NAME, True), ("GALA_COOK_FOOD_BIBLE.pdf", False)):
+            p = legacy_dir / name
+            if p.exists():
+                data = p.read_bytes()
+                await _bible_store(data if already_enc else _BIBLE_FERNET.encrypt(data))
+                p.unlink()
+                return
+
     SIGNED_TOKENS = {}  # token -> {user_id, expires_at}
 
     @router.post("/bible/upload")
@@ -440,7 +458,7 @@ def create_phase4_router(db, get_current_user, require_role, audit, doc_out):
         if not file.filename.lower().endswith(".pdf"):
             raise HTTPException(status_code=400, detail="Fichier PDF requis")
         content = await file.read()
-        BIBLE_FILE.write_bytes(_BIBLE_FERNET.encrypt(content))
+        await _bible_store(_BIBLE_FERNET.encrypt(content))
         await db.bible_meta.update_one(
             {"_id": "current"},
             {"$set": {
@@ -456,9 +474,10 @@ def create_phase4_router(db, get_current_user, require_role, audit, doc_out):
 
     @router.get("/bible/meta")
     async def bible_meta(user: dict = Depends(get_current_user)):
+        await _bible_migrate_legacy()
         m = await db.bible_meta.find_one({"_id": "current"})
         return {
-            "exists": BIBLE_FILE.exists(),
+            "exists": (await _bible_doc()) is not None,
             "meta": (doc_out(m) if m else None),
         }
 
@@ -476,7 +495,8 @@ def create_phase4_router(db, get_current_user, require_role, audit, doc_out):
                 raise HTTPException(status_code=403, detail="Accès Bible réservé après signature du NDA")
         elif role not in {"admin", "juridique", "production"}:
             raise HTTPException(status_code=403, detail="Accès refusé")
-        if not BIBLE_FILE.exists():
+        await _bible_migrate_legacy()
+        if not await _bible_doc():
             raise HTTPException(status_code=404, detail="Bible non uploadée")
         token = secrets.token_urlsafe(24)
         SIGNED_TOKENS[token] = {
@@ -496,7 +516,8 @@ def create_phase4_router(db, get_current_user, require_role, audit, doc_out):
         rec = SIGNED_TOKENS.get(token)
         if not rec or rec["expires_at"] < datetime.now(timezone.utc):
             raise HTTPException(status_code=403, detail="Lien expiré ou invalide")
-        if not BIBLE_FILE.exists():
+        fdoc = await _bible_doc()
+        if not fdoc:
             raise HTTPException(status_code=404, detail="Bible introuvable")
         # Single-use: pop the token
         SIGNED_TOKENS.pop(token, None)
@@ -505,8 +526,10 @@ def create_phase4_router(db, get_current_user, require_role, audit, doc_out):
             "at": datetime.now(timezone.utc).isoformat(),
             "action": "stream_consumed",
         })
+        stream = await _bible_fs.open_download_stream(fdoc["_id"])
+        encrypted = await stream.read()
         return StreamingResponse(
-            io.BytesIO(_BIBLE_FERNET.decrypt(BIBLE_FILE.read_bytes())),
+            io.BytesIO(_BIBLE_FERNET.decrypt(encrypted)),
             media_type="application/pdf",
             headers={"Content-Disposition": 'inline; filename="GALA_COOK_FOOD_BIBLE.pdf"'},
         )
