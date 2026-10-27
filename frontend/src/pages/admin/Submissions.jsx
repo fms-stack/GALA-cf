@@ -23,7 +23,7 @@ export default function Submissions() {
   }, [tab]);
 
   return (
-    <div className="p-10" data-testid="admin-submissions">
+    <div className="p-5 md:p-10" data-testid="admin-submissions">
       <div className="mb-10">
         <p className="label-eyebrow opacity-60">Espaces publics</p>
         <h1 className="serif-display text-5xl mt-2">Réceptions.</h1>
@@ -40,7 +40,8 @@ export default function Submissions() {
           </button>
         ))}
       </div>
-      <table className="w-full border border-sable bg-white/40" data-testid={`table-${tab.key}`}>
+      <div className="overflow-x-auto">
+        <table className="w-full min-w-[640px] border border-sable bg-white/40" data-testid={`table-${tab.key}`}>
         <thead>
           <tr className="border-b border-sable label-eyebrow opacity-60 text-left">
             {tab.cols.map((c) => <th key={c} className="py-3 px-4">{HEADERS[c] || c}</th>)}
@@ -61,6 +62,7 @@ export default function Submissions() {
           {items.length === 0 && <tr><td colSpan={tab.cols.length + 1} className="py-10 text-center opacity-60">Aucune entrée.</td></tr>}
         </tbody>
       </table>
+      </div>
     </div>
   );
 }

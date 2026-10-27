@@ -18,7 +18,7 @@ export default function Invitations() {
     const q = f === "all" ? "" : `?status=${f}`;
     api.get(`/invitations${q}`).then((r) => setItems(r.data)).catch(() => {});
   };
-  useEffect(() => { load(filter); }, [filter]);
+  useEffect(() => { load(filter); }, [filter]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const update = async (id, status) => {
     try {
@@ -31,7 +31,7 @@ export default function Invitations() {
   const totalSeats = items.reduce((s, it) => s + (it.seats || 0), 0);
 
   return (
-    <div className="p-10" data-testid="admin-invitations">
+    <div className="p-5 md:p-10" data-testid="admin-invitations">
       <div className="flex items-center justify-between mb-10">
         <div>
           <p className="label-eyebrow opacity-60">RSVP VIP cfceremony.com</p>
@@ -56,7 +56,9 @@ export default function Invitations() {
         ))}
       </div>
 
-      <table className="w-full border border-sable bg-white/40" data-testid="invitations-table">
+      <div className="overflow-x-auto">
+
+        <table className="w-full min-w-[640px] border border-sable bg-white/40" data-testid="invitations-table">
         <thead>
           <tr className="border-b border-sable label-eyebrow opacity-60 text-left">
             <th className="py-3 px-4">Nom</th>
@@ -94,6 +96,8 @@ export default function Invitations() {
           {items.length === 0 && <tr><td colSpan={6} className="py-10 text-center opacity-60">Aucune invitation pour ce filtre.</td></tr>}
         </tbody>
       </table>
+
+      </div>
 
       {items.length > 0 && items[0]?.message && (
         <p className="mt-6 text-xs opacity-50 italic">Astuce : cliquer sur le statut pour valider, refuser ou mettre en liste d'attente.</p>

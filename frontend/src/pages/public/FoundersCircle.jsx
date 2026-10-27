@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { api } from "@/lib/api";
 import { useI18n } from "@/lib/i18n";
 
@@ -40,6 +41,7 @@ export default function FoundersCircle() {
           <p className="label-eyebrow text-or mb-4">{t("founders.council_label")}</p>
           <p className="serif-display text-2xl mb-2">+596 696 78 89 86</p>
           <p className="text-sable text-sm italic opacity-70">{t("founders.council_note")}</p>
+          <Link to="/cercle-restreint" data-testid="founders-cta" className="inline-block mt-8 bg-or text-noir px-8 py-4 label-eyebrow hover:bg-ivoire transition-colors">{t("cta.join_circle")} →</Link>
         </div>
       </div>
     </div>

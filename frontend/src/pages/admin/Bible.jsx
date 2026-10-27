@@ -19,7 +19,7 @@ export default function Bible() {
       setLogs(l.data);
     }
   };
-  useEffect(() => { load(); }, [user]);
+  useEffect(() => { load(); }, [user]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onUpload = async (e) => {
     const f = e.target.files?.[0];
@@ -49,7 +49,7 @@ export default function Bible() {
   };
 
   return (
-    <div className="p-10" data-testid="admin-bible">
+    <div className="p-5 md:p-10" data-testid="admin-bible">
       <div className="mb-10">
         <p className="label-eyebrow opacity-60">Phase 5 · Bible CVLN</p>
         <h1 className="serif-display text-5xl mt-2">Bible PDF.</h1>

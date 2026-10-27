@@ -1,9 +1,9 @@
 const zh = {
   nav: { home: "首页", concept: "概念", concours: "大赛", prix: "七项大奖", billetterie: "门票", cercle: "核心圈", mecenat: "赞助", partenaires: "合作伙伴", soumettre: "提交", casting: "选角" },
-  cta: { confirm: "确认", reserve: "预订席位", join_circle: "加入核心圈", become_patron: "成为赞助人", confirm_presence: "确认出席", public_billet: "公众门票", discover: "探索" },
+  cta: { confirm: "确认", reserve: "预订席位", join_circle: "加入核心圈", become_patron: "成为赞助人", confirm_presence: "确认出席", public_billet: "公众门票", discover: "探索", guest_confirm: "受邀嘉宾 · 确认出席" },
   hero: { chapter: "第一章 · 2027年4月10日 星期六 · 巴黎", tagline: "沉浸式美食与文化体验 · 烹饪、文化、音乐、艺术、时尚、电影与文学。", note: "不仅是活动，更是文化印记。" },
-  footer: { rights: "版权所有", powered: "Powered by", staff_access: "团队入口 ↗", baseline: "Cook & Food Gala · 不仅是活动，更是文化印记。", date_place: "2027年4月10日 · 巴黎", powered_by_label: "技术支持", contact: "联系方式" },
-  invitation: { title: "餐桌上的 120 个席位。", body: "邀请函将于 2026 年 9 月发出。\n仅限推荐。", manifest: "表达兴趣 · 保密", signal_ok: "信号已收到，负责团队将与您联系。" },
+  footer: { rights: "版权所有", powered: "Powered by", staff_access: "团队入口 ↗", baseline: "Cook & Food Gala · 不仅是活动，更是文化印记。", date_place: "2027年4月10日 · 巴黎", powered_by_label: "技术支持", contact: "联系方式", organisation: "主办机构", contact_page: "联系我们", join_circle: "加入圈层" },
+  invitation: { title: "餐桌上的 120 个席位。", body: "邀请函将以个人名义发出。\n仅限推荐。", manifest: "表达兴趣 · 保密", signal_ok: "信号已收到，负责团队将与您联系。" },
   common: { days: "天", hours: "小时", name: "姓名 *", email: "电子邮箱 *", phone: "电话", message: "留言", optional: "（可选）", sending: "发送中…", thanks: "谢谢。", ref: "参考编号", discover: "探索 →", choose: "选择 →" },
   home: {
     founding_label: "创始宣言", founding: "「这场盛典奠定全球非洲侨民的文化标准。」",
@@ -40,7 +40,7 @@ const zh = {
   prix: {
     eyebrow: "Cook & Food Awards", title: "七项CF-GAP大奖。",
     intro: "七大领域，七项加冕。一场被构思为创始之举的典礼 · 每个奖项都为全球非洲侨民确立新的标准。",
-    note: "* 提名、评审团与获奖者将于2026年11月公布。CIP（文化影响协议）· 标准注册中。",
+    note: "* 提名名单将于2027年1月公布 · 获奖者将于2027年4月10日揭晓。CIP（文化影响协议）· 标准注册中。",
   },
   prizes: {
     "CF-GAP-01": { title: "侨民美食食谱奖", discipline: "非裔烹饪卓越", intro: "一道讲述土地、传递记忆、确立标准的食谱。", body: "授予以其创作定义当代非裔美食身份的主厨或美食作家。超越技艺，此奖表彰将记忆化为手势、手势化为菜肴、菜肴化为叙事的能力。" },
@@ -69,7 +69,7 @@ const zh = {
   founders: {
     eyebrow: "Founders' Circle", title: "第一章|的东道主。",
     intro: "核心圈通过推荐组建。每位东道主开启一扇新门。名单将由核心圈决定，逐步在此揭晓。",
-    empty_label: "筹建中", empty_title: "首批名单将于2026年9月揭晓。",
+    empty_label: "筹建中", empty_title: "首批名单即将揭晓。",
     empty_note: "如需推荐东道主，请直接联系Laurent · circle@cookandfood.gala",
     council_label: "专属通道", council_note: "WhatsApp Business · circle@cookandfood.gala · 24小时内回复", host: "东道主",
   },
@@ -98,6 +98,7 @@ const zh = {
     pay: "支付并预订 →", redirect: "正在跳转Stripe…", secure: "通过Stripe Checkout安全支付。即将跳转。",
     s_paid_label: "支付已确认", s_paid_title: "欢迎。", s_paid_body: "您的席位已预订。确认邮件即将送达。",
     s_expired: "会话已过期。", s_retry: "重试 →", s_wait_label: "验证中…", s_wait_title: "支付处理中。", s_attempt: "尝试",
+    s_slow: "付款确认所需时间比预期更长。如果付款成功，确认信息将通过电子邮件发送给您；否则不会扣款。",
   },
   rsvp: {
     eyebrow: "RSVP · 数字", title: "确认|我的出席。",
@@ -112,12 +113,14 @@ const zh = {
     intro: "一道食谱、一场演出、一件作品、一篇文字。若您的提案与盛典的基因共鸣，我们将与您联系。",
     discipline: "领域 *", project: "项目名称 *", desc: "描述 *", portfolio: "作品集链接",
     submit: "发送提案 →", s_label: "提案已收到", s_body: "艺术总监审阅后将与您联系。", sent_toast: "您的提案已送达。",
+    disciplines: {cuisine: "烹饪", musique: "音乐", art: "艺术", mode: "时尚", cinema: "电影", litterature: "文学", culture: "文化"},
   },
   casting: {
     eyebrow: "登上舞台", title: "选角。",
     intro: "主厨、艺术家、表演者、司仪。真正与众不同的人才不在名录之中。",
     profile: "类型 *", bio: "简短介绍 *", demo: "演示 / 作品集链接",
     submit: "申请 →", s_label: "选角", s_title: "已收到。", s_body: "如您的资料符合，选角总监将与您联系。", sent_toast: "申请已登记。",
+    types: {chef: "主厨", artiste: "艺术家", performer: "表演者", mc: "主持人"},
   },
   sponsoring: {
     eyebrow: "成为合作伙伴", title: "将您的品牌|铭刻于基石。",
@@ -141,12 +144,12 @@ const zh = {
     eyebrow: "赞助", title: "支持|这项基业。",
     intro: "Cook & Food Gala 资助七项CF-GAP大奖、TV拍摄、Bible计划及长期文化基础设施。每笔捐赠都在支持一个新生的标准。",
     fiscal_label: "税务框架",
-    fiscal_body: "可应要求开具税务收据。捐赠符合法国税法第200条及238 bis条规定，通过我们的公益合作机构办理。",
+    fiscal_body: "您的捐赠适用的税务安排（收据、抵扣方式）可应要求由我们的团队说明。",
     council_label: "专属通道", council_note: "mecenat@cookandfood.gala · 24小时内回复",
     amount_label: "建议金额", custom_ph: "或输入金额…", purpose: "用途",
     purposes: { general: "综合支持", prizes: "七项CF-GAP大奖基金", casting: "青年才俊选拔", series: "TV剧集制作", bible: "Bible与档案计划" },
     org: "机构（可选）", submit: "捐赠 →", stripe: "Stripe…",
-    secure: "Stripe安全支付 · 7日内开具税务收据",
+    secure: "通过 Stripe 安全支付",
     s_label: "捐赠已确认", s_title: "万分感谢。", s_body: "您的支持滋养着这项基业。收据及署名 Cook & Food Gala by Factory Maker Studio & CVLN Group 的信函即将送达。",
   },
 };

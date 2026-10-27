@@ -35,7 +35,7 @@ export default function Positions() {
   };
 
   return (
-    <div className="p-10" data-testid="admin-positions">
+    <div className="p-5 md:p-10" data-testid="admin-positions">
       <div className="flex items-center justify-between mb-10">
         <div>
           <p className="label-eyebrow opacity-60">Référentiel</p>
@@ -46,7 +46,9 @@ export default function Positions() {
         </button>
       </div>
 
-      <table className="w-full border border-sable bg-white/40" data-testid="positions-table">
+      <div className="overflow-x-auto">
+
+        <table className="w-full min-w-[640px] border border-sable bg-white/40" data-testid="positions-table">
         <thead>
           <tr className="border-b border-sable label-eyebrow opacity-60 text-left">
             <th className="py-3 px-4 w-32">Code</th>
@@ -70,6 +72,8 @@ export default function Positions() {
           {items.length === 0 && <tr><td colSpan={4} className="py-10 text-center opacity-60">Aucun poste.</td></tr>}
         </tbody>
       </table>
+
+      </div>
 
       {open && (
         <div className="fixed inset-0 bg-noir/50 z-50 flex items-center justify-center p-6" onClick={() => setOpen(false)}>

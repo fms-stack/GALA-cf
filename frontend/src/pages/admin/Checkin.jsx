@@ -75,7 +75,7 @@ export default function Checkin() {
   useEffect(() => () => stopCamera(), []);
 
   return (
-    <div className="p-6 lg:p-10 max-w-2xl" data-testid="admin-checkin">
+    <div className="p-5 md:p-10 max-w-2xl" data-testid="admin-checkin">
       <div className="mb-8">
         <p className="label-eyebrow opacity-60">Jour J · accueil public</p>
         <h1 className="serif-display text-5xl mt-2">Contrôle des entrées.</h1>

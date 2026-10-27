@@ -72,7 +72,8 @@ export default function Billetterie() {
                     data-testid={`ticket-${tk.id}`}
                     className="bg-noir p-10 text-left transition-all hover:bg-noir/40 group relative overflow-hidden disabled:opacity-40 disabled:cursor-not-allowed"
                   >
-                    <div className="serif-display text-4xl mb-6 group-hover:text-or transition-colors">{copy.eyebrow}</div>
+                    <div className="serif-display text-4xl mb-2 group-hover:text-or transition-colors">{copy.eyebrow}</div>
+                    <div className="serif-display text-3xl text-or mb-6" data-testid={`ticket-${tk.id}-price`}>{tk.amount} €</div>
                     <p className="text-sable text-sm leading-relaxed">{copy.body}</p>
                     {unavailable ? (
                       <div className="mt-8 label-eyebrow text-or" data-testid={`ticket-${tk.id}-unavailable`}>{tk.sold_out ? t("billetterie.sold_out") : t("billetterie.closed")}</div>
@@ -187,7 +188,11 @@ export function BilletterieSuccess() {
         ) : status.status === "expired" ? (
           <><h1 className="serif-display text-5xl mb-6">{t("billetterie.s_expired")}</h1><button onClick={() => navigate("/billetterie")} className="border border-or text-or px-6 py-3 label-eyebrow">{t("billetterie.s_retry")}</button></>
         ) : (
-          <><p className="label-eyebrow text-or mb-6">{t("billetterie.s_wait_label")}</p><h1 className="serif-display text-5xl mb-6">{t("billetterie.s_wait_title")}</h1><p className="text-sable">{t("billetterie.s_attempt")} {attempts}/8…</p></>
+          attempts >= 8 ? (
+            <><h1 className="serif-display text-4xl mb-6">{t("billetterie.s_wait_title")}</h1><p className="text-sable">{t("billetterie.s_slow")}</p></>
+          ) : (
+            <><p className="label-eyebrow text-or mb-6">{t("billetterie.s_wait_label")}</p><h1 className="serif-display text-5xl mb-6">{t("billetterie.s_wait_title")}</h1><p className="text-sable">{t("billetterie.s_attempt")} {attempts}/8…</p></>
+          )
         )}
       </div>
     </div>

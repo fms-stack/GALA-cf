@@ -67,7 +67,7 @@ export default function Concours() {
   const TABS = [["chefs", `Chefs (${chefs.length})`], ["jury", `Jury (${jurors.length})`], ["notation", "Notation"], ["classement", "Classement"]];
 
   return (
-    <div className="p-6 lg:p-10" data-testid="admin-concours">
+    <div className="p-5 md:p-10" data-testid="admin-concours">
       <div className="mb-8">
         <p className="label-eyebrow opacity-60">Concours · Héritage & Création</p>
         <h1 className="serif-display text-5xl mt-2">Le duel des chefs.</h1>
@@ -94,7 +94,8 @@ export default function Concours() {
             <textarea placeholder="Biographie (visible publiquement pour les finalistes)" rows={2} value={chefForm.bio} onChange={(e) => setChefForm({ ...chefForm, bio: e.target.value })} className={`${inp} md:col-span-2`} />
             <button type="submit" className={btn}>Ajouter le chef</button>
           </form>
-          <table className="w-full border border-sable bg-white/40" data-testid="table-chefs">
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[640px] border border-sable bg-white/40" data-testid="table-chefs">
             <thead><tr className="border-b border-sable label-eyebrow opacity-60 text-left">
               <th className="py-3 px-4">Chef</th><th className="py-3 px-4">Territoire</th><th className="py-3 px-4">Spécialité</th><th className="py-3 px-4">Statut</th><th className="py-3 px-4">Droit à l'image</th>{isAdmin && <th />}
             </tr></thead>
@@ -121,6 +122,7 @@ export default function Concours() {
               {chefs.length === 0 && <tr><td colSpan={6} className="py-10 text-center opacity-60">Aucun chef. Les candidatures « chef » arrivent dans Réceptions publiques · Casting.</td></tr>}
             </tbody>
           </table>
+          </div>
           <p className="text-xs opacity-60 mt-3">Seuls les finalistes et lauréats dont l'autorisation de droit à l'image est signée apparaissent sur la page publique /concours (sans leur e-mail). Aucun chef ne doit être filmé avant signature du contrat « Chef Invité + CIP » (menu Contrats & NDA).</p>
         </>
       )}
@@ -179,7 +181,8 @@ export default function Concours() {
             <span className="text-sm">Vote du public : <b>{settings.vote_open ? "ouvert" : "fermé"}</b> · {board.votes_total} voix</span>
             {isAdmin && <button onClick={toggleVote} className={btn} data-testid="vote-toggle">{settings.vote_open ? "Fermer le vote" : "Ouvrir le vote"}</button>}
           </div>
-          <table className="w-full border border-sable bg-white/40" data-testid="table-leaderboard">
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[640px] border border-sable bg-white/40" data-testid="table-leaderboard">
             <thead><tr className="border-b border-sable label-eyebrow opacity-60 text-left">
               <th className="py-3 px-4">#</th><th className="py-3 px-4">Chef</th>
               {CRITERIA.map(([k, l]) => <th key={k} className="py-3 px-4">{l}</th>)}
@@ -198,6 +201,7 @@ export default function Concours() {
               ))}
             </tbody>
           </table>
+          </div>
         </>
       )}
     </div>

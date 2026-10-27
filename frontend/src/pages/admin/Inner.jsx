@@ -22,7 +22,7 @@ export default function Inner() {
   const [sponsor, setSponsor] = useState("");
 
   const load = () => api.get(tab.endpoint).then((r) => setItems(r.data)).catch(() => setItems([]));
-  useEffect(() => { load(); }, [tab]);
+  useEffect(() => { load(); }, [tab]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const issueToken = async () => {
     try {
@@ -57,7 +57,7 @@ export default function Inner() {
   };
 
   return (
-    <div className="p-10" data-testid="admin-inner">
+    <div className="p-5 md:p-10" data-testid="admin-inner">
       <div className="mb-10">
         <p className="label-eyebrow opacity-60">Tiers premium</p>
         <h1 className="serif-display text-5xl mt-2">Cercle, Mécénat &amp; Cooptation.</h1>
@@ -86,7 +86,9 @@ export default function Inner() {
         </div>
       )}
 
-      <table className="w-full border border-sable bg-white/40" data-testid={`inner-table-${tab.key}`}>
+      <div className="overflow-x-auto">
+
+        <table className="w-full min-w-[640px] border border-sable bg-white/40" data-testid={`inner-table-${tab.key}`}>
         <thead>
           <tr className="border-b border-sable label-eyebrow opacity-60 text-left">
             {tab.cols.map((c) => <th key={c} className="py-3 px-4">{HEADERS[c] || c}</th>)}
@@ -119,6 +121,8 @@ export default function Inner() {
           {items.length === 0 && <tr><td colSpan={tab.cols.length + 2} className="py-10 text-center opacity-60">Aucune entrée.</td></tr>}
         </tbody>
       </table>
+
+      </div>
     </div>
   );
 }

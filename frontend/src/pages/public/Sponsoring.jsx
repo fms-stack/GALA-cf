@@ -79,13 +79,13 @@ export default function Sponsoring() {
           ))}
         </div>
         <form onSubmit={submit} className="grid md:grid-cols-2 gap-6 max-w-3xl">
-          <input type="text" value={form.honeypot} onChange={onChange("honeypot")} className="hidden" tabIndex={-1} />
+          <input type="text" value={form.honeypot} onChange={onChange("honeypot")} className="hidden" tabIndex={-1} autoComplete="off" />
           <Field label={t("sponsoring.company")}><input required value={form.company_name} onChange={onChange("company_name")} className={inp} data-testid="spon-company" /></Field>
           <Field label={t("sponsoring.contact_name")}><input required value={form.contact_name} onChange={onChange("contact_name")} className={inp} data-testid="spon-contact" /></Field>
           <Field label={t("common.email")}><input required type="email" value={form.email} onChange={onChange("email")} className={inp} data-testid="spon-email" /></Field>
           <Field label={t("common.phone")}><input value={form.phone} onChange={onChange("phone")} className={inp} /></Field>
           <Field label={t("sponsoring.sector")}><input value={form.sector} onChange={onChange("sector")} className={inp} /></Field>
-          <Field label={t("sponsoring.tier")}><div className="py-3 capitalize text-or">{form.tier_interest}</div></Field>
+          <Field label={t("sponsoring.tier")}><div className="py-3 text-or">{(tiers.find((x) => x.id === form.tier_interest) || {}).label || form.tier_interest}</div></Field>
           <div className="md:col-span-2"><Field label={t("sponsoring.msg")}><textarea required rows={4} value={form.message} onChange={onChange("message")} className={`${inp} resize-none`} data-testid="spon-msg" /></Field></div>
           <button type="submit" disabled={loading} data-testid="spon-submit" className="md:col-span-2 bg-or text-noir py-4 label-eyebrow hover:bg-ivoire transition-colors disabled:opacity-60">{loading ? t("common.sending") : t("sponsoring.submit")}</button>
         </form>

@@ -55,7 +55,7 @@ export default function Casting() {
           <Field label={t("common.name")}><input required value={form.full_name} onChange={onChange("full_name")} className={inp} data-testid="cast-name" /></Field>
           <Field label={t("common.email")}><input required type="email" value={form.email} onChange={onChange("email")} className={inp} data-testid="cast-email" /></Field>
           <Field label={t("common.phone")}><input value={form.phone} onChange={onChange("phone")} className={inp} data-testid="cast-phone" /></Field>
-          <Field label={t("casting.profile")}><select value={form.profile_type} onChange={onChange("profile_type")} className={inp} data-testid="cast-type">{TYPES.map((ty) => <option key={ty} value={ty}>{ty}</option>)}</select></Field>
+          <Field label={t("casting.profile")}><select value={form.profile_type} onChange={onChange("profile_type")} className={inp} data-testid="cast-type">{TYPES.map((ty) => <option key={ty} value={ty}>{t(`casting.types.${ty}`)}</option>)}</select></Field>
           <Field label={t("casting.bio")}><textarea required rows={4} value={form.bio} onChange={onChange("bio")} className={`${inp} resize-none`} data-testid="cast-bio" /></Field>
           <Field label={t("casting.demo")}><input value={form.demo_url} onChange={onChange("demo_url")} className={inp} placeholder="https://…" data-testid="cast-demo" /></Field>
           <button type="submit" disabled={loading} data-testid="cast-submit" className="w-full bg-or text-noir py-4 label-eyebrow hover:bg-ivoire transition-colors disabled:opacity-60">{loading ? t("common.sending") : t("casting.submit")}</button>

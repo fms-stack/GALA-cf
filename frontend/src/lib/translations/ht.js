@@ -1,9 +1,9 @@
 const ht = {
   nav: { home: "Akèy", concept: "Konsèp", concours: "Konkou", prix: "7 Pri yo", billetterie: "Tikè", cercle: "Sèk la", mecenat: "Mesena", partenaires: "Patnè", soumettre: "Soumèt", casting: "Kasting" },
-  cta: { confirm: "Konfime", reserve: "Rezève yon plas", join_circle: "Antre nan Sèk la", become_patron: "Vin mesèn", confirm_presence: "Konfime prezans mwen", public_billet: "Tikè piblik", discover: "Dekouvri" },
+  cta: { confirm: "Konfime", reserve: "Rezève yon plas", join_circle: "Antre nan Sèk la", become_patron: "Vin mesèn", confirm_presence: "Konfime prezans mwen", public_billet: "Tikè piblik", discover: "Dekouvri", guest_confirm: "Envite · konfime prezans mwen" },
   hero: { chapter: "Chapit I · Samdi 10 Avril 2027 · Pari", tagline: "Yon eksperyans gastwonomik ak kiltirèl imèsif · Kwizin, Kilti, Mizik, Atizay, Mòd, Sinema ak Literati.", note: "Plis pase yon evènman, yon mak kiltirèl." },
-  footer: { rights: "Tout dwa rezève", powered: "Powered by", staff_access: "Aksè ekip ↗", baseline: "Cook & Food Gala · plis pase yon evènman, yon mak kiltirèl.", date_place: "10 Avril 2027 · Pari", powered_by_label: "Pouse pa", contact: "Kontak" },
-  invitation: { title: "120 plas sou tab la.", body: "Envitasyon yo ap soti an septanm 2026.\nSèlman sou kooptasyon.", manifest: "Montre enterè w · konfidansyèl", signal_ok: "Siyal la resevwa. Direksyon an ap tounen vin jwenn ou." },
+  footer: { rights: "Tout dwa rezève", powered: "Powered by", staff_access: "Aksè ekip ↗", baseline: "Cook & Food Gala · plis pase yon evènman, yon mak kiltirèl.", date_place: "10 Avril 2027 · Pari", powered_by_label: "Pouse pa", contact: "Kontak", organisation: "Òganizasyon an", contact_page: "Ekri nou", join_circle: "Antre nan Sèk la" },
+  invitation: { title: "120 plas sou tab la.", body: "Envitasyon yo voye pèsonèlman.\nSèlman sou kooptasyon.", manifest: "Montre enterè w · konfidansyèl", signal_ok: "Siyal la resevwa. Direksyon an ap tounen vin jwenn ou." },
   common: { days: "Jou", hours: "Èdtan", name: "Non konplè *", email: "Imèl *", phone: "Telefòn", message: "Mesaj", optional: "(si w vle)", sending: "Ap voye…", thanks: "Mèsi.", ref: "Referans", discover: "Dekouvri →", choose: "Chwazi →" },
   home: {
     founding_label: "Fraz fondatè", founding: "« Gala sa a tabli estanda kiltirèl dyaspora afro mondyal la. »",
@@ -40,7 +40,7 @@ const ht = {
   prix: {
     eyebrow: "Cook & Food Awards", title: "Sèt pri CF-GAP yo.",
     intro: "Sèt disiplin, sèt konsekrasyon. Yon seremoni ki panse tankou yon zak fondasyon · chak pri make enstalasyon yon nouvo estanda pou dyaspora afro mondyal la.",
-    note: "* Nominasyon, jiri ak lorea yo ap anonse an novanm 2026. CIP (Cultural Impact Protocol) · estanda k ap depoze.",
+    note: "* Nominasyon yo ap revele an janvye 2027 · lorea yo ap pwoklame 10 avril 2027. CIP (Cultural Impact Protocol) · estanda k ap depoze.",
   },
   prizes: {
     "CF-GAP-01": { title: "Resèt Gastwonomik Dyaspora", discipline: "Ekselans kilinè afro", intro: "Yon resèt ki rakonte yon tèritwa, ki transmèt yon memwa e ki tabli yon estanda.", body: "Yo bay yon chèf oswa yon otè kilinè li, lè kreyasyon li siyen idantite gastwonomik afro kontanporen an. Pi lwen pase teknik, pri a konsakre kapasite pou transfòme memwa an jès, jès an pla, epi pla an rakonte." },
@@ -69,7 +69,7 @@ const ht = {
   founders: {
     eyebrow: "Founders' Circle", title: "Lame kay|Chapter I a.",
     intro: "Sèk la fòme pa kooptasyon. Chak lame kay ouvri yon nouvo pòt. Non yo ap parèt isit la piti piti, dapre desizyon Sèk la.",
-    empty_label: "An konstriksyon", empty_title: "Premye non yo ap revele an septanm 2026.",
+    empty_label: "An konstriksyon", empty_title: "Premye non yo ap revele talè.",
     empty_note: "Pou pwopoze yon lame kay, kontakte Laurent dirèkteman · circle@cookandfood.gala",
     council_label: "Liy dedye", council_note: "WhatsApp Business · circle@cookandfood.gala · repons nan 24è", host: "Lame kay",
   },
@@ -98,6 +98,7 @@ const ht = {
     pay: "Peye epi rezève →", redirect: "Redireksyon Stripe…", secure: "Peman sekirize atravè Stripe Checkout. Y ap redirije w.",
     s_paid_label: "Peman konfime", s_paid_title: "Byenveni.", s_paid_body: "Plas ou rezève. Yon imèl konfimasyon ap rive jwenn ou.",
     s_expired: "Sesyon ekspire.", s_retry: "Eseye ankò →", s_wait_label: "Verifikasyon…", s_wait_title: "Peman ap fèt.", s_attempt: "Tantativ",
+    s_slow: "Konfimasyon peman an pran plis tan pase sa nou te prevwa. Si peman ou pase, w ap resevwa konfimasyon an pa imèl. Sinon, yo pa retire okenn lajan.",
   },
   rsvp: {
     eyebrow: "RSVP · Dijital", title: "Konfime|prezans mwen.",
@@ -112,12 +113,14 @@ const ht = {
     intro: "Yon resèt, yon set, yon pyès, yon zèv, yon tèks. Si pwopozisyon w rezone ak ADN Gala a, n ap tounen vin jwenn ou.",
     discipline: "Disiplin *", project: "Tit pwojè a *", desc: "Deskripsyon *", portfolio: "Lyen pòtfolyo",
     submit: "Voye pwopozisyon mwen →", s_label: "Pwopozisyon resevwa", s_body: "Direksyon atistik la ap tounen vin jwenn ou apre lekti.", sent_toast: "Pwopozisyon w rive.",
+    disciplines: {cuisine: "Kwizin", musique: "Mizik", art: "Atizay", mode: "Mòd", cinema: "Sinema", litterature: "Literati", culture: "Kilti"},
   },
   casting: {
     eyebrow: "Antre sou sèn nan", title: "Kasting.",
     intro: "Chèf, atis, pèfòmè, mèt seremoni. Talan ki fè diferans yo pa jwenn nan anyè.",
     profile: "Pwofil *", bio: "Byografi kout *", demo: "Lyen demo / pòtfolyo",
     submit: "Poze kandidati →", s_label: "Kasting", s_title: "Resevwa.", s_body: "Direktris kasting la ap kontakte w si pwofil ou koresponn.", sent_toast: "Kandidati anrejistre.",
+    types: {chef: "Chèf", artiste: "Atis", performer: "Pèfòmè", mc: "Mèt seremoni"},
   },
   sponsoring: {
     eyebrow: "Vin patnè", title: "Enskri mak ou|nan fondasyon an.",
@@ -141,12 +144,12 @@ const ht = {
     eyebrow: "Mesena", title: "Sipòte|fondasyon an.",
     intro: "Cook & Food Gala finanse 7 Pri CF-GAP yo, kaptasyon TV la, pwogram Bible la ak enfrastrikti kiltirèl alontèm nan. Chak don sipòte yon estanda k ap fèt.",
     fiscal_label: "Kad fiskal",
-    fiscal_body: "Resi fiskal bay sou demann. Don yo elijib dapre atik 200 ak 238 bis Kòd Jeneral Enpo fransè a, atravè estrikti patnè nou an ki rekonèt itilite piblik.",
+    fiscal_body: "Ekip nou an ap ba ou detay sou kondisyon fiskal don ou (resi, dediksyon) si ou mande.",
     council_label: "Liy dedye", council_note: "mecenat@cookandfood.gala · repons 24è",
     amount_label: "Montan sijere", custom_ph: "Oswa antre yon montan…", purpose: "Afektasyon",
     purposes: { general: "Sipò jeneral", prizes: "Dotasyon 7 Pri CF-GAP yo", casting: "Kasting jèn talan", series: "Pwodiksyon seri TV", bible: "Pwogram Bible ak achiv" },
     org: "Òganizasyon (si w vle)", submit: "Fè don mwen →", stripe: "Stripe…",
-    secure: "Peman Stripe sekirize · resi fiskal nan 7 jou",
+    secure: "Peman an sekirite ak Stripe",
     s_label: "Don konfime", s_title: "Mèsi anpil anpil.", s_body: "Angajman w nouri fondasyon an. Yon resi ak yon mesaj siyen Cook & Food Gala by Factory Maker Studio & CVLN Group ap rive jwenn ou.",
   },
 };

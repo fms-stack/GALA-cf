@@ -8,7 +8,7 @@ const eur = (n) => `${Number(n || 0).toLocaleString("fr-FR")} €`;
 function Stat({ label, value, hint, testid }) {
   return (
     <div className="border border-sable bg-white/40 p-6" data-testid={testid}>
-      <div className="label-eyebrow opacity-60">{label}</div>
+      <div className="label-eyebrow opacity-60 [overflow-wrap:anywhere]">{label}</div>
       <div className="serif-display text-5xl mt-3">{value}</div>
       {hint && <div className="text-xs opacity-60 mt-2">{hint}</div>}
     </div>
@@ -43,7 +43,7 @@ export default function Ticketing() {
 
   const tot = data?.totals;
   return (
-    <div className="p-10" data-testid="admin-ticketing">
+    <div className="p-5 md:p-10" data-testid="admin-ticketing">
       <div className="mb-10">
         <p className="label-eyebrow opacity-60">Billetterie publique</p>
         <h1 className="serif-display text-5xl mt-2">Ventes & jauge.</h1>
@@ -56,7 +56,9 @@ export default function Ticketing() {
         <Stat label="Entrées scannées" value={tot ? tot.checked_in : "·"} hint={tot ? `sur ${tot.paid} billets` : ""} testid="tk-checked" />
       </div>
 
-      <table className="w-full border border-sable bg-white/40 mb-14" data-testid="table-packages">
+      <div className="overflow-x-auto">
+
+        <table className="w-full min-w-[640px] border border-sable bg-white/40 mb-14" data-testid="table-packages">
         <thead>
           <tr className="border-b border-sable label-eyebrow opacity-60 text-left">
             <th className="py-3 px-4">Catégorie</th><th className="py-3 px-4">Prix</th><th className="py-3 px-4">Jauge</th>
@@ -103,8 +105,11 @@ export default function Ticketing() {
         </tbody>
       </table>
 
+      </div>
+
       <h2 className="serif-display text-3xl mb-6">Billets émis ({tickets.length})</h2>
-      <table className="w-full border border-sable bg-white/40" data-testid="table-tickets">
+      <div className="overflow-x-auto">
+        <table className="w-full min-w-[640px] border border-sable bg-white/40" data-testid="table-tickets">
         <thead>
           <tr className="border-b border-sable label-eyebrow opacity-60 text-left">
             <th className="py-3 px-4">Code</th><th className="py-3 px-4">Titulaire</th><th className="py-3 px-4">E-mail</th>
@@ -126,6 +131,7 @@ export default function Ticketing() {
           {tickets.length === 0 && <tr><td colSpan={5} className="py-10 text-center opacity-60">Aucun billet émis.</td></tr>}
         </tbody>
       </table>
+      </div>
     </div>
   );
 }

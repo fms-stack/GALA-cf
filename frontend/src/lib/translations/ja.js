@@ -1,9 +1,9 @@
 const ja = {
   nav: { home: "ホーム", concept: "コンセプト", concours: "コンテスト", prix: "7つの賞", billetterie: "チケット", cercle: "サークル", mecenat: "メセナ", partenaires: "パートナー", soumettre: "応募", casting: "キャスティング" },
-  cta: { confirm: "確認する", reserve: "席を予約", join_circle: "サークルに参加", become_patron: "メセナになる", confirm_presence: "出席を確認", public_billet: "一般チケット", discover: "見る" },
+  cta: { confirm: "確認する", reserve: "席を予約", join_circle: "サークルに参加", become_patron: "メセナになる", confirm_presence: "出席を確認", public_billet: "一般チケット", discover: "見る", guest_confirm: "招待客の方 · 出席を確認する" },
   hero: { chapter: "第一章 · 2027年4月10日（土）· パリ", tagline: "没入型の美食と文化の体験 · 料理、文化、音楽、アート、ファッション、映画、文学。", note: "イベントを超えた、文化の刻印。" },
-  footer: { rights: "全著作権所有", powered: "Powered by", staff_access: "チーム入口 ↗", baseline: "Cook & Food Gala · イベントを超えた、文化の刻印。", date_place: "2027年4月10日 · パリ", powered_by_label: "提供", contact: "お問い合わせ" },
-  invitation: { title: "テーブルの120席。", body: "招待状は2026年9月に発送されます。\n推薦制のみ。", manifest: "関心を表明 · 機密", signal_ok: "受け付けました。運営よりご連絡いたします。" },
+  footer: { rights: "全著作権所有", powered: "Powered by", staff_access: "チーム入口 ↗", baseline: "Cook & Food Gala · イベントを超えた、文化の刻印。", date_place: "2027年4月10日 · パリ", powered_by_label: "提供", contact: "お問い合わせ", organisation: "主催", contact_page: "お問い合わせ", join_circle: "サークルに参加する" },
+  invitation: { title: "テーブルの120席。", body: "招待状は個別にお送りします。\n推薦制のみ。", manifest: "関心を表明 · 機密", signal_ok: "受け付けました。運営よりご連絡いたします。" },
   common: { days: "日", hours: "時間", name: "氏名 *", email: "メールアドレス *", phone: "電話番号", message: "メッセージ", optional: "（任意）", sending: "送信中…", thanks: "ありがとうございます。", ref: "参照番号", discover: "見る →", choose: "選ぶ →" },
   home: {
     founding_label: "創設の言葉", founding: "「このガラは、世界のアフロ・ディアスポラの文化的スタンダードを打ち立てる。」",
@@ -40,7 +40,7 @@ const ja = {
   prix: {
     eyebrow: "Cook & Food Awards", title: "CF-GAP 七つの賞。",
     intro: "七つの分野、七つの戴冠。創設の行為として構想された式典 · 各賞は世界アフロ・ディアスポラの新たなスタンダードの確立を刻む。",
-    note: "* ノミネート、審査員、受賞者は2026年11月に発表。CIP（Cultural Impact Protocol）· 登録手続き中のスタンダード。",
+    note: "* ノミネートは2027年1月に発表 · 受賞者は2027年4月10日に発表。CIP（Cultural Impact Protocol）· 登録手続き中のスタンダード。",
   },
   prizes: {
     "CF-GAP-01": { title: "ディアスポラ美食レシピ賞", discipline: "アフロ料理の卓越", intro: "土地を語り、記憶を伝え、スタンダードを打ち立てるレシピ。", body: "現代アフロ美食のアイデンティティを刻む創作を生んだシェフまたは料理作家に贈られる。技術を超え、記憶を所作に、所作を皿に、皿を物語に変える力を讃える。" },
@@ -69,7 +69,7 @@ const ja = {
   founders: {
     eyebrow: "Founders' Circle", title: "第一章の|ホストたち。",
     intro: "サークルは推薦によって構成される。各ホストが新たな扉を開く。名前はサークルの決定により、順次ここに現れる。",
-    empty_label: "構築中", empty_title: "最初の名前は2026年9月に発表されます。",
+    empty_label: "構築中", empty_title: "最初の名前は近日発表されます。",
     empty_note: "ホストの推薦はLaurentまで直接ご連絡ください · circle@cookandfood.gala",
     council_label: "専用窓口", council_note: "WhatsApp Business · circle@cookandfood.gala · 24時間以内に返信", host: "ホスト",
   },
@@ -98,6 +98,7 @@ const ja = {
     pay: "支払って予約 →", redirect: "Stripeへ移動中…", secure: "Stripe Checkoutによる安全な決済。リダイレクトされます。",
     s_paid_label: "決済確認済み", s_paid_title: "ようこそ。", s_paid_body: "お席は予約されました。確認メールが届きます。",
     s_expired: "セッション期限切れ。", s_retry: "再試行 →", s_wait_label: "確認中…", s_wait_title: "決済処理中。", s_attempt: "試行",
+    s_slow: "お支払いの確認に予想以上の時間がかかっています。お支払いが完了している場合、確認はメールでお届けします。そうでない場合、請求は発生していません。",
   },
   rsvp: {
     eyebrow: "RSVP · デジタル", title: "出席を|確認する。",
@@ -112,12 +113,14 @@ const ja = {
     intro: "レシピ、セット、作品、テキスト。あなたの提案がガラのDNAと共鳴すれば、ご連絡いたします。",
     discipline: "分野 *", project: "プロジェクト名 *", desc: "概要 *", portfolio: "ポートフォリオURL",
     submit: "提案を送る →", s_label: "提案を受領", s_body: "芸術監督が拝読の上ご連絡いたします。", sent_toast: "提案が届きました。",
+    disciplines: {cuisine: "料理", musique: "音楽", art: "アート", mode: "ファッション", cinema: "映画", litterature: "文学", culture: "文化"},
   },
   casting: {
     eyebrow: "ステージへ", title: "キャスティング。",
     intro: "シェフ、アーティスト、パフォーマー、MC。違いを生む才能は名簿の中にはいない。",
     profile: "プロフィール *", bio: "短い経歴 *", demo: "デモ / ポートフォリオURL",
     submit: "応募する →", s_label: "キャスティング", s_title: "受領しました。", s_body: "プロフィールが合致すればキャスティングディレクターよりご連絡します。", sent_toast: "応募を登録しました。",
+    types: {chef: "シェフ", artiste: "アーティスト", performer: "パフォーマー", mc: "司会者"},
   },
   sponsoring: {
     eyebrow: "パートナーになる", title: "あなたのブランドを|礎に刻む。",
@@ -141,12 +144,12 @@ const ja = {
     eyebrow: "メセナ", title: "礎を|支える。",
     intro: "Cook & Food Gala は7つのCF-GAP賞、TV撮影、Bibleプログラム、長期的な文化インフラに資金を提供する。すべての寄付が生まれつつあるスタンダードを支える。",
     fiscal_label: "税制",
-    fiscal_body: "ご要望に応じて領収書を発行。フランス税法第200条・238条bisに基づく優遇の対象（公益認定パートナー機関経由）。",
+    fiscal_body: "ご寄付に適用される税制（領収書、控除制度）については、ご要望に応じてチームがご案内します。",
     council_label: "専用窓口", council_note: "mecenat@cookandfood.gala · 24時間以内に返信",
     amount_label: "推奨金額", custom_ph: "または金額を入力…", purpose: "用途",
     purposes: { general: "全般支援", prizes: "CF-GAP 7賞の基金", casting: "若手才能のキャスティング", series: "TVシリーズ制作", bible: "Bibleとアーカイブ" },
     org: "団体名（任意）", submit: "寄付する →", stripe: "Stripe…",
-    secure: "Stripe安全決済 · 7日以内に領収書",
+    secure: "Stripe による安全なお支払い",
     s_label: "寄付確認済み", s_title: "心より感謝します。", s_body: "あなたの支援が礎を育てます。領収書と Cook & Food Gala by Factory Maker Studio & CVLN Group 署名のメッセージが届きます。",
   },
 };

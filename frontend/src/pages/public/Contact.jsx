@@ -15,20 +15,17 @@ export default function Contact() {
           <div className="space-y-8 text-lg">
             <div>
               <p className="label-eyebrow opacity-60 mb-2">{t("contact.general")}</p>
-              <p>contact@cookandfood.gala</p>
+              <a href="mailto:contact@cookandfood.gala" className="hover:text-or">contact@cookandfood.gala</a>
             </div>
             <div>
               <p className="label-eyebrow opacity-60 mb-2">{t("contact.press")}</p>
-              <p>press@cookandfood.gala</p>
+              <a href="mailto:press@cookandfood.gala" className="hover:text-or">press@cookandfood.gala</a>
             </div>
             <div>
               <p className="label-eyebrow opacity-60 mb-2">{t("contact.sponsoring")}</p>
-              <p>partners@cookandfood.gala</p>
+              <a href="mailto:partners@cookandfood.gala" className="hover:text-or">partners@cookandfood.gala</a>
             </div>
-            <div>
-              <p className="label-eyebrow opacity-60 mb-2">{t("contact.phone")}</p>
-              <p>+596 696 00 00 00</p>
-            </div>
+
           </div>
         </div>
         <div className="lg:pt-20">

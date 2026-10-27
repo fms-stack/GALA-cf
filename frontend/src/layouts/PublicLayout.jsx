@@ -5,15 +5,19 @@ import { Logo } from "@/components/Logo";
 import { LangSwitcher, useI18n } from "@/lib/i18n";
 import { List, X } from "@phosphor-icons/react";
 
+// Adresse de contact affichée sur le site · à confirmer (le domaine .gala ne semble pas exister)
+const CONTACT_EMAIL = "contact@cookandfood.gala";
+
+// primary: affiché dans la barre sur grand écran · les autres restent dans le menu (bouton toujours visible)
 const NAV_KEYS = [
   { to: "/", key: "home", end: true },
-  { to: "/concept", key: "concept" },
-  { to: "/prix", key: "prix" },
-  { to: "/concours", key: "concours" },
-  { to: "/billetterie", key: "billetterie" },
-  { to: "/founders-circle", key: "cercle" },
-  { to: "/mecenat", key: "mecenat" },
-  { to: "/sponsoring", key: "partenaires" },
+  { to: "/concept", key: "concept", primary: true },
+  { to: "/prix", key: "prix", primary: true },
+  { to: "/concours", key: "concours", primary: true },
+  { to: "/billetterie", key: "billetterie", primary: true },
+  { to: "/founders-circle", key: "cercle", primary: true },
+  { to: "/mecenat", key: "mecenat", primary: true },
+  { to: "/sponsoring", key: "partenaires", primary: true },
   { to: "/candidatures", key: "soumettre" },
   { to: "/casting", key: "casting" },
 ];
@@ -31,47 +35,50 @@ export default function PublicLayout() {
     <div className="min-h-screen bg-noir text-ivoire">
       <header className="fixed top-0 inset-x-0 z-50 backdrop-blur-md bg-noir/70 border-b border-ivoire/10">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12 py-5 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-3 text-ivoire group" data-testid="public-logo-link">
+          <Link to="/" onClick={() => setOpen(false)} className="flex items-center gap-3 text-ivoire group shrink-0" data-testid="public-logo-link">
             <Logo size={32} className="transition-transform duration-700 group-hover:rotate-180" />
             <div className="leading-tight">
-              <div className="serif-display text-xl">Cook &amp; Food</div>
+              <div className="serif-display text-xl whitespace-nowrap">Cook &amp; Food</div>
               <div className="label-eyebrow opacity-70">Gala · 2027</div>
             </div>
           </Link>
-          <nav className="hidden lg:flex items-center gap-8">
-            {NAV.map((n) => (
+          <nav className="hidden min-[1360px]:flex items-center gap-6 2xl:gap-8">
+            {NAV.filter((n) => n.primary).map((n) => (
               <NavLink
                 key={n.to}
                 to={n.to}
                 end={n.end}
                 data-testid={`public-nav-${n.to.replace("/", "") || "home"}`}
                 className={({ isActive }) =>
-                  `label-eyebrow transition-opacity hover:opacity-100 ${isActive ? "text-or opacity-100" : "opacity-60"}`
+                  `label-eyebrow whitespace-nowrap transition-opacity hover:opacity-100 ${isActive ? "text-or opacity-100" : "opacity-60"}`
                 }
               >
                 {n.label}
               </NavLink>
             ))}
           </nav>
-          <Link
-            to="/rsvp"
-            data-testid="public-cta-rsvp"
-            className="hidden md:inline-flex border border-or px-5 py-2 text-or label-eyebrow hover:bg-or hover:text-noir transition-colors"
-          >
-            {t("cta.confirm")}
-          </Link>
-          <LangSwitcher />
-          <button
-            onClick={() => setOpen(!open)}
-            aria-label="Menu"
-            data-testid="public-mobile-burger"
-            className="lg:hidden text-ivoire p-2"
-          >
-            {open ? <X size={24} /> : <List size={24} />}
-          </button>
+          <div className="flex items-center gap-3 md:gap-4 shrink-0">
+            <Link
+              to="/billetterie"
+              data-testid="public-cta-billetterie"
+              className="hidden md:inline-flex whitespace-nowrap border border-or px-5 py-2 text-or label-eyebrow hover:bg-or hover:text-noir transition-colors"
+            >
+              {t("cta.reserve")}
+            </Link>
+            <LangSwitcher />
+            <button
+              onClick={() => setOpen(!open)}
+              aria-label="Menu"
+              aria-expanded={open}
+              data-testid="public-mobile-burger"
+              className="text-ivoire p-2"
+            >
+              {open ? <X size={24} /> : <List size={24} />}
+            </button>
+          </div>
         </div>
         {open && (
-          <div className="lg:hidden border-t border-ivoire/10 bg-noir px-6 py-6 flex flex-col gap-4" data-testid="public-mobile-menu">
+          <div className="border-t border-ivoire/10 bg-noir px-6 lg:px-12 py-6 flex flex-col gap-4 max-h-[calc(100vh-80px)] overflow-y-auto" data-testid="public-mobile-menu">
             {NAV.map((n) => (
               <NavLink
                 key={n.to}
@@ -85,6 +92,10 @@ export default function PublicLayout() {
                 {n.label}
               </NavLink>
             ))}
+            <Link to="/billetterie" onClick={() => setOpen(false)} data-testid="mobile-cta-billetterie"
+              className="mt-2 bg-or text-noir text-center py-3 label-eyebrow">{t("cta.reserve")}</Link>
+            <Link to="/rsvp" onClick={() => setOpen(false)} data-testid="mobile-cta-rsvp"
+              className="border border-or text-or text-center py-3 label-eyebrow">{t("cta.guest_confirm")}</Link>
           </div>
         )}
       </header>
@@ -105,11 +116,17 @@ export default function PublicLayout() {
               <li>Factory Maker Studio</li>
               <li>CVL Culinary Innovations</li>
             </ul>
+            <Link to="/partenaires" className="label-eyebrow text-or mt-4 inline-block" data-testid="footer-organisation">{t("footer.organisation")} →</Link>
           </div>
           <div>
             <div className="label-eyebrow opacity-60 mb-4">{t("footer.contact")}</div>
-            <p className="text-sm">contact@cookandfood.gala</p>
+            <a href={`mailto:${CONTACT_EMAIL}`} className="text-sm hover:text-or">{CONTACT_EMAIL}</a>
             <p className="text-sm mt-1 opacity-70">Martinique · France</p>
+            <div className="mt-4 flex flex-col gap-2">
+              <Link to="/contact" className="label-eyebrow text-or" data-testid="footer-contact">{t("footer.contact_page")} →</Link>
+              <Link to="/cercle-restreint" className="label-eyebrow text-or" data-testid="footer-cercle">{t("footer.join_circle")} →</Link>
+              <Link to="/rsvp" className="label-eyebrow text-or" data-testid="footer-rsvp">{t("cta.guest_confirm")} →</Link>
+            </div>
             <Link to="/login" className="text-xs opacity-50 hover:opacity-100 mt-6 inline-block" data-testid="public-staff-login">
               {t("footer.staff_access")}
             </Link>
@@ -124,7 +141,7 @@ export default function PublicLayout() {
             data-testid="powered-by-fms"
             className="flex items-center gap-3 group"
           >
-            <span className="label-eyebrow opacity-40 group-hover:opacity-70 transition-opacity">Powered by</span>
+            <span className="label-eyebrow opacity-40 group-hover:opacity-70 transition-opacity">{t("footer.powered")}</span>
             <span className="serif-display text-base text-or group-hover:text-ivoire transition-colors tracking-wide">Factory Maker Studio</span>
           </a>
         </div>

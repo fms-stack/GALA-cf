@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/lib/auth";
 import { I18nProvider } from "@/lib/i18n";
@@ -38,8 +39,9 @@ import ConcoursAdmin from "@/pages/admin/Concours";
 import "@/App.css";
 
 function Protected({ children }) {
-  const { user, loading } = useAuth();
-  if (loading) return <div className="min-h-screen flex items-center justify-center text-foreground">Chargement…</div>;
+  const { user, loading, checked, refresh } = useAuth();
+  useEffect(() => { if (!checked && !user) refresh(); }, [checked, user, refresh]);
+  if (loading || (!checked && !user)) return <div className="min-h-screen flex items-center justify-center text-foreground">Chargement…</div>;
   if (!user) return <Navigate to="/login" replace />;
   return children;
 }

@@ -5,7 +5,7 @@ import { useAuth } from "@/lib/auth";
 function Stat({ label, value, hint, testid }) {
   return (
     <div className="border border-sable bg-white/40 p-6" data-testid={testid}>
-      <div className="label-eyebrow opacity-60">{label}</div>
+      <div className="label-eyebrow opacity-60 [overflow-wrap:anywhere]">{label}</div>
       <div className="serif-display text-5xl mt-3">{value}</div>
       {hint && <div className="text-xs opacity-60 mt-2">{hint}</div>}
     </div>
@@ -21,7 +21,7 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <div className="p-10" data-testid="admin-dashboard">
+    <div className="p-5 md:p-10" data-testid="admin-dashboard">
       <div className="mb-12">
         <p className="label-eyebrow opacity-60">Bienvenue {user?.name?.split(" ")[0]}</p>
         <h1 className="serif-display text-5xl mt-2">Tableau de bord.</h1>
@@ -32,6 +32,10 @@ export default function Dashboard() {
         <Stat label="Personnes" value={stats?.people ?? "·"} testid="stat-people" />
         <Stat label="Affectations" value={stats?.assignments ?? "·"} testid="stat-assignments" />
         <Stat label="Compte à rebours" value={stats ? `J-${stats.days_to_gala}` : "·"} hint="10 avril 2027" testid="stat-countdown" />
+        <Stat label="Commandes payées" value={stats?.orders?.paid ?? "·"} hint={stats ? `${stats.orders.total} commandes ouvertes au total` : ""} testid="stat-orders" />
+        <Stat label="Billets émis" value={stats?.tickets?.issued ?? "·"} hint={stats ? `${stats.tickets.checked_in} entrées scannées` : ""} testid="stat-tickets" />
+        <Stat label="Candidatures" value={stats?.applications ?? "·"} hint={stats ? `${stats.castings} castings` : ""} testid="stat-applications" />
+        <Stat label="Sponsoring" value={stats?.sponsoring ?? "·"} hint="demandes reçues" testid="stat-sponsoring" />
       </div>
 
       <div className="grid lg:grid-cols-2 gap-6">
@@ -54,7 +58,7 @@ export default function Dashboard() {
         </div>
 
         <div className="border border-sable bg-white/40 p-8" data-testid="card-contracts">
-          <div className="label-eyebrow opacity-60 mb-4">Contrats (Phase 4 à venir)</div>
+          <div className="label-eyebrow opacity-60 mb-4">Contrats</div>
           <div className="grid grid-cols-3 gap-4">
             <div>
               <div className="serif-display text-4xl">{stats?.contracts?.signed ?? 0}</div>

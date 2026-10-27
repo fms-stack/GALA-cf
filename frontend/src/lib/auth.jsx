@@ -6,8 +6,11 @@ const AuthCtx = createContext(null);
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);   // null = unknown, false = guest, object = authed
   const [loading, setLoading] = useState(true);
+  const [checked, setChecked] = useState(false);
 
   const refresh = useCallback(async () => {
+    setChecked(true);
+    setLoading(true);
     try {
       const { data } = await api.get("/auth/me");
       setUser(data);
@@ -18,8 +21,10 @@ export function AuthProvider({ children }) {
     }
   }, []);
 
+  // La session n'est vérifiée que pour l'espace équipe : le site public n'envoie aucun appel /auth/me.
   useEffect(() => {
-    refresh();
+    if (/^\/(admin|portail)/.test(window.location.pathname)) refresh();
+    else setLoading(false);
   }, [refresh]);
 
   const login = async (email, password) => {
@@ -34,7 +39,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthCtx.Provider value={{ user, loading, login, logout, refresh, setUser }}>
+    <AuthCtx.Provider value={{ user, loading, checked, login, logout, refresh, setUser }}>
       {children}
     </AuthCtx.Provider>
   );

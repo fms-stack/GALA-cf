@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 import { api, formatApiError } from "@/lib/api";
 import { toast } from "sonner";
 import { useI18n } from "@/lib/i18n";
@@ -46,7 +47,7 @@ export default function Mecenat() {
         </div>
 
         <form onSubmit={submit} className="space-y-6">
-          <input type="text" value={form.honeypot} onChange={onChange("honeypot")} className="hidden" tabIndex={-1} />
+          <input type="text" value={form.honeypot} onChange={onChange("honeypot")} className="hidden" tabIndex={-1} autoComplete="off" />
           <div>
             <label className="label-eyebrow opacity-60 block mb-3">{t("mecenat.amount_label")}</label>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-4">
@@ -76,12 +77,43 @@ export default function Mecenat() {
 
 export function MecenatSuccess() {
   const { t } = useI18n();
+  const [params] = useSearchParams();
+  const sid = params.get("session_id");
+  const [state, setState] = useState(sid ? "checking" : "unknown");
+
+  useEffect(() => {
+    if (!sid) return;
+    let cancel = false;
+    const poll = async (a = 0) => {
+      if (cancel) return;
+      try {
+        const { data } = await api.get(`/public/mecenat/status/${sid}`);
+        if (data.payment_status === "paid") return setState("paid");
+        if (data.status === "expired") return setState("expired");
+      } catch { /* retry */ }
+      if (a >= 7) return setState("slow");
+      setTimeout(() => poll(a + 1), 2000);
+    };
+    poll(0);
+    return () => { cancel = true; };
+  }, [sid]);
+
   return (
     <div className="min-h-[70vh] bg-noir text-ivoire flex items-center justify-center px-6 py-24" data-testid="mecenat-success">
-      <div className="text-center max-w-lg">
-        <p className="label-eyebrow text-or mb-6">{t("mecenat.s_label")}</p>
-        <h1 className="serif-display text-5xl mb-6">{t("mecenat.s_title")}</h1>
-        <p className="text-sable">{t("mecenat.s_body")}</p>
+      <div className="text-center max-w-lg" data-state={state}>
+        {state === "paid" ? (
+          <>
+            <p className="label-eyebrow text-or mb-6">{t("mecenat.s_label")}</p>
+            <h1 className="serif-display text-5xl mb-6">{t("mecenat.s_title")}</h1>
+            <p className="text-sable">{t("mecenat.s_body")}</p>
+          </>
+        ) : state === "checking" ? (
+          <><p className="label-eyebrow text-or mb-6">{t("billetterie.s_wait_label")}</p><h1 className="serif-display text-5xl">{t("billetterie.s_wait_title")}</h1></>
+        ) : state === "expired" ? (
+          <><h1 className="serif-display text-5xl mb-6">{t("billetterie.s_expired")}</h1><Link to="/mecenat" className="border border-or text-or px-6 py-3 label-eyebrow inline-block">{t("billetterie.s_retry")}</Link></>
+        ) : (
+          <><h1 className="serif-display text-4xl mb-6">{t("billetterie.s_wait_title")}</h1><p className="text-sable">{t("billetterie.s_slow")}</p></>
+        )}
       </div>
     </div>
   );

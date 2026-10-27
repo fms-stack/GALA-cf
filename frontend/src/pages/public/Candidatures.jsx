@@ -55,7 +55,7 @@ export default function Candidatures() {
           <input type="text" value={form.honeypot} onChange={onChange("honeypot")} className="hidden" tabIndex={-1} autoComplete="off" />
           <Field label={t("common.name")} testid="app-name"><input required value={form.full_name} onChange={onChange("full_name")} className={inp} /></Field>
           <Field label={t("common.email")} testid="app-email"><input required type="email" value={form.email} onChange={onChange("email")} className={inp} /></Field>
-          <Field label={t("cand.discipline")}><select value={form.discipline} onChange={onChange("discipline")} className={inp} data-testid="app-discipline">{DISCIPLINES.map((d) => <option key={d} value={d}>{d}</option>)}</select></Field>
+          <Field label={t("cand.discipline")}><select value={form.discipline} onChange={onChange("discipline")} className={inp} data-testid="app-discipline">{DISCIPLINES.map((d) => <option key={d} value={d}>{t(`cand.disciplines.${d}`)}</option>)}</select></Field>
           <Field label={t("cand.project")} testid="app-title"><input required value={form.project_title} onChange={onChange("project_title")} className={inp} /></Field>
           <Field label={t("cand.desc")} testid="app-desc"><textarea required rows={4} value={form.description} onChange={onChange("description")} className={`${inp} resize-none`} /></Field>
           <Field label={t("cand.portfolio")} testid="app-portfolio"><input value={form.portfolio_url} onChange={onChange("portfolio_url")} className={inp} placeholder="https://…" /></Field>

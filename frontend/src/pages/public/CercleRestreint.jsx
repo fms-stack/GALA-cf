@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { api, formatApiError } from "@/lib/api";
 import { toast } from "sonner";
 import { useI18n } from "@/lib/i18n";
@@ -10,14 +11,28 @@ export default function CercleRestreint() {
   });
   const [ref, setRef] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [sponsor, setSponsor] = useState(null);
+  const [params] = useSearchParams();
+  const token = params.get("coopte");
   const { t } = useI18n();
+
+  useEffect(() => {
+    if (!token) return;
+    api.get(`/public/cooptation/${token}`).then((r) => {
+      if (r.data.valid) {
+        setSponsor(r.data.sponsor);
+        setForm((f) => ({ ...f, recommended_by: f.recommended_by || r.data.sponsor }));
+      }
+    }).catch(() => {});
+  }, [token]);
   const onChange = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
 
   const submit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const { data } = await api.post("/public/cercle-restreint", form);
+      const message = sponsor ? `${form.message}\n[coopte:${token}]`.trim() : form.message;
+      const { data } = await api.post("/public/cercle-restreint", { ...form, message });
       setRef(data.ref);
       toast.success(t("cercle.sent_toast"));
     } catch (err) { toast.error(formatApiError(err.response?.data?.detail)); }
@@ -41,8 +56,14 @@ export default function CercleRestreint() {
         <p className="label-eyebrow text-or mb-6">{t("cercle.eyebrow")}</p>
         <h1 className="serif-display text-5xl md:text-6xl mb-6">{t("cercle.title")}</h1>
         <p className="text-sable text-base md:text-lg leading-relaxed mb-12">{t("cercle.intro")}</p>
+        {sponsor && (
+          <div className="border border-or/40 px-6 py-4 mb-12" data-testid="cercle-cooptation">
+            <p className="label-eyebrow text-or mb-2">{t("surinv.coopt_label")}</p>
+            <p className="serif-display text-2xl italic">{t("surinv.coopt_line")} <span className="text-or not-italic">{sponsor}</span>.</p>
+          </div>
+        )}
         <form onSubmit={submit} className="space-y-6">
-          <input type="text" value={form.honeypot} onChange={onChange("honeypot")} className="hidden" tabIndex={-1} />
+          <input type="text" value={form.honeypot} onChange={onChange("honeypot")} className="hidden" tabIndex={-1} autoComplete="off" />
           <F l={t("common.name")}><input required value={form.full_name} onChange={onChange("full_name")} className={inp} /></F>
           <F l={t("cercle.email")}><input required type="email" value={form.email} onChange={onChange("email")} className={inp} /></F>
           <F l={t("cercle.phone")}><input value={form.phone} onChange={onChange("phone")} className={inp} /></F>

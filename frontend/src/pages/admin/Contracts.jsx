@@ -66,7 +66,7 @@ export default function Contracts() {
   const role = user?.role;
 
   return (
-    <div className="p-10" data-testid="admin-contracts">
+    <div className="p-5 md:p-10" data-testid="admin-contracts">
       <div className="flex items-center justify-between mb-10">
         <div>
           <p className="label-eyebrow opacity-60">Phase 4</p>
@@ -88,7 +88,9 @@ export default function Contracts() {
         ))}
       </div>
 
-      <table className="w-full border border-sable bg-white/40" data-testid="contracts-table">
+      <div className="overflow-x-auto">
+
+        <table className="w-full min-w-[640px] border border-sable bg-white/40" data-testid="contracts-table">
         <thead>
           <tr className="border-b border-sable label-eyebrow opacity-60 text-left">
             <th className="py-3 px-4">Template</th>
@@ -130,6 +132,8 @@ export default function Contracts() {
           {filtered.length === 0 && <tr><td colSpan={6} className="py-10 text-center opacity-60">Aucun contrat.</td></tr>}
         </tbody>
       </table>
+
+      </div>
 
       {open && (
         <div className="fixed inset-0 bg-noir/50 z-50 flex items-center justify-center p-6" onClick={() => setOpen(false)}>

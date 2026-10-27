@@ -1,9 +1,9 @@
 const en = {
   nav: { home: "Home", concept: "Concept", concours: "Competition", prix: "The 7 Awards", billetterie: "Tickets", cercle: "Circle", mecenat: "Patronage", partenaires: "Partners", soumettre: "Submit", casting: "Casting" },
-  cta: { confirm: "Confirm", reserve: "Reserve a seat", join_circle: "Join the Circle", become_patron: "Become a patron", confirm_presence: "Confirm my presence", public_billet: "Public tickets", discover: "Discover" },
+  cta: { confirm: "Confirm", reserve: "Reserve a seat", join_circle: "Join the Circle", become_patron: "Become a patron", confirm_presence: "Confirm my presence", public_billet: "Public tickets", discover: "Discover", guest_confirm: "Invited guest · confirm my presence" },
   hero: { chapter: "Chapter I · Saturday April 10, 2027 · Paris", tagline: "An immersive gastronomic & cultural experience · Cuisine, Culture, Music, Art, Fashion, Cinema & Literature.", note: "More than an event. A cultural imprint." },
-  footer: { rights: "All rights reserved", powered: "Powered by", staff_access: "Team access ↗", baseline: "Cook & Food Gala · more than an event, a cultural imprint.", date_place: "April 10, 2027 · Paris", powered_by_label: "Powered by", contact: "Contact" },
-  invitation: { title: "120 seats at the table.", body: "Invitations are sent out in September 2026.\nBy co-option only.", manifest: "Signal your interest · confidential", signal_ok: "Signal received. The team will reach out to you." },
+  footer: { rights: "All rights reserved", powered: "Powered by", staff_access: "Team access ↗", baseline: "Cook & Food Gala · more than an event, a cultural imprint.", date_place: "April 10, 2027 · Paris", powered_by_label: "Powered by", contact: "Contact", organisation: "The organisation", contact_page: "Write to us", join_circle: "Join the Circle" },
+  invitation: { title: "120 seats at the table.", body: "Invitations are sent personally.\nBy co-option only.", manifest: "Signal your interest · confidential", signal_ok: "Signal received. The team will reach out to you." },
   common: { days: "Days", hours: "Hours", name: "Full name *", email: "E-mail *", phone: "Phone", message: "Message", optional: "(optional)", sending: "Sending…", thanks: "Thank you.", ref: "Reference", discover: "Discover →", choose: "Choose →" },
   home: {
     founding_label: "Founding statement",
@@ -41,7 +41,7 @@ const en = {
   prix: {
     eyebrow: "Cook & Food Awards", title: "The seven CF-GAP awards.",
     intro: "Seven disciplines, seven consecrations. A ceremony conceived as a founding act · each award marks the installation of a new standard for the global Afro diaspora.",
-    note: "* Nominations, jury and laureates announced in November 2026. CIP (Cultural Impact Protocol) · standard being registered.",
+    note: "* Nominees revealed in January 2027 · laureates announced on April 10, 2027. CIP (Cultural Impact Protocol) · standard being registered.",
   },
   prizes: {
     "CF-GAP-01": { title: "Diaspora Gastronomic Recipe", discipline: "Afro culinary excellence", intro: "A recipe that tells a territory, transmits a memory and installs a standard.", body: "Awarded to a chef or culinary author whose creation defines contemporary Afro gastronomic identity. Beyond technique, the award consecrates the ability to turn memory into gesture, gesture into dish, and dish into narrative." },
@@ -70,7 +70,7 @@ const en = {
   founders: {
     eyebrow: "Founders' Circle", title: "The hosts|of Chapter I.",
     intro: "The Circle is built by co-option. Each host opens a new door. Names appear here progressively, by decision of the Circle.",
-    empty_label: "In construction", empty_title: "The first names will be revealed in September 2026.",
+    empty_label: "In construction", empty_title: "The first names will be revealed soon.",
     empty_note: "To propose a host, contact Laurent directly · circle@cookandfood.gala",
     council_label: "Dedicated line", council_note: "WhatsApp Business · circle@cookandfood.gala · reply within 24h", host: "Host",
   },
@@ -99,6 +99,7 @@ const en = {
     pay: "Pay and reserve →", redirect: "Redirecting to Stripe…", secure: "Secure payment via Stripe Checkout. You will be redirected.",
     s_paid_label: "Payment confirmed", s_paid_title: "Welcome.", s_paid_body: "Your seat is reserved. A confirmation e-mail is on its way.",
     s_expired: "Session expired.", s_retry: "Try again →", s_wait_label: "Verifying…", s_wait_title: "Payment in progress.", s_attempt: "Attempt",
+    s_slow: "Payment confirmation is taking longer than expected. If your payment went through, the confirmation will reach you by e-mail. Otherwise, nothing has been charged.",
   },
   rsvp: {
     eyebrow: "RSVP · Digital", title: "Confirm|my presence.",
@@ -113,12 +114,14 @@ const en = {
     intro: "A recipe, a set, a piece, a work, a text. If your proposal resonates with the Gala's DNA, we will get back to you.",
     discipline: "Discipline *", project: "Project title *", desc: "Description *", portfolio: "Portfolio link",
     submit: "Send my proposal →", s_label: "Proposal received", s_body: "The artistic direction will get back to you after review.", sent_toast: "Your proposal has arrived.",
+    disciplines: {cuisine: "Cuisine", musique: "Music", art: "Art", mode: "Fashion", cinema: "Cinema", litterature: "Literature", culture: "Culture"},
   },
   casting: {
     eyebrow: "Join the stage", title: "Casting.",
     intro: "Chefs, artists, performers, masters of ceremony. The talents that make a difference are not found in directories.",
     profile: "Profile *", bio: "Short bio *", demo: "Demo / portfolio link",
     submit: "Apply →", s_label: "Casting", s_title: "Received.", s_body: "The casting director will contact you if your profile matches.", sent_toast: "Application recorded.",
+    types: {chef: "Chef", artiste: "Artist", performer: "Performer", mc: "Master of ceremonies"},
   },
   sponsoring: {
     eyebrow: "Become a partner", title: "Inscribe your brand|in the foundation.",
@@ -142,12 +145,12 @@ const en = {
     eyebrow: "Patronage", title: "Support|the foundation.",
     intro: "The Cook & Food Gala funds the 7 CF-GAP Awards, the TV capture, the Bible programme and long-term cultural infrastructure. Every gift supports a nascent standard.",
     fiscal_label: "Tax framework",
-    fiscal_body: "Tax receipt issued on request. Gifts eligible under articles 200 and 238 bis of the French Tax Code through our public-interest partner host structure.",
+    fiscal_body: "The tax arrangements applicable to your donation (receipt, deduction schemes) are provided on request by our team.",
     council_label: "Dedicated line", council_note: "mecenat@cookandfood.gala · reply within 24h",
     amount_label: "Suggested amount", custom_ph: "Or enter an amount…", purpose: "Allocation",
     purposes: { general: "General support", prizes: "Endowment of the 7 CF-GAP Awards", casting: "Young talents casting", series: "TV series production", bible: "Bible & archive programme" },
     org: "Organisation (optional)", submit: "Make my gift →", stripe: "Stripe…",
-    secure: "Secure Stripe payment · tax receipt within 7 days",
+    secure: "Secure payment via Stripe",
     s_label: "Gift confirmed", s_title: "Thank you so much.", s_body: "Your commitment nourishes the foundation. A receipt and a message signed Cook & Food Gala by Factory Maker Studio & CVLN Group are on their way.",
   },
 };

@@ -41,11 +41,11 @@ export default function Home() {
               <span className="italic"> {t("hero.note")}</span>
             </p>
             <div className="mt-8 md:mt-12 flex flex-wrap gap-3 md:gap-4" data-reveal>
-              <Link to="/rsvp" data-testid="home-cta-rsvp" className="bg-or text-noir px-6 md:px-8 py-3 md:py-4 label-eyebrow hover:bg-ivoire transition-colors">
-                {t("cta.confirm_presence")} →
+              <Link to="/billetterie" data-testid="home-cta-billet" className="bg-or text-noir px-6 md:px-8 py-3 md:py-4 label-eyebrow hover:bg-ivoire transition-colors">
+                {t("cta.reserve")} →
               </Link>
-              <Link to="/billetterie" data-testid="home-cta-billet" className="border border-ivoire/40 px-6 md:px-8 py-3 md:py-4 label-eyebrow hover:border-or hover:text-or transition-colors">
-                {t("cta.public_billet")}
+              <Link to="/rsvp" data-testid="home-cta-rsvp" className="border border-ivoire/40 px-6 md:px-8 py-3 md:py-4 label-eyebrow hover:border-or hover:text-or transition-colors">
+                {t("cta.guest_confirm")}
               </Link>
             </div>
             <div className="mt-12 md:mt-20 pt-6 md:pt-10 border-t border-ivoire/10" data-reveal>
@@ -126,9 +126,14 @@ export default function Home() {
             {ctaA}<br /><span className="italic">{ctaB}</span>
           </h2>
           <p className="text-sable mb-8 md:mb-12 text-base md:text-lg">{t("home.cta_body")}</p>
-          <Link to="/rsvp" data-testid="home-final-cta" className="inline-block bg-or text-noir px-8 md:px-12 py-4 md:py-5 label-eyebrow hover:bg-ivoire transition-colors">
-            {t("cta.confirm_presence")}
-          </Link>
+          <div className="flex flex-wrap justify-center gap-3 md:gap-4">
+            <Link to="/billetterie" data-testid="home-final-cta" className="inline-block bg-or text-noir px-8 md:px-12 py-4 md:py-5 label-eyebrow hover:bg-ivoire transition-colors">
+              {t("cta.reserve")}
+            </Link>
+            <Link to="/cercle-restreint" data-testid="home-final-cercle" className="inline-block border border-or text-or px-8 md:px-12 py-4 md:py-5 label-eyebrow hover:bg-or hover:text-noir transition-colors">
+              {t("cta.join_circle")}
+            </Link>
+          </div>
         </div>
       </section>
     </div>
