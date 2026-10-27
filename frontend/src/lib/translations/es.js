@@ -1,5 +1,5 @@
 const es = {
-  nav: { home: "Inicio", concept: "Concepto", prix: "Los 7 Premios", billetterie: "Entradas", cercle: "Círculo", mecenat: "Mecenazgo", partenaires: "Socios", soumettre: "Proponer", casting: "Casting" },
+  nav: { home: "Inicio", concept: "Concepto", concours: "Concurso", prix: "Los 7 Premios", billetterie: "Entradas", cercle: "Círculo", mecenat: "Mecenazgo", partenaires: "Socios", soumettre: "Proponer", casting: "Casting" },
   cta: { confirm: "Confirmar", reserve: "Reservar plaza", join_circle: "Unirse al Círculo", become_patron: "Ser mecenas", confirm_presence: "Confirmar mi presencia", public_billet: "Entradas públicas", discover: "Descubrir" },
   hero: { chapter: "Capítulo I · Sábado 10 de abril de 2027 · París", tagline: "Una experiencia gastronómica y cultural inmersiva · Cocina, Cultura, Música, Arte, Moda, Cine y Literatura.", note: "Más que un evento. Una huella cultural." },
   footer: { rights: "Todos los derechos reservados", powered: "Powered by", staff_access: "Acceso equipo ↗", baseline: "Cook & Food Gala · más que un evento, una huella cultural.", date_place: "10 de abril de 2027 · París", powered_by_label: "Impulsado por", contact: "Contacto" },
@@ -81,6 +81,7 @@ const es = {
     submit: "Enviar mi solicitud →", note: "Examen en 7 días · mensaje firmado Cook & Food Gala by Factory Maker Studio & CVLN Group",
     s_label: "Solicitud recibida", s_body: "Referencia confidencial", s_body2: "La dirección le responderá personalmente.", s_wa: "+596 696 78 89 86 · WhatsApp dedicado al Círculo", sent_toast: "Solicitud enviada.",
   },
+  concours: {eyebrow: "Concurso · Herencia & Creación", title: "El duelo de los chefs.", intro: "Chefs de la diáspora compiten en torno a un producto emblemático, entre receta heredada y creación contemporánea. Final en directo el 10 de abril de 2027, en las dos islas de cocina.", criteria: "Sabor · Técnica · Creatividad · La historia que cuenta el plato", finalists: "Los finalistas", empty: "Los finalistas se anunciarán en marzo de 2027.", vote_open: "La votación del público está abierta · un voto por persona.", vote_closed: "La votación del público aún no está abierta.", vote: "Votar →", vote_ok: "Gracias, su voto ha sido registrado.", chosen: "Su elección", apply: "¿Es usted chef? Presente su candidatura →" },
   billetterie: {
     eyebrow: "Entradas · París · 10.04.2027", title: "Reservar una plaza.",
     intro: "Una noche · un escenario · siete disciplinas. Elija primero la naturaleza de su presencia · el detalle vendrá después.",

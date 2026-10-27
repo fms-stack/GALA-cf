@@ -9,6 +9,7 @@ const NAV_KEYS = [
   { to: "/", key: "home", end: true },
   { to: "/concept", key: "concept" },
   { to: "/prix", key: "prix" },
+  { to: "/concours", key: "concours" },
   { to: "/billetterie", key: "billetterie" },
   { to: "/founders-circle", key: "cercle" },
   { to: "/mecenat", key: "mecenat" },

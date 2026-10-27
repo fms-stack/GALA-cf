@@ -9,6 +9,7 @@ import AdminLayout from "@/layouts/AdminLayout";
 import Home from "@/pages/public/Home";
 import Concept from "@/pages/public/Concept";
 import Prix from "@/pages/public/Prix";
+import ConcoursPublic from "@/pages/public/Concours";
 import Partenaires from "@/pages/public/Partenaires";
 import RSVP from "@/pages/public/RSVP";
 import Contact from "@/pages/public/Contact";
@@ -33,6 +34,7 @@ import Bible from "@/pages/admin/Bible";
 import Inner from "@/pages/admin/Inner";
 import Ticketing from "@/pages/admin/Ticketing";
 import Checkin from "@/pages/admin/Checkin";
+import ConcoursAdmin from "@/pages/admin/Concours";
 import "@/App.css";
 
 function Protected({ children }) {
@@ -54,6 +56,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/concept" element={<Concept />} />
               <Route path="/prix" element={<Prix />} />
+              <Route path="/concours" element={<ConcoursPublic />} />
               <Route path="/partenaires" element={<Partenaires />} />
               <Route path="/rsvp" element={<RSVP />} />
               <Route path="/billetterie" element={<Billetterie />} />
@@ -85,6 +88,7 @@ function App() {
               <Route path="/admin/inner" element={<Inner />} />
               <Route path="/admin/billetterie" element={<Ticketing />} />
               <Route path="/admin/checkin" element={<Checkin />} />
+              <Route path="/admin/concours" element={<ConcoursAdmin />} />
             </Route>
 
             <Route path="*" element={<Navigate to="/" replace />} />

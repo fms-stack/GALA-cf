@@ -1,5 +1,5 @@
 const ht = {
-  nav: { home: "Akèy", concept: "Konsèp", prix: "7 Pri yo", billetterie: "Tikè", cercle: "Sèk la", mecenat: "Mesena", partenaires: "Patnè", soumettre: "Soumèt", casting: "Kasting" },
+  nav: { home: "Akèy", concept: "Konsèp", concours: "Konkou", prix: "7 Pri yo", billetterie: "Tikè", cercle: "Sèk la", mecenat: "Mesena", partenaires: "Patnè", soumettre: "Soumèt", casting: "Kasting" },
   cta: { confirm: "Konfime", reserve: "Rezève yon plas", join_circle: "Antre nan Sèk la", become_patron: "Vin mesèn", confirm_presence: "Konfime prezans mwen", public_billet: "Tikè piblik", discover: "Dekouvri" },
   hero: { chapter: "Chapit I · Samdi 10 Avril 2027 · Pari", tagline: "Yon eksperyans gastwonomik ak kiltirèl imèsif · Kwizin, Kilti, Mizik, Atizay, Mòd, Sinema ak Literati.", note: "Plis pase yon evènman, yon mak kiltirèl." },
   footer: { rights: "Tout dwa rezève", powered: "Powered by", staff_access: "Aksè ekip ↗", baseline: "Cook & Food Gala · plis pase yon evènman, yon mak kiltirèl.", date_place: "10 Avril 2027 · Pari", powered_by_label: "Pouse pa", contact: "Kontak" },
@@ -81,6 +81,7 @@ const ht = {
     submit: "Soumèt demann mwen →", note: "Egzamen nan 7 jou · mesaj siyen Cook & Food Gala by Factory Maker Studio & CVLN Group",
     s_label: "Demann resevwa", s_body: "Referans konfidansyèl", s_body2: "Direksyon an ap tounen vin jwenn ou pèsonèlman.", s_wa: "+596 696 78 89 86 · WhatsApp dedye pou Sèk la", sent_toast: "Demann voye.",
   },
+  concours: {eyebrow: "Konkou · Eritaj & Kreyasyon", title: "Dyèl chèf yo.", intro: "Chèf dyaspora a ap konpetisyone sou yon pwodwi senbolik, ant resèt eritaj ak kreyasyon kontanporen. Final an dirèk 10 avril 2027, sou de zile kwizin yo.", criteria: "Gou · Teknik · Kreyativite · Istwa plat la rakonte", finalists: "Finalis yo", empty: "Nou pral anonse finalis yo an mas 2027.", vote_open: "Vòt piblik la louvri · yon vòt pa moun.", vote_closed: "Vòt piblik la poko louvri.", vote: "Vote →", vote_ok: "Mèsi, nou anrejistre vòt ou.", chosen: "Chwa ou", apply: "Ou se chèf? Poze kandidati ou →" },
   billetterie: {
     eyebrow: "Tikè · Pari · 10.04.2027", title: "Rezève yon plas.",
     intro: "Yon nwit · yon sèn · sèt disiplin. Chwazi dabò nati prezans ou · detay yo ap vini apre.",

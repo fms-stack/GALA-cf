@@ -1067,6 +1067,8 @@ async def invalid_objectid_handler(request, exc):
 from phases import create_phase4_router, seed_ecosystem_nodes
 app.include_router(create_phase4_router(db, get_current_user, require_role, audit, doc_out))
 app.include_router(create_ticketing_router(db, require_role, audit, doc_out))
+from competition import create_competition_router, ensure_indexes as competition_indexes
+app.include_router(create_competition_router(db, require_role, audit, doc_out))
 
 
 @app.middleware("http")
@@ -1096,6 +1098,7 @@ async def on_startup():
     await db.tickets.create_index("code", unique=True)
     await db.tickets.create_index("session_id")
     await db.payment_transactions.create_index("session_id")
+    await competition_indexes(db)
     await seed_admin()
     await seed_positions()
     await seed_ecosystem_nodes(db, audit)

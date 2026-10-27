@@ -1,5 +1,5 @@
 const ja = {
-  nav: { home: "ホーム", concept: "コンセプト", prix: "7つの賞", billetterie: "チケット", cercle: "サークル", mecenat: "メセナ", partenaires: "パートナー", soumettre: "応募", casting: "キャスティング" },
+  nav: { home: "ホーム", concept: "コンセプト", concours: "コンテスト", prix: "7つの賞", billetterie: "チケット", cercle: "サークル", mecenat: "メセナ", partenaires: "パートナー", soumettre: "応募", casting: "キャスティング" },
   cta: { confirm: "確認する", reserve: "席を予約", join_circle: "サークルに参加", become_patron: "メセナになる", confirm_presence: "出席を確認", public_billet: "一般チケット", discover: "見る" },
   hero: { chapter: "第一章 · 2027年4月10日（土）· パリ", tagline: "没入型の美食と文化の体験 · 料理、文化、音楽、アート、ファッション、映画、文学。", note: "イベントを超えた、文化の刻印。" },
   footer: { rights: "全著作権所有", powered: "Powered by", staff_access: "チーム入口 ↗", baseline: "Cook & Food Gala · イベントを超えた、文化の刻印。", date_place: "2027年4月10日 · パリ", powered_by_label: "提供", contact: "お問い合わせ" },
@@ -81,6 +81,7 @@ const ja = {
     submit: "申請を送る →", note: "7日以内に審査 · 署名 Cook & Food Gala by Factory Maker Studio & CVLN Group",
     s_label: "申請を受領", s_body: "機密参照番号", s_body2: "運営より直接ご連絡いたします。", s_wa: "+596 696 78 89 86 · サークル専用WhatsApp", sent_toast: "申請を送信しました。",
   },
+  concours: {eyebrow: "コンテスト · 継承と創造", title: "シェフの対決。", intro: "ディアスポラのシェフたちが象徴的な食材をめぐり、受け継がれたレシピと現代の創作の間で競い合います。決勝は2027年4月10日、2つのキッチンアイランドで生中継。", criteria: "味 · 技術 · 創造性 · 料理が語る物語", finalists: "ファイナリスト", empty: "ファイナリストは2027年3月に発表されます。", vote_open: "一般投票受付中 · お一人様1票。", vote_closed: "一般投票はまだ始まっていません。", vote: "投票する →", vote_ok: "ありがとうございます。投票を受け付けました。", chosen: "あなたの選択", apply: "シェフの方へ：応募する →" },
   billetterie: {
     eyebrow: "チケット · パリ · 10.04.2027", title: "席を予約する。",
     intro: "一夜 · 一つのステージ · 七つの分野。まずご臨席のかたちをお選びください · 詳細は後ほど。",

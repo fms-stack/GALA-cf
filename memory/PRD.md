@@ -76,3 +76,8 @@ Voir `/app/memory/test_credentials.md` — admin Laurent, production, juridique 
 - `backend/mailer.py` : envoi réel via Resend dès que `RESEND_API_KEY` est renseignée (`RESEND_FROM` = expéditeur sur domaine vérifié). Mock sinon.
 - Front : cartes « Complet / Vente close / Plus que N places », billets affichés après paiement, page `/billet/:code`, back-office `/admin/billetterie` (ventes, recettes, jauge) et `/admin/checkin` (douchette, saisie, caméra).
 - Reste à faire avant ouverture : clés Stripe live + Resend, domaine `cfceremony.com`, achat réel de bout en bout.
+
+## Concours Héritage & Création (2026-10-27)
+- `backend/competition.py` : chefs (candidat → qualifié → finaliste → lauréat / éliminé), jury, notation par épreuve (qualifications, finale) sur 4 critères pondérés (goût 35 %, technique 25 %, créativité 20 %, récit 20 %), classement, vote du public (finalistes uniquement, une voix par e-mail, ouverture/fermeture par l'admin).
+- Front : page publique `/concours` (9 langues, finalistes + vote) et back-office `/admin/concours` (chefs, jury, notation, classement).
+- Limite connue : le vote du public n'a pas de vérification d'e-mail (une adresse = une voix) · à durcir avant ouverture (lien de confirmation par e-mail).
