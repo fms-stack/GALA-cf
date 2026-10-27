@@ -93,6 +93,7 @@ const ht = {
       lateral: { eyebrow: "Sou kote", body: "Zòn kanpe · anbyans imèsif toupre zile kwizin yo." },
     },
     sold_out: "Fini", closed: "Vant fèmen", remaining: "Rete sèlman {n} plas", tickets_title: "Tikè ou yo.", ticket_open: "Louvri tikè a →", ticket_label: "Tikè nominatif", ticket_hint: "Montre QR kòd sa a nan antre a · yon tikè = yon antre.", ticket_used: "Tikè sa a deja itilize", ticket_not_found: "Nou pa jwenn tikè a.", seat: "Plas",
+    image_consent: "Mwen konnen yo ap filme ak fotografye Gala a pou difizyon (seri TV, rezo, laprès) epi mwen dakò imaj mwen ka parèt ladan l. Ou ka opoze nenpòt ki lè: contact@cookandfood.gala.",
     back: "← Chanje kategori", qty: "Kantite plas", total: "Total pou peye",
     pay: "Peye epi rezève →", redirect: "Redireksyon Stripe…", secure: "Peman sekirize atravè Stripe Checkout. Y ap redirije w.",
     s_paid_label: "Peman konfime", s_paid_title: "Byenveni.", s_paid_body: "Plas ou rezève. Yon imèl konfimasyon ap rive jwenn ou.",

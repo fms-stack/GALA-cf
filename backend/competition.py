@@ -35,6 +35,8 @@ class ChefIn(BaseModel):
     photo_url: Optional[str] = Field(default="", max_length=500)
     email: Optional[str] = Field(default="", max_length=200)
     status: Literal["candidat", "qualifie", "finaliste", "laureat", "elimine"] = "candidat"
+    # Autorisation de droit à l'image (contrat « Chef Invité + CIP ») · requise avant tournage et publication
+    image_release: Literal["aucune", "envoyee", "signee"] = "aucune"
 
 
 class JurorIn(BaseModel):
@@ -104,7 +106,8 @@ def create_competition_router(db, require_role, audit, doc_out):
     async def update_chef(cid: str, payload: ChefIn, user: dict = Depends(staff)):
         await get_chef(cid)
         await db.competition_chefs.update_one({"_id": ObjectId(cid)}, {"$set": payload.model_dump()})
-        await audit(user["id"], "chef_update", "competition_chef", cid, {"status": payload.status})
+        await audit(user["id"], "chef_update", "competition_chef", cid,
+                    {"status": payload.status, "image_release": payload.image_release})
         return {"ok": True}
 
     @router.delete("/competition/chefs/{cid}")
@@ -172,6 +175,7 @@ def create_competition_router(db, require_role, audit, doc_out):
             n = len(mine)
             rows.append({
                 "chef_id": cid, "name": c["name"], "origin": c.get("origin", ""), "status": c.get("status"),
+                "image_release": c.get("image_release", "aucune"),
                 "scores": n,
                 "total": round(sum(s["total"] for s in mine) / n, 2) if n else None,
                 "criteria": {k: round(sum(float(s[k]) for s in mine) / n, 2) if n else None for k in CRITERIA},
@@ -195,7 +199,8 @@ def create_competition_router(db, require_role, audit, doc_out):
 
     @router.get("/public/competition")
     async def public_competition():
-        items = await db.competition_chefs.find({"status": {"$in": list(PUBLIC_STATUSES)}}).sort("name", 1).to_list(50)
+        items = await db.competition_chefs.find(
+            {"status": {"$in": list(PUBLIC_STATUSES)}, "image_release": "signee"}).sort("name", 1).to_list(50)
         return {**(await get_settings()), "finalists": [public_chef(c) for c in items]}
 
     @router.post("/public/competition/vote")
@@ -205,7 +210,8 @@ def create_competition_router(db, require_role, audit, doc_out):
         if not (await get_settings())["vote_open"]:
             raise HTTPException(status_code=403, detail="Le vote du public n'est pas ouvert")
         try:
-            chef = await db.competition_chefs.find_one({"_id": ObjectId(payload.chef_id), "status": {"$in": list(PUBLIC_STATUSES)}})
+            chef = await db.competition_chefs.find_one({"_id": ObjectId(payload.chef_id), "status": {"$in": list(PUBLIC_STATUSES)},
+                                                         "image_release": "signee"})
         except Exception:
             chef = None
         if not chef:

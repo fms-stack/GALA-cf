@@ -155,7 +155,7 @@ def test_checkout_qty_99():
 
 
 def test_checkout_valid_session():
-    r = requests.post(f"{BASE}/public/checkout/session", json={"package_id": "gradin", "quantity": 1, "origin_url": BASE_URL, "full_name": "TEST U", "email": "t@u.io"}, timeout=30)
+    r = requests.post(f"{BASE}/public/checkout/session", json={"package_id": "gradin", "quantity": 1, "origin_url": BASE_URL, "full_name": "TEST U", "email": "t@u.io", "image_consent": True}, timeout=30)
     print("valid checkout:", r.status_code, r.text[:200])
     assert r.status_code == 200 and "url" in r.json()
 

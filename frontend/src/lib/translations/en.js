@@ -94,6 +94,7 @@ const en = {
       lateral: { eyebrow: "Side", body: "Standing zone · immersive atmosphere close to the kitchen islands." },
     },
     sold_out: "Sold out", closed: "Sales closed", remaining: "Only {n} seats left", tickets_title: "Your tickets.", ticket_open: "Open ticket →", ticket_label: "Named ticket", ticket_hint: "Show this QR code at the entrance · one ticket = one entry.", ticket_used: "Ticket already used", ticket_not_found: "Ticket not found.", seat: "Seat",
+    image_consent: "I understand that the Gala is filmed and photographed for broadcast (TV series, social media, press) and I accept that my image may appear. You may object at any time: contact@cookandfood.gala.",
     back: "← Change category", qty: "Number of seats", total: "Total due",
     pay: "Pay and reserve →", redirect: "Redirecting to Stripe…", secure: "Secure payment via Stripe Checkout. You will be redirected.",
     s_paid_label: "Payment confirmed", s_paid_title: "Welcome.", s_paid_body: "Your seat is reserved. A confirmation e-mail is on its way.",

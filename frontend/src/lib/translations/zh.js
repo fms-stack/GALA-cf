@@ -93,6 +93,7 @@ const zh = {
       lateral: { eyebrow: "侧区", body: "站立区 · 紧邻烹饪岛的沉浸式氛围。" },
     },
     sold_out: "已售罄", closed: "已停售", remaining: "仅剩 {n} 个席位", tickets_title: "您的门票。", ticket_open: "打开门票 →", ticket_label: "实名门票", ticket_hint: "入场时出示此二维码 · 一票一人次。", ticket_used: "门票已使用", ticket_not_found: "未找到门票。", seat: "席位",
+    image_consent: "我已知悉本盛典将被拍摄录制用于传播（电视剧集、社交媒体、新闻），并同意我的肖像可能出现在其中。可随时提出异议：contact@cookandfood.gala。",
     back: "← 更换类别", qty: "席位数量", total: "应付总额",
     pay: "支付并预订 →", redirect: "正在跳转Stripe…", secure: "通过Stripe Checkout安全支付。即将跳转。",
     s_paid_label: "支付已确认", s_paid_title: "欢迎。", s_paid_body: "您的席位已预订。确认邮件即将送达。",

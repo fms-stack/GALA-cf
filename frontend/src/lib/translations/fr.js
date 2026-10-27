@@ -94,6 +94,7 @@ const fr = {
       lateral: { eyebrow: "Latéral", body: "Zone debout · ambiance immersive proche des îlots cuisine." },
     },
     sold_out: "Complet", closed: "Vente close", remaining: "Plus que {n} places", tickets_title: "Vos billets.", ticket_open: "Ouvrir le billet →", ticket_label: "Billet nominatif", ticket_hint: "Présentez ce QR code à l'entrée · un billet = une entrée.", ticket_used: "Billet déjà utilisé", ticket_not_found: "Billet introuvable.", seat: "Place",
+    image_consent: "J'ai pris connaissance que le Gala est filmé et photographié pour sa diffusion (série TV, réseaux, presse) et j'accepte que mon image puisse y apparaître. Opposition possible à tout moment : contact@cookandfood.gala.",
     back: "← Changer de catégorie", qty: "Nombre de places", total: "Total à régler",
     pay: "Payer et réserver →", redirect: "Redirection Stripe…", secure: "Paiement sécurisé via Stripe Checkout. Vous serez redirigé.",
     s_paid_label: "Paiement confirmé", s_paid_title: "Bienvenue.", s_paid_body: "Votre place est réservée. Un e-mail de confirmation vous parviendra.",

@@ -24,7 +24,7 @@ from emergentintegrations.payments.stripe.checkout import (
     StripeCheckout, CheckoutSessionRequest, CheckoutSessionResponse, CheckoutStatusResponse,
 )
 from mailer import send_email
-from ticketing import availability, reserve_check, issue_tickets, create_ticketing_router
+from ticketing import availability, reserve_check, issue_tickets, create_ticketing_router, IMAGE_NOTICE_VERSION
 
 
 # ============================================================================
@@ -246,6 +246,7 @@ class CheckoutCreateIn(BaseModel):
     origin_url: str
     full_name: str = Field(min_length=2, max_length=120)
     email: EmailStr
+    image_consent: bool = False  # captation du Gala acceptée (case à cocher obligatoire)
 
 
 # ============================================================================
@@ -742,6 +743,8 @@ async def public_tickets():
 
 @api_router.post("/public/checkout/session")
 async def create_checkout_session(payload: CheckoutCreateIn, request: Request):
+    if not payload.image_consent:
+        raise HTTPException(status_code=400, detail="Merci d'accepter les conditions de captation de l'événement")
     pkg = await reserve_check(db, payload.package_id, int(payload.quantity))
     amount = float(pkg["amount"]) * int(payload.quantity)
     api_key = os.environ.get("STRIPE_API_KEY", "")
@@ -774,6 +777,7 @@ async def create_checkout_session(payload: CheckoutCreateIn, request: Request):
         "payment_status": "initiated",
         "status": "open",
         "metadata": metadata,
+        "image_consent": {"accepted": True, "version": IMAGE_NOTICE_VERSION, "at": datetime.now(timezone.utc).isoformat()},
         "created_at": datetime.now(timezone.utc).isoformat(),
     })
     return {"url": session.url, "session_id": session.session_id}

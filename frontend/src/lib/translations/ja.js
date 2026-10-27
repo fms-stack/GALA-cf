@@ -93,6 +93,7 @@ const ja = {
       lateral: { eyebrow: "サイド", body: "スタンディングゾーン · キッチンアイランドに近い没入空間。" },
     },
     sold_out: "完売", closed: "販売終了", remaining: "残り {n} 席", tickets_title: "あなたのチケット。", ticket_open: "チケットを開く →", ticket_label: "記名チケット", ticket_hint: "入口でこのQRコードを提示してください · 1枚につき1回入場。", ticket_used: "使用済みのチケット", ticket_not_found: "チケットが見つかりません。", seat: "席",
+    image_consent: "ガラが放送（TVシリーズ、SNS、報道）のために撮影されることを理解し、自分の姿が映る可能性に同意します。異議はいつでも可能です：contact@cookandfood.gala。",
     back: "← カテゴリーを変更", qty: "席数", total: "お支払い合計",
     pay: "支払って予約 →", redirect: "Stripeへ移動中…", secure: "Stripe Checkoutによる安全な決済。リダイレクトされます。",
     s_paid_label: "決済確認済み", s_paid_title: "ようこそ。", s_paid_body: "お席は予約されました。確認メールが届きます。",

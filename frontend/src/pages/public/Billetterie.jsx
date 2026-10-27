@@ -12,6 +12,7 @@ export default function Billetterie() {
   const [qty, setQty] = useState(1);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [consent, setConsent] = useState(false);
   const [loading, setLoading] = useState(false);
   const { t } = useI18n();
 
@@ -27,7 +28,7 @@ export default function Billetterie() {
     try {
       const origin_url = window.location.origin;
       const { data } = await api.post("/public/checkout/session", {
-        package_id: pkg.id, quantity: Number(qty), origin_url, full_name: name, email,
+        package_id: pkg.id, quantity: Number(qty), origin_url, full_name: name, email, image_consent: consent,
       });
       window.location.href = data.url;
     } catch (err) {
@@ -111,7 +112,11 @@ export default function Billetterie() {
                     {total} €
                   </motion.div>
                 </Field>
-                <button type="submit" disabled={loading || !pkg} data-testid="bill-submit" className="col-span-2 bg-or text-noir py-4 label-eyebrow hover:bg-ivoire transition-colors disabled:opacity-60 mt-4">
+                <label className="col-span-2 flex items-start gap-3 text-xs text-sable leading-relaxed cursor-pointer" data-testid="bill-consent-label">
+                  <input type="checkbox" required checked={consent} onChange={(e) => setConsent(e.target.checked)} className="mt-0.5 accent-or" data-testid="bill-consent" />
+                  <span>{t("billetterie.image_consent")}</span>
+                </label>
+                <button type="submit" disabled={loading || !pkg || !consent} data-testid="bill-submit" className="col-span-2 bg-or text-noir py-4 label-eyebrow hover:bg-ivoire transition-colors disabled:opacity-60 mt-4">
                   {loading ? t("billetterie.redirect") : t("billetterie.pay")}
                 </button>
                 <p className="col-span-2 text-xs opacity-50 italic">{t("billetterie.secure")}</p>

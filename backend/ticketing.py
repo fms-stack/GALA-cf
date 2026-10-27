@@ -21,6 +21,8 @@ logger = logging.getLogger(__name__)
 
 FRONTEND_URL = os.environ.get("FRONTEND_URL", "http://localhost:3000")
 HOLD_MINUTES = 30
+# Version du texte d'information sur la captation affiché à l'achat (à incrémenter si le texte change)
+IMAGE_NOTICE_VERSION = "2026-10-27"
 
 # Jauge publique Chapter I : 800 places (les 120 VIP passent par le Cercle, hors billetterie).
 # Répartition par défaut · ajustable dans le back-office une fois le plan de salle validé.
@@ -163,6 +165,7 @@ async def issue_tickets(db, session_id: str) -> list:
         "seat_index": i + 1,
         "status": "valid",
         "checked_in_at": None,
+        "image_consent": rec.get("image_consent"),
         "created_at": now,
     } for i in range(int(rec.get("quantity") or 1))]
     await db.tickets.insert_many(docs)

@@ -93,6 +93,7 @@ const es = {
       lateral: { eyebrow: "Lateral", body: "Zona de pie · ambiente inmersivo cerca de las islas de cocina." },
     },
     sold_out: "Agotado", closed: "Venta cerrada", remaining: "Solo quedan {n} plazas", tickets_title: "Sus entradas.", ticket_open: "Abrir la entrada →", ticket_label: "Entrada nominativa", ticket_hint: "Presente este código QR en la entrada · una entrada = un acceso.", ticket_used: "Entrada ya utilizada", ticket_not_found: "Entrada no encontrada.", seat: "Plaza",
+    image_consent: "He sido informado/a de que la Gala se filma y fotografía para su difusión (serie TV, redes, prensa) y acepto que mi imagen pueda aparecer. Oposición posible en todo momento: contact@cookandfood.gala.",
     back: "← Cambiar de categoría", qty: "Número de plazas", total: "Total a pagar",
     pay: "Pagar y reservar →", redirect: "Redirigiendo a Stripe…", secure: "Pago seguro vía Stripe Checkout. Será redirigido.",
     s_paid_label: "Pago confirmado", s_paid_title: "Bienvenido.", s_paid_body: "Su plaza está reservada. Recibirá un e-mail de confirmación.",

@@ -8,7 +8,8 @@ const STATUSES = [
 ];
 const CRITERIA = [["gout", "Goût"], ["technique", "Technique"], ["creativite", "Créativité"], ["recit", "Récit"]];
 const ROUNDS = [["qualifications", "Qualifications"], ["finale", "Finale"]];
-const EMPTY_CHEF = { name: "", origin: "", specialty: "", bio: "", photo_url: "", email: "", status: "candidat" };
+const EMPTY_CHEF = { name: "", origin: "", specialty: "", bio: "", photo_url: "", email: "", status: "candidat", image_release: "aucune" };
+const RELEASES = [["aucune", "Non envoyée"], ["envoyee", "Envoyée"], ["signee", "Signée"]];
 const EMPTY_SCORE = { gout: "", technique: "", creativite: "", recit: "" };
 
 const inp = "border border-sable bg-white/60 px-3 py-2 text-sm";
@@ -46,7 +47,9 @@ export default function Concours() {
     e.preventDefault();
     if (await call(() => api.post("/competition/chefs", chefForm), "Chef ajouté")) setChefForm(EMPTY_CHEF);
   };
-  const setStatus = (c, status) => call(() => api.put(`/competition/chefs/${c.id}`, { ...EMPTY_CHEF, ...c, status }), `${c.name} · ${status}`);
+  const patchChef = (c, patch, msg) => call(() => api.put(`/competition/chefs/${c.id}`, { ...EMPTY_CHEF, ...c, ...patch }), msg);
+  const setStatus = (c, status) => patchChef(c, { status }, `${c.name} · ${status}`);
+  const setRelease = (c, image_release) => patchChef(c, { image_release }, `${c.name} · autorisation ${image_release}`);
   const removeChef = (c) => window.confirm(`Supprimer ${c.name} et ses notes ?`) && call(() => api.delete(`/competition/chefs/${c.id}`), "Chef supprimé");
   const addJuror = async (e) => {
     e.preventDefault();
@@ -93,7 +96,7 @@ export default function Concours() {
           </form>
           <table className="w-full border border-sable bg-white/40" data-testid="table-chefs">
             <thead><tr className="border-b border-sable label-eyebrow opacity-60 text-left">
-              <th className="py-3 px-4">Chef</th><th className="py-3 px-4">Territoire</th><th className="py-3 px-4">Spécialité</th><th className="py-3 px-4">Statut</th>{isAdmin && <th />}
+              <th className="py-3 px-4">Chef</th><th className="py-3 px-4">Territoire</th><th className="py-3 px-4">Spécialité</th><th className="py-3 px-4">Statut</th><th className="py-3 px-4">Droit à l'image</th>{isAdmin && <th />}
             </tr></thead>
             <tbody>
               {chefs.map((c) => (
@@ -106,13 +109,19 @@ export default function Concours() {
                       {STATUSES.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
                     </select>
                   </td>
+                  <td className="py-3 px-4 text-sm">
+                    <select value={c.image_release || "aucune"} onChange={(e) => setRelease(c, e.target.value)} data-testid={`chef-release-${c.id}`}
+                      className={`${inp} ${c.image_release === "signee" ? "" : "border-red-700 text-red-800"}`}>
+                      {RELEASES.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
+                    </select>
+                  </td>
                   {isAdmin && <td className="py-3 px-4"><button onClick={() => removeChef(c)} className="text-xs underline opacity-60">Supprimer</button></td>}
                 </tr>
               ))}
-              {chefs.length === 0 && <tr><td colSpan={5} className="py-10 text-center opacity-60">Aucun chef. Les candidatures « chef » arrivent dans Réceptions publiques · Casting.</td></tr>}
+              {chefs.length === 0 && <tr><td colSpan={6} className="py-10 text-center opacity-60">Aucun chef. Les candidatures « chef » arrivent dans Réceptions publiques · Casting.</td></tr>}
             </tbody>
           </table>
-          <p className="text-xs opacity-60 mt-3">Seuls les finalistes et lauréats apparaissent sur la page publique /concours (sans leur e-mail).</p>
+          <p className="text-xs opacity-60 mt-3">Seuls les finalistes et lauréats dont l'autorisation de droit à l'image est signée apparaissent sur la page publique /concours (sans leur e-mail). Aucun chef ne doit être filmé avant signature du contrat « Chef Invité + CIP » (menu Contrats & NDA).</p>
         </>
       )}
 
@@ -180,7 +189,7 @@ export default function Concours() {
               {board.rows.map((r, i) => (
                 <tr key={r.chef_id} className="border-b border-sable/40">
                   <td className="py-3 px-4 text-sm">{r.total == null ? "·" : i + 1}</td>
-                  <td className="py-3 px-4 text-sm">{r.name}<div className="text-xs opacity-60">{r.status}</div></td>
+                  <td className="py-3 px-4 text-sm">{r.name}<div className="text-xs opacity-60">{r.status}{r.image_release !== "signee" && <span className="text-red-800"> · autorisation image manquante</span>}</div></td>
                   {CRITERIA.map(([k]) => <td key={k} className="py-3 px-4 text-sm">{r.criteria[k] ?? "·"}</td>)}
                   <td className="py-3 px-4 serif-display text-2xl">{r.total ?? "·"}</td>
                   <td className="py-3 px-4 text-sm">{r.scores}/{board.jurors}</td>
