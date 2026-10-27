@@ -30,8 +30,8 @@ const ht = {
     eyebrow: "Konsèp ak ADN", title: "Kwizin, kilti, imaj · yon sèl nwit.",
     poles: [
       { title: "Vizyon ak ADN", body: "Zak fondasyon. Premye estanda gastwonomik ak kiltirèl pou dyaspora afro mondyal kontanporen an." },
-      { title: "Arèn Estidyo 360°", body: "Dekò panse pou kamera ak envite. Achitekti doub-pwodwi: Gala an dirèk + Seri TC'V." },
-      { title: "Plan sèn", body: "Sèn santral awondi, de zile kwizin, 120 plas VIP an ak, gradò, zòn sou kote, rejì TC'V." },
+      { title: "Arèn Estidyo 360°", body: "Dekò panse pou kamera ak envite. Achitekti doub-pwodwi: Gala an dirèk + Seri TV." },
+      { title: "Plan sèn", body: "Sèn santral awondi, de zile kwizin, 120 plas VIP an ak, gradò, zòn sou kote, rejì TV." },
       { title: "Run of Show", body: "18h30 ouvèti piblik → 22h00 seremoni pri yo → 00h00 rezotaj estratejik. Milimetre." },
       { title: "Sèt Pòl", body: "Direksyon · Atistik · Kasting · Teknik · Seri · DataTech · Kominikasyon. 25 pòs konfime." },
       { title: "Trajectwa", body: "Chapter I (2027) · Chapter II (2028) · Chapter III (2029) · trajectwa IPO." },
@@ -55,7 +55,7 @@ const ht = {
     eyebrow: "Ekosistèm", title: "Twa poto, yon estanda.",
     partners: [
       { role: "Pwopriyetè IP · Gouvènans", body: "Konglomera kiltirèl afro, pwopriyetè IP Gala a · Gala a prezante ekosistèm nan." },
-      { role: "Pwodiktè Egzekitif · Direksyon atistik", body: "Pwodiksyon egzekitif, direksyon atistik, premye difizyon TC'V." },
+      { role: "Pwodiktè Egzekitif · Direksyon atistik", body: "Pwodiksyon egzekitif, direksyon atistik, premye difizyon TV." },
       { role: "CIP · Estanda kilinè", body: "Nòm silansye, premye seremoni CIP · zak fondatè yon estanda entènasyonal." },
     ],
     inst_label: "Patnè enstitisyonèl vize",
@@ -119,9 +119,9 @@ const ht = {
   },
   sponsoring: {
     eyebrow: "Vin patnè", title: "Enskri mak ou|nan fondasyon an.",
-    intro: "Cook & Food Gala · Chapter I adrese 800–1000 envite, ak 120 VIP ladan yo. Odyans dijital ak difizyon TC'V ap vini. Patenarya a ouvri aksè a yon kapital kiltirèl san parèy.",
+    intro: "Cook & Food Gala · Chapter I adrese 800–1000 envite, ak 120 VIP ladan yo. Odyans dijital ak difizyon TV ap vini. Patenarya a ouvri aksè a yon kapital kiltirèl san parèy.",
     tiers: {
-      titre: { label: "Sponsò Tit", body: "Liks · Spirits · Agro Premium · Kategori inik", price: "Kategori inik · sou dosye", perks: ["Dwa non Chapter I", "Koktèl prive nominatif", "5 plas VIP + tab donè", "Mansyon difizyon TC'V"] },
+      titre: { label: "Sponsò Tit", body: "Liks · Spirits · Agro Premium · Kategori inik", price: "Kategori inik · sou dosye", perks: ["Dwa non Chapter I", "Koktèl prive nominatif", "5 plas VIP + tab donè", "Mansyon difizyon TV"] },
       or: { label: "Sponsò Lò", body: "Teknoloji · Fintech · Medya", price: "Sou dosye", perks: ["Vizibilite senografi", "3 plas VIP", "Prezans dijital", "Logo difizyon"] },
       argent: { label: "Sponsò Ajan", body: "Otèl · Touris · Mòd", price: "Sou dosye", perks: ["Prezans dijital", "2 plas VIP", "Mansyon nan dosye laprès"] },
       partenaire: { label: "Patnè", body: "Laprès · Kilti · Enstitisyon", price: "Echanj vizibilite", perks: ["Logo cfceremony.com", "2 plas gradò", "Aksè rezotaj"] },
@@ -137,12 +137,12 @@ const ht = {
   },
   mecenat: {
     eyebrow: "Mesena", title: "Sipòte|fondasyon an.",
-    intro: "Cook & Food Gala finanse 7 Pri CF-GAP yo, kaptasyon TC'V la, pwogram Bible la ak enfrastrikti kiltirèl alontèm nan. Chak don sipòte yon estanda k ap fèt.",
+    intro: "Cook & Food Gala finanse 7 Pri CF-GAP yo, kaptasyon TV la, pwogram Bible la ak enfrastrikti kiltirèl alontèm nan. Chak don sipòte yon estanda k ap fèt.",
     fiscal_label: "Kad fiskal",
     fiscal_body: "Resi fiskal bay sou demann. Don yo elijib dapre atik 200 ak 238 bis Kòd Jeneral Enpo fransè a, atravè estrikti patnè nou an ki rekonèt itilite piblik.",
     council_label: "Liy dedye", council_note: "mecenat@cookandfood.gala · repons 24è",
     amount_label: "Montan sijere", custom_ph: "Oswa antre yon montan…", purpose: "Afektasyon",
-    purposes: { general: "Sipò jeneral", prizes: "Dotasyon 7 Pri CF-GAP yo", casting: "Kasting jèn talan", series: "Pwodiksyon seri TC'V", bible: "Pwogram Bible ak achiv" },
+    purposes: { general: "Sipò jeneral", prizes: "Dotasyon 7 Pri CF-GAP yo", casting: "Kasting jèn talan", series: "Pwodiksyon seri TV", bible: "Pwogram Bible ak achiv" },
     org: "Òganizasyon (si w vle)", submit: "Fè don mwen →", stripe: "Stripe…",
     secure: "Peman Stripe sekirize · resi fiskal nan 7 jou",
     s_label: "Don konfime", s_title: "Mèsi anpil anpil.", s_body: "Angajman w nouri fondasyon an. Yon resi ak yon mesaj siyen Cook & Food Gala by Factory Maker Studio & CVLN Group ap rive jwenn ou.",

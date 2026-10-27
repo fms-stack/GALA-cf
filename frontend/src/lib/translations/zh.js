@@ -30,8 +30,8 @@ const zh = {
     eyebrow: "概念与基因", title: "烹饪、文化、影像 · 只在一夜。",
     poles: [
       { title: "愿景与基因", body: "创始之举。为当代全球非洲侨民设立的首个美食与文化标准。" },
-      { title: "360°摄影棚竞技场", body: "为镜头与宾客而设计的场景。双产品架构：现场盛典 + TC'V剧集。" },
-      { title: "舞台布局", body: "中央环形舞台、两座烹饪岛、120个弧形VIP席、看台、侧区、TC'V导控室。" },
+      { title: "360°摄影棚竞技场", body: "为镜头与宾客而设计的场景。双产品架构：现场盛典 + TV剧集。" },
+      { title: "舞台布局", body: "中央环形舞台、两座烹饪岛、120个弧形VIP席、看台、侧区、TV导控室。" },
       { title: "流程安排", body: "18:30公众开放 → 22:00颁奖典礼 → 00:00战略社交。分秒必争。" },
       { title: "七大部门", body: "总监 · 艺术 · 选角 · 技术 · 剧集 · 数据科技 · 传播。25个已确认岗位。" },
       { title: "发展轨迹", body: "第一章（2027）· 第二章（2028）· 第三章（2029）· IPO轨迹。" },
@@ -55,7 +55,7 @@ const zh = {
     eyebrow: "生态体系", title: "三大支柱，一个标准。",
     partners: [
       { role: "知识产权持有者 · 治理", body: "非裔文化集团，盛典知识产权所有者 · 盛典呈现生态体系。" },
-      { role: "执行制片 · 艺术指导", body: "执行制作、艺术指导、TC'V首播。" },
+      { role: "执行制片 · 艺术指导", body: "执行制作、艺术指导、TV首播。" },
       { role: "CIP · 烹饪标准", body: "静默规范，首届CIP典礼 · 国际标准的创始之举。" },
     ],
     inst_label: "目标机构合作伙伴",
@@ -119,9 +119,9 @@ const zh = {
   },
   sponsoring: {
     eyebrow: "成为合作伙伴", title: "将您的品牌|铭刻于基石。",
-    intro: "Cook & Food Gala · 第一章面向800–1000位宾客，其中120位VIP。数字受众与TC'V转播即将到来。合作将开启无可比拟的文化资本。",
+    intro: "Cook & Food Gala · 第一章面向800–1000位宾客，其中120位VIP。数字受众与TV转播即将到来。合作将开启无可比拟的文化资本。",
     tiers: {
-      titre: { label: "冠名赞助商", body: "奢侈品 · 烈酒 · 高端农产 · 独占类别", price: "独占类别 · 凭案审议", perks: ["第一章冠名权", "私人冠名鸡尾酒会", "5个VIP席位+荣誉主桌", "TC'V转播提及"] },
+      titre: { label: "冠名赞助商", body: "奢侈品 · 烈酒 · 高端农产 · 独占类别", price: "独占类别 · 凭案审议", perks: ["第一章冠名权", "私人冠名鸡尾酒会", "5个VIP席位+荣誉主桌", "TV转播提及"] },
       or: { label: "金牌赞助商", body: "科技 · 金融科技 · 媒体", price: "凭案审议", perks: ["舞美可见度", "3个VIP席位", "数字曝光", "转播标识"] },
       argent: { label: "银牌赞助商", body: "酒店 · 旅游 · 时尚", price: "凭案审议", perks: ["数字曝光", "2个VIP席位", "新闻资料提及"] },
       partenaire: { label: "合作伙伴", body: "媒体 · 文化 · 机构", price: "曝光互换", perks: ["cfceremony.com标识", "2个看台席位", "社交通道"] },
@@ -137,12 +137,12 @@ const zh = {
   },
   mecenat: {
     eyebrow: "赞助", title: "支持|这项基业。",
-    intro: "Cook & Food Gala 资助七项CF-GAP大奖、TC'V拍摄、Bible计划及长期文化基础设施。每笔捐赠都在支持一个新生的标准。",
+    intro: "Cook & Food Gala 资助七项CF-GAP大奖、TV拍摄、Bible计划及长期文化基础设施。每笔捐赠都在支持一个新生的标准。",
     fiscal_label: "税务框架",
     fiscal_body: "可应要求开具税务收据。捐赠符合法国税法第200条及238 bis条规定，通过我们的公益合作机构办理。",
     council_label: "专属通道", council_note: "mecenat@cookandfood.gala · 24小时内回复",
     amount_label: "建议金额", custom_ph: "或输入金额…", purpose: "用途",
-    purposes: { general: "综合支持", prizes: "七项CF-GAP大奖基金", casting: "青年才俊选拔", series: "TC'V剧集制作", bible: "Bible与档案计划" },
+    purposes: { general: "综合支持", prizes: "七项CF-GAP大奖基金", casting: "青年才俊选拔", series: "TV剧集制作", bible: "Bible与档案计划" },
     org: "机构（可选）", submit: "捐赠 →", stripe: "Stripe…",
     secure: "Stripe安全支付 · 7日内开具税务收据",
     s_label: "捐赠已确认", s_title: "万分感谢。", s_body: "您的支持滋养着这项基业。收据及署名 Cook & Food Gala by Factory Maker Studio & CVLN Group 的信函即将送达。",

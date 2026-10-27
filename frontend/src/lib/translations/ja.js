@@ -30,8 +30,8 @@ const ja = {
     eyebrow: "コンセプトとDNA", title: "料理、文化、映像 · ただ一夜。",
     poles: [
       { title: "ビジョンとDNA", body: "創設の行為。現代の世界アフロ・ディアスポラのための初の美食・文化スタンダード。" },
-      { title: "360°スタジオアリーナ", body: "カメラとゲストのために設計された空間。二重プロダクト構造：ライブガラ + TC'Vシリーズ。" },
-      { title: "ステージプラン", body: "中央円形ステージ、二つのキッチンアイランド、弧状のVIP席120、観覧席、サイドゾーン、TC'Vコントロールルーム。" },
+      { title: "360°スタジオアリーナ", body: "カメラとゲストのために設計された空間。二重プロダクト構造：ライブガラ + TVシリーズ。" },
+      { title: "ステージプラン", body: "中央円形ステージ、二つのキッチンアイランド、弧状のVIP席120、観覧席、サイドゾーン、TVコントロールルーム。" },
       { title: "進行表", body: "18:30 一般開場 → 22:00 授賞式 → 00:00 戦略的ネットワーキング。分刻み。" },
       { title: "七つの部門", body: "ディレクション · アート · キャスティング · 技術 · シリーズ · DataTech · コミュニケーション。確定25ポスト。" },
       { title: "軌道", body: "Chapter I (2027) · Chapter II (2028) · Chapter III (2029) · IPO軌道。" },
@@ -55,7 +55,7 @@ const ja = {
     eyebrow: "エコシステム", title: "三本の柱、一つのスタンダード。",
     partners: [
       { role: "IP保有者 · ガバナンス", body: "アフロ文化コングロマリット、ガラのIP保有者 · ガラはエコシステムを提示する。" },
-      { role: "エグゼクティブプロデューサー · 芸術監督", body: "制作総指揮、芸術監督、TC'V初放送。" },
+      { role: "エグゼクティブプロデューサー · 芸術監督", body: "制作総指揮、芸術監督、TV初放送。" },
       { role: "CIP · 料理スタンダード", body: "静かな規範、初のCIP式典 · 国際スタンダードの創設行為。" },
     ],
     inst_label: "目標とする公的パートナー",
@@ -119,9 +119,9 @@ const ja = {
   },
   sponsoring: {
     eyebrow: "パートナーになる", title: "あなたのブランドを|礎に刻む。",
-    intro: "Cook & Food Gala · 第一章は800〜1000名（うちVIP120名）のゲストを迎える。デジタル観客とTC'V放送はこれから。パートナーシップは比類なき文化資本への扉を開く。",
+    intro: "Cook & Food Gala · 第一章は800〜1000名（うちVIP120名）のゲストを迎える。デジタル観客とTV放送はこれから。パートナーシップは比類なき文化資本への扉を開く。",
     tiers: {
-      titre: { label: "タイトルスポンサー", body: "ラグジュアリー · スピリッツ · プレミアム農産 · 単独カテゴリー", price: "単独カテゴリー · 審査制", perks: ["Chapter I ネーミングライツ", "プライベート冠カクテル", "VIP5席+メインテーブル", "TC'V放送での言及"] },
+      titre: { label: "タイトルスポンサー", body: "ラグジュアリー · スピリッツ · プレミアム農産 · 単独カテゴリー", price: "単独カテゴリー · 審査制", perks: ["Chapter I ネーミングライツ", "プライベート冠カクテル", "VIP5席+メインテーブル", "TV放送での言及"] },
       or: { label: "ゴールドスポンサー", body: "テクノロジー · フィンテック · メディア", price: "審査制", perks: ["舞台美術での露出", "VIP3席", "デジタル展開", "放送ロゴ"] },
       argent: { label: "シルバースポンサー", body: "ホスピタリティ · 観光 · ファッション", price: "審査制", perks: ["デジタル展開", "VIP2席", "プレスキット掲載"] },
       partenaire: { label: "パートナー", body: "プレス · 文化 · 機関", price: "露出交換", perks: ["cfceremony.com ロゴ", "スタンド2席", "ネットワーキング"] },
@@ -137,12 +137,12 @@ const ja = {
   },
   mecenat: {
     eyebrow: "メセナ", title: "礎を|支える。",
-    intro: "Cook & Food Gala は7つのCF-GAP賞、TC'V撮影、Bibleプログラム、長期的な文化インフラに資金を提供する。すべての寄付が生まれつつあるスタンダードを支える。",
+    intro: "Cook & Food Gala は7つのCF-GAP賞、TV撮影、Bibleプログラム、長期的な文化インフラに資金を提供する。すべての寄付が生まれつつあるスタンダードを支える。",
     fiscal_label: "税制",
     fiscal_body: "ご要望に応じて領収書を発行。フランス税法第200条・238条bisに基づく優遇の対象（公益認定パートナー機関経由）。",
     council_label: "専用窓口", council_note: "mecenat@cookandfood.gala · 24時間以内に返信",
     amount_label: "推奨金額", custom_ph: "または金額を入力…", purpose: "用途",
-    purposes: { general: "全般支援", prizes: "CF-GAP 7賞の基金", casting: "若手才能のキャスティング", series: "TC'Vシリーズ制作", bible: "Bibleとアーカイブ" },
+    purposes: { general: "全般支援", prizes: "CF-GAP 7賞の基金", casting: "若手才能のキャスティング", series: "TVシリーズ制作", bible: "Bibleとアーカイブ" },
     org: "団体名（任意）", submit: "寄付する →", stripe: "Stripe…",
     secure: "Stripe安全決済 · 7日以内に領収書",
     s_label: "寄付確認済み", s_title: "心より感謝します。", s_body: "あなたの支援が礎を育てます。領収書と Cook & Food Gala by Factory Maker Studio & CVLN Group 署名のメッセージが届きます。",

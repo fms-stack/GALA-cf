@@ -30,8 +30,8 @@ const pt = {
     eyebrow: "Conceito e ADN", title: "Cozinha, cultura, imagem · uma só noite.",
     poles: [
       { title: "Visão e ADN", body: "Ato de fundação. Primeiro padrão gastronómico e cultural para a diáspora afro mundial contemporânea." },
-      { title: "Arena Estúdio 360°", body: "Cenário pensado para câmaras e convidados. Arquitetura de duplo produto: Gala ao vivo + Série TC'V." },
-      { title: "Plano de palco", body: "Palco central circular, duas ilhas de cozinha, 120 lugares VIP em arco, bancadas, zonas laterais, régie TC'V." },
+      { title: "Arena Estúdio 360°", body: "Cenário pensado para câmaras e convidados. Arquitetura de duplo produto: Gala ao vivo + Série TV." },
+      { title: "Plano de palco", body: "Palco central circular, duas ilhas de cozinha, 120 lugares VIP em arco, bancadas, zonas laterais, régie TV." },
       { title: "Run of Show", body: "18h30 abertura pública → 22h00 cerimónia de prémios → 00h00 networking estratégico. Milimetrado." },
       { title: "Sete Polos", body: "Direção · Artístico · Casting · Técnico · Série · DataTech · Comunicação. 25 postos confirmados." },
       { title: "Trajetória", body: "Chapter I (2027) · Chapter II (2028) · Chapter III (2029) · trajetória IPO." },
@@ -55,7 +55,7 @@ const pt = {
     eyebrow: "Ecossistema", title: "Três pilares, um padrão.",
     partners: [
       { role: "IP Owner · Governança", body: "Conglomerado cultural afro, proprietário IP da Gala · a Gala apresenta o ecossistema." },
-      { role: "Produtor Executivo · Direção artística", body: "Produção executiva, direção artística, primeira difusão TC'V." },
+      { role: "Produtor Executivo · Direção artística", body: "Produção executiva, direção artística, primeira difusão TV." },
       { role: "CIP · Padrão culinário", body: "Norma silenciosa, primeira cerimónia CIP · ato fundador de um padrão internacional." },
     ],
     inst_label: "Parceiros institucionais alvo",
@@ -119,9 +119,9 @@ const pt = {
   },
   sponsoring: {
     eyebrow: "Tornar-se parceiro", title: "Inscrever a sua marca|na fundação.",
-    intro: "A Cook & Food Gala · Chapter I dirige-se a 800–1000 convidados, incluindo 120 VIP. Audiência digital e broadcast TC'V por vir. A parceria abre o acesso a um capital cultural sem equivalente.",
+    intro: "A Cook & Food Gala · Chapter I dirige-se a 800–1000 convidados, incluindo 120 VIP. Audiência digital e broadcast TV por vir. A parceria abre o acesso a um capital cultural sem equivalente.",
     tiers: {
-      titre: { label: "Sponsor Título", body: "Luxo · Spirits · Agro Premium · Categoria única", price: "Categoria única · sob dossiê", perks: ["Naming rights Chapter I", "Cocktail nominativo privado", "5 lugares VIP + mesa de honra", "Menção broadcast TC'V"] },
+      titre: { label: "Sponsor Título", body: "Luxo · Spirits · Agro Premium · Categoria única", price: "Categoria única · sob dossiê", perks: ["Naming rights Chapter I", "Cocktail nominativo privado", "5 lugares VIP + mesa de honra", "Menção broadcast TV"] },
       or: { label: "Sponsor Ouro", body: "Tecnologia · Fintech · Média", price: "Sob dossiê", perks: ["Visibilidade cenografia", "3 lugares VIP", "Presença digital", "Logo broadcast"] },
       argent: { label: "Sponsor Prata", body: "Hotelaria · Turismo · Moda", price: "Sob dossiê", perks: ["Presença digital", "2 lugares VIP", "Menção no dossiê de imprensa"] },
       partenaire: { label: "Parceiro", body: "Imprensa · Cultura · Instituições", price: "Troca de visibilidade", perks: ["Logo cfceremony.com", "2 lugares bancada", "Acesso networking"] },
@@ -137,12 +137,12 @@ const pt = {
   },
   mecenat: {
     eyebrow: "Mecenato", title: "Apoiar|a fundação.",
-    intro: "A Cook & Food Gala financia os 7 Prémios CF-GAP, a captação TC'V, o programa Bible e a infraestrutura cultural de longo prazo. Cada donativo apoia um padrão nascente.",
+    intro: "A Cook & Food Gala financia os 7 Prémios CF-GAP, a captação TV, o programa Bible e a infraestrutura cultural de longo prazo. Cada donativo apoia um padrão nascente.",
     fiscal_label: "Quadro fiscal",
     fiscal_body: "Recibo fiscal emitido a pedido. Donativos elegíveis segundo os artigos 200 e 238 bis do CGI francês através da nossa estrutura de acolhimento reconhecida de utilidade pública.",
     council_label: "Linha dedicada", council_note: "mecenat@cookandfood.gala · resposta 24h",
     amount_label: "Montante sugerido", custom_ph: "Ou inserir um montante…", purpose: "Afetação",
-    purposes: { general: "Apoio geral", prizes: "Dotação dos 7 Prémios CF-GAP", casting: "Casting jovens talentos", series: "Produção série TC'V", bible: "Programa Bible e arquivo" },
+    purposes: { general: "Apoio geral", prizes: "Dotação dos 7 Prémios CF-GAP", casting: "Casting jovens talentos", series: "Produção série TV", bible: "Programa Bible e arquivo" },
     org: "Organização (opcional)", submit: "Fazer o meu donativo →", stripe: "Stripe…",
     secure: "Pagamento Stripe seguro · recibo fiscal em 7 dias",
     s_label: "Donativo confirmado", s_title: "Muito obrigado.", s_body: "O seu compromisso alimenta a fundação. Um recibo e uma mensagem assinada Cook & Food Gala by Factory Maker Studio & CVLN Group chegarão até si.",

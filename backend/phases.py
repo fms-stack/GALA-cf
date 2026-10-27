@@ -158,7 +158,7 @@ Du {start_date} au {end_date}.
 **{fee_amount} € HT** versés en deux tranches.
 
 **ARTICLE 5 · Droits image et captation**
-Le Chef Invité cède son droit à l'image dans le cadre des captations TC'V et de la diffusion ultérieure série/broadcast.
+Le Chef Invité cède son droit à l'image dans le cadre des captations TV et de la diffusion ultérieure série/broadcast.
 
 **ARTICLE 6 · Propriété intellectuelle**
 Toute recette créée pour le Gala devient propriété co-exploitée CVLN / CVL Culinary Innovations dans le cadre du standard CIP.
@@ -179,7 +179,7 @@ Entre **CVLN Holding** et **{full_name}** (« l'Artiste »), au titre de sa miss
 L'Artiste cède à CVLN ses droits voisins relatifs à toute interprétation, performance, captation sonore ou visuelle réalisée dans le cadre du Cook & Food Gala 2027.
 
 **ARTICLE 2 · Droit à l'image**
-L'Artiste autorise CVLN, Factory Maker Studio et leurs partenaires à fixer, reproduire et diffuser son image pour toute exploitation liée au Gala, à la série TC'V et aux supports promotionnels, pour une durée de 10 ans.
+L'Artiste autorise CVLN, Factory Maker Studio et leurs partenaires à fixer, reproduire et diffuser son image pour toute exploitation liée au Gala, à la série TV et aux supports promotionnels, pour une durée de 10 ans.
 
 **ARTICLE 3 · Territoire**
 Monde entier, tous médias connus ou à venir.
@@ -206,7 +206,7 @@ Le Partenaire s'associe au Cook & Food Gala 2027 en qualité de partenaire offic
 {deliverables}
 
 **ARTICLE 3 · Contreparties accordées**
-Visibilité logo · présence sur le site cfceremony.com · mentions broadcast TC'V · cocktail privé · réseautage VIP.
+Visibilité logo · présence sur le site cfceremony.com · mentions broadcast TV · cocktail privé · réseautage VIP.
 
 **ARTICLE 4 · Contribution**
 **{fee_amount} € HT**.
@@ -232,7 +232,7 @@ Je soussigné(e) **{full_name}**, présent(e) au Cook & Food Gala 2027 le 10 avr
 Autorise **CVLN Holding** et **Factory Maker Studio** à :
 
 · Me filmer et me photographier durant l'événement ;
-· Reproduire et diffuser mon image dans tous les supports liés au Gala (TC'V série, broadcast, communication digitale, presse, supports promotionnels) ;
+· Reproduire et diffuser mon image dans tous les supports liés au Gala (série TV, broadcast, communication digitale, presse, supports promotionnels) ;
 · Sur tous territoires et pour une durée de 10 ans à compter du présent accord.
 
 Cette autorisation est consentie à titre gracieux dans le cadre de ma présence en qualité de convive.
