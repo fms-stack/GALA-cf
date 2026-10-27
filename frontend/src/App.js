@@ -15,7 +15,7 @@ import Contact from "@/pages/public/Contact";
 import Candidatures from "@/pages/public/Candidatures";
 import Casting from "@/pages/public/Casting";
 import Sponsoring from "@/pages/public/Sponsoring";
-import Billetterie, { BilletterieSuccess } from "@/pages/public/Billetterie";
+import Billetterie, { BilletterieSuccess, Billet } from "@/pages/public/Billetterie";
 import SurInvitation from "@/pages/public/SurInvitation";
 import FoundersCircle from "@/pages/public/FoundersCircle";
 import CercleRestreint from "@/pages/public/CercleRestreint";
@@ -31,6 +31,8 @@ import Submissions from "@/pages/admin/Submissions";
 import Contracts from "@/pages/admin/Contracts";
 import Bible from "@/pages/admin/Bible";
 import Inner from "@/pages/admin/Inner";
+import Ticketing from "@/pages/admin/Ticketing";
+import Checkin from "@/pages/admin/Checkin";
 import "@/App.css";
 
 function Protected({ children }) {
@@ -56,6 +58,7 @@ function App() {
               <Route path="/rsvp" element={<RSVP />} />
               <Route path="/billetterie" element={<Billetterie />} />
               <Route path="/billetterie/success" element={<BilletterieSuccess />} />
+              <Route path="/billet/:code" element={<Billet />} />
               <Route path="/sur-invitation" element={<SurInvitation />} />
               <Route path="/founders-circle" element={<FoundersCircle />} />
               <Route path="/cercle-restreint" element={<CercleRestreint />} />
@@ -80,6 +83,8 @@ function App() {
               <Route path="/admin/contracts" element={<Contracts />} />
               <Route path="/admin/bible" element={<Bible />} />
               <Route path="/admin/inner" element={<Inner />} />
+              <Route path="/admin/billetterie" element={<Ticketing />} />
+              <Route path="/admin/checkin" element={<Checkin />} />
             </Route>
 
             <Route path="*" element={<Navigate to="/" replace />} />

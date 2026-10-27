@@ -9,6 +9,7 @@ import uuid
 import logging
 import secrets
 from datetime import datetime, timezone, timedelta
+from zoneinfo import ZoneInfo
 from typing import List, Optional, Literal
 
 import bcrypt
@@ -22,6 +23,8 @@ from pydantic import BaseModel, Field, EmailStr, ConfigDict
 from emergentintegrations.payments.stripe.checkout import (
     StripeCheckout, CheckoutSessionRequest, CheckoutSessionResponse, CheckoutStatusResponse,
 )
+from mailer import send_email
+from ticketing import availability, reserve_check, issue_tickets, create_ticketing_router
 
 
 # ============================================================================
@@ -37,6 +40,8 @@ APP_NAME = os.environ.get('APP_NAME', 'cvln-gala-os')
 FRONTEND_URL = os.environ.get('FRONTEND_URL', 'http://localhost:3000')
 RESEND_API_KEY = os.environ.get('RESEND_API_KEY', '')
 EXPOSE_DEV_LINKS = os.environ.get('EXPOSE_DEV_LINKS', 'false').lower() == 'true'
+# Date du Gala · Chapter I · samedi 10 avril 2027, 19h00 heure de Paris
+GALA_DATE = datetime(2027, 4, 10, 19, 0, 0, tzinfo=ZoneInfo("Europe/Paris"))
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
@@ -231,13 +236,8 @@ class MecenatIn(BaseModel):
     honeypot: Optional[str] = ""
 
 
-# Ticket packages · server-side definition (never trust frontend prices)
+# Ticket packages · server-side definition in ticketing.py (never trust frontend prices)
 # NOTE: VIP retiré de la billetterie publique · passage via /cercle-restreint sur dossier.
-TICKET_PACKAGES = {
-    "gradin":  {"label": "Gradin face",            "amount": 50.0,   "currency": "eur", "tier": "public",  "order": 1},
-    "lateral": {"label": "Zone latérale (debout)", "amount": 80.0,   "currency": "eur", "tier": "public",  "order": 2},
-    "premium": {"label": "Gradin premium",         "amount": 120.0,  "currency": "eur", "tier": "public",  "order": 3},
-}
 
 
 class CheckoutCreateIn(BaseModel):
@@ -343,11 +343,12 @@ async def refresh_token(request: Request, response: Response):
 # MAGIC LINK (Nommés)
 # ============================================================================
 async def send_magic_link_email(email: str, link: str):
-    if RESEND_API_KEY:
-        # Production path would integrate Resend here.
-        logger.info(f"[Resend] Magic link envoyé à {email}")
-    else:
+    if not RESEND_API_KEY:
         logger.warning(f"[MOCK EMAIL] Magic link pour {email} → {link}")
+    await send_email(
+        email, "Votre accès · Cook & Food Gala 2027",
+        f'<p>Votre lien d\'accès personnel (valable 20 minutes) :</p><p><a href="{link}">{link}</a></p>',
+    )
 
 
 @api_router.post("/auth/magic-link/request")
@@ -657,7 +658,7 @@ async def send_cercle_reply(iid: str, body: dict, user: dict = Depends(require_r
     body_text = body.get("body") or (
         f"Bonjour {rec.get('full_name', '')},\n\n"
         "Votre démarche auprès du Cercle restreint a été reçue. La direction reviendra vers vous personnellement sous 7 jours.\n\n"
-        "Cook & Food Gala · Chapter I · Samedi 12 décembre 2026 · Paris\n\n"
+        "Cook & Food Gala · Chapter I · Samedi 10 avril 2027 · Paris\n\n"
         "· Cook & Food Gala by Factory Maker Studio & CVLN Group"
     )
     if RESEND_API_KEY:
@@ -736,16 +737,12 @@ async def list_orders(user: dict = Depends(require_role("admin", "production")))
 # ============================================================================
 @api_router.get("/public/tickets")
 async def public_tickets():
-    items = [{"id": k, **v} for k, v in TICKET_PACKAGES.items()]
-    items.sort(key=lambda x: x.get("order", 0))
-    return items
+    return await availability(db)
 
 
 @api_router.post("/public/checkout/session")
 async def create_checkout_session(payload: CheckoutCreateIn, request: Request):
-    pkg = TICKET_PACKAGES.get(payload.package_id)
-    if not pkg:
-        raise HTTPException(status_code=400, detail="Type de billet invalide")
+    pkg = await reserve_check(db, payload.package_id, int(payload.quantity))
     amount = float(pkg["amount"]) * int(payload.quantity)
     api_key = os.environ.get("STRIPE_API_KEY", "")
     host_url = str(request.base_url).rstrip("/")
@@ -795,6 +792,7 @@ async def checkout_status(session_id: str, request: Request):
             {"session_id": session_id},
             {"$set": {"payment_status": st.payment_status, "status": st.status, "paid_at": datetime.now(timezone.utc).isoformat()}},
         )
+        await issue_tickets(db, session_id)
     elif record:
         await db.payment_transactions.update_one(
             {"session_id": session_id},
@@ -819,6 +817,7 @@ async def stripe_webhook(request: Request):
                 {"session_id": ev.session_id},
                 {"$set": {"payment_status": "paid", "status": "complete", "paid_at": datetime.now(timezone.utc).isoformat()}},
             )
+            await issue_tickets(db, ev.session_id)
         return {"received": True}
     except Exception as e:
         logger.error(f"Stripe webhook error: {e}")
@@ -844,8 +843,9 @@ async def dashboard_stats(user: dict = Depends(get_current_user)):
     sponsoring_count = await db.sponsoring_requests.count_documents({})
     orders_paid = await db.payment_transactions.count_documents({"payment_status": "paid"})
     orders_total = await db.payment_transactions.count_documents({})
-    gala_date = datetime(2026, 12, 12, tzinfo=timezone.utc)
-    days_to_gala = (gala_date - datetime.now(timezone.utc)).days
+    tickets_issued = await db.tickets.count_documents({})
+    tickets_checked_in = await db.tickets.count_documents({"status": "checked_in"})
+    days_to_gala = (GALA_DATE - datetime.now(timezone.utc)).days
     return {
         "positions": positions,
         "people": people,
@@ -860,8 +860,9 @@ async def dashboard_stats(user: dict = Depends(get_current_user)):
         "castings": castings_count,
         "sponsoring": sponsoring_count,
         "orders": {"total": orders_total, "paid": orders_paid},
+        "tickets": {"issued": tickets_issued, "checked_in": tickets_checked_in},
         "days_to_gala": days_to_gala,
-        "gala_date": gala_date.isoformat(),
+        "gala_date": GALA_DATE.isoformat(),
     }
 
 
@@ -920,10 +921,9 @@ async def public_ecosystem():
 
 @api_router.get("/public/countdown")
 async def public_countdown():
-    gala = datetime(2026, 12, 12, 19, 0, 0, tzinfo=timezone.utc)
-    delta = gala - datetime.now(timezone.utc)
+    delta = GALA_DATE - datetime.now(timezone.utc)
     return {
-        "gala_date": gala.isoformat(),
+        "gala_date": GALA_DATE.isoformat(),
         "days": max(0, delta.days),
         "hours": max(0, delta.seconds // 3600),
     }
@@ -1066,6 +1066,7 @@ async def invalid_objectid_handler(request, exc):
 # Phase 4-5-6 modules
 from phases import create_phase4_router, seed_ecosystem_nodes
 app.include_router(create_phase4_router(db, get_current_user, require_role, audit, doc_out))
+app.include_router(create_ticketing_router(db, require_role, audit, doc_out))
 
 
 @app.middleware("http")
@@ -1092,6 +1093,9 @@ async def on_startup():
     await db.invitations_vip.create_index("created_at")
     await db.magic_link_tokens.create_index("token", unique=True)
     await db.login_attempts.create_index("identifier")
+    await db.tickets.create_index("code", unique=True)
+    await db.tickets.create_index("session_id")
+    await db.payment_transactions.create_index("session_id")
     await seed_admin()
     await seed_positions()
     await seed_ecosystem_nodes(db, audit)

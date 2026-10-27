@@ -104,7 +104,7 @@ Tous : si `honeypot != ""` → `200 {ok:true}` **sans persistance** (leurre bots
 |---|---|---|---|
 | 44 | GET | `/api/public/prizes` | 7 prix CF-GAP-01..07 **hardcodés** (titre, discipline, image Unsplash, intro, body) |
 | 45 | GET | `/api/public/ecosystem` | Nodes `public_visible=true` uniquement → `{name, kind}` (les 4 entités silencieuses ne sortent jamais) |
-| 46 | GET | `/api/public/countdown` | `{gala_date: 2026-12-12T19:00Z, days, hours}` |
+| 46 | GET | `/api/public/countdown` | `{gala_date: 2027-04-10T19:00Z, days, hours}` |
 
 ## 3.9 Dashboard & audit
 

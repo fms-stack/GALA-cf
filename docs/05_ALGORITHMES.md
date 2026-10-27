@@ -68,7 +68,7 @@ rendered ← tmpl.body.format(full_name, role_title, deliverables,
            fee_amount formaté "12 500.00", start_date, end_date, today=JJ/MM/AAAA)
 contracts.insert({..., rendered_body:rendered, status:"draft"})
 --- PDF à la demande ---
-story ← [eyebrow "COOK & FOOD GALA — CHAPTER I · PARIS · 12.12.2026", titre]
+story ← [eyebrow "COOK & FOOD GALA — CHAPTER I · PARIS · 10.04.2027", titre]
 pour chaque ligne de rendered_body:
     ligne vide → Spacer ; "**x**" → <b>x</b> (bascule alternée) ; Paragraph justifié
 SimpleDocTemplate(A4, marges 2.5 cm).build(story) → bytes → StreamingResponse

@@ -1,8 +1,8 @@
 const pt = {
   nav: { home: "Início", concept: "Conceito", prix: "Os 7 Prémios", billetterie: "Bilheteira", cercle: "Círculo", mecenat: "Mecenato", partenaires: "Parceiros", soumettre: "Submeter", casting: "Casting" },
   cta: { confirm: "Confirmar", reserve: "Reservar lugar", join_circle: "Juntar-se ao Círculo", become_patron: "Tornar-se mecenas", confirm_presence: "Confirmar a minha presença", public_billet: "Bilhetes públicos", discover: "Descobrir" },
-  hero: { chapter: "Capítulo I · Sábado 12 de dezembro de 2026 · Paris", tagline: "Uma experiência gastronómica e cultural imersiva · Cozinha, Cultura, Música, Arte, Moda, Cinema e Literatura.", note: "Mais do que um evento. Uma marca cultural." },
-  footer: { rights: "Todos os direitos reservados", powered: "Powered by", staff_access: "Acesso equipa ↗", baseline: "Cook & Food Gala · mais do que um evento, uma marca cultural.", date_place: "12 de dezembro de 2026 · Paris", powered_by_label: "Impulsionado por", contact: "Contacto" },
+  hero: { chapter: "Capítulo I · Sábado 10 de abril de 2027 · Paris", tagline: "Uma experiência gastronómica e cultural imersiva · Cozinha, Cultura, Música, Arte, Moda, Cinema e Literatura.", note: "Mais do que um evento. Uma marca cultural." },
+  footer: { rights: "Todos os direitos reservados", powered: "Powered by", staff_access: "Acesso equipa ↗", baseline: "Cook & Food Gala · mais do que um evento, uma marca cultural.", date_place: "10 de abril de 2027 · Paris", powered_by_label: "Impulsionado por", contact: "Contacto" },
   invitation: { title: "120 lugares à mesa.", body: "Os convites são enviados em setembro 2026.\nApenas por cooptação.", manifest: "Manifestar interesse · confidencial", signal_ok: "Sinal recebido. A direção entrará em contacto." },
   common: { days: "Dias", hours: "Horas", name: "Nome completo *", email: "E-mail *", phone: "Telefone", message: "Mensagem", optional: "(opcional)", sending: "A enviar…", thanks: "Obrigado.", ref: "Referência", discover: "Descobrir →", choose: "Escolher →" },
   home: {
@@ -34,7 +34,7 @@ const pt = {
       { title: "Plano de palco", body: "Palco central circular, duas ilhas de cozinha, 120 lugares VIP em arco, bancadas, zonas laterais, régie TC'V." },
       { title: "Run of Show", body: "18h30 abertura pública → 22h00 cerimónia de prémios → 00h00 networking estratégico. Milimetrado." },
       { title: "Sete Polos", body: "Direção · Artístico · Casting · Técnico · Série · DataTech · Comunicação. 25 postos confirmados." },
-      { title: "Trajetória", body: "Chapter I (2026) · Chapter II (2027) · Chapter III (2028) · trajetória IPO." },
+      { title: "Trajetória", body: "Chapter I (2027) · Chapter II (2028) · Chapter III (2029) · trajetória IPO." },
     ],
   },
   prix: {
@@ -82,14 +82,16 @@ const pt = {
     s_label: "Pedido recebido", s_body: "Referência confidencial", s_body2: "A direção entrará em contacto pessoalmente.", s_wa: "+596 696 78 89 86 · WhatsApp dedicado ao Círculo", sent_toast: "Pedido enviado.",
   },
   billetterie: {
-    eyebrow: "Bilheteira · Paris · 12.12.2026", title: "Reservar um lugar.",
+    eyebrow: "Bilheteira · Paris · 10.04.2027", title: "Reservar um lugar.",
     intro: "Uma noite · um palco · sete disciplinas. Escolha primeiro a natureza da sua presença · o detalhe virá depois.",
     load_error: "Impossível carregar a bilheteira.",
     tiers: {
+      early: { eyebrow: "Early Bird", body: "Bancada frontal · preço de lançamento · quantidade limitada, até 31 de janeiro de 2027." },
       premium: { eyebrow: "Premium", body: "Bancada frontal elevada · chegada prioritária · bengaleiro dedicado." },
       gradin: { eyebrow: "Bancada", body: "Vista direta para o palco circular · experiência completa." },
       lateral: { eyebrow: "Lateral", body: "Zona de pé · ambiente imersivo perto das ilhas de cozinha." },
     },
+    sold_out: "Esgotado", closed: "Venda encerrada", remaining: "Restam apenas {n} lugares", tickets_title: "Os seus bilhetes.", ticket_open: "Abrir o bilhete →", ticket_label: "Bilhete nominativo", ticket_hint: "Apresente este código QR à entrada · um bilhete = uma entrada.", ticket_used: "Bilhete já utilizado", ticket_not_found: "Bilhete não encontrado.", seat: "Lugar",
     back: "← Mudar de categoria", qty: "Número de lugares", total: "Total a pagar",
     pay: "Pagar e reservar →", redirect: "Redirecionamento Stripe…", secure: "Pagamento seguro via Stripe Checkout. Será redirecionado.",
     s_paid_label: "Pagamento confirmado", s_paid_title: "Bem-vindo.", s_paid_body: "O seu lugar está reservado. Receberá um e-mail de confirmação.",
@@ -97,7 +99,7 @@ const pt = {
   },
   rsvp: {
     eyebrow: "RSVP · Digital", title: "Confirmar|a minha presença.",
-    date_line: "Sábado 12 de dezembro de 2026 · 19h00 · Paris.", dress: "Dress code:",
+    date_line: "Sábado 10 de abril de 2027 · 19h00 · Paris.", dress: "Dress code:",
     privacy: "Os seus dados são registados de forma estritamente confidencial. Nenhum nome é exposto publicamente.",
     name_ph: "O seu nome completo", email_ph: "voce@exemplo.com", seats: "Número de lugares",
     submit: "Confirmar a minha presença →", nontransf: "Convite pessoal · intransferível",

@@ -1,4 +1,4 @@
-# DOSSIER TECHNIQUE — CVLN Gala OS / Cook & Food Gala 2026
+# DOSSIER TECHNIQUE — CVLN Gala OS / Cook & Food Gala 2027
 ## Propriété Intellectuelle Logicielle — Version 1.0
 
 **Titulaire** : CVLN Holding · **Éditeur** : Factory Maker Studio · **Date** : Juin 2026
@@ -30,7 +30,7 @@
 │       │   └── cinematics.js     (GSAP ScrollTrigger : parallax/split-text/reveal/stagger)
 │       ├── components/
 │       │   ├── Logo.jsx          (SVG anneaux concentriques + wave signature)
-│       │   ├── Countdown.jsx     (J-XXX vers 12/12/2026)
+│       │   ├── Countdown.jsx     (J-XXX vers 10/04/2027)
 │       │   ├── CustomCursor.jsx  (Cercle or + halo délayé)
 │       │   ├── AmbientAudio.jsx  (Audio HTML5 opt-in)
 │       │   └── ui/               (shadcn/ui composants)
@@ -307,7 +307,7 @@ rendered = tmpl.body.format(
 )
 doc = SimpleDocTemplate(A4, margins=2.5cm)
 story = [
-    Paragraph(eyebrow_style, "COOK & FOOD GALA — CHAPTER I · PARIS · 12.12.2026"),
+    Paragraph(eyebrow_style, "COOK & FOOD GALA — CHAPTER I · PARIS · 10.04.2027"),
     Paragraph(title_style, tmpl.title),
     ...paragraphs from rendered.split("\n")
 ]
@@ -514,7 +514,7 @@ Aucun système d'automatisation IA implémenté ; l'infrastructure permet de bra
 ## 7. SPÉCIFICATIONS FONCTIONNELLES
 
 ### 7.1 Vision
-CVLN Gala OS est le portail privé et le site vitrine du **Cook & Food Gala 2026 — Chapter I**, événement gastronomique et culturel de la diaspora afro mondiale, tenu à Paris le 12 décembre 2026. La plateforme opère l'ensemble du cycle : communication publique premium, RSVP VIP confidentiel, casting, candidatures artistiques, sponsoring, mécénat défiscalisable, cooptation traçable, gestion des postes/personnes/affectations, contrats juridiques avec workflow, Bible technique chiffrée, signature électronique, et monitoring.
+CVLN Gala OS est le portail privé et le site vitrine du **Cook & Food Gala 2027 — Chapter I**, événement gastronomique et culturel de la diaspora afro mondiale, tenu à Paris le 10 avril 2027. La plateforme opère l'ensemble du cycle : communication publique premium, RSVP VIP confidentiel, casting, candidatures artistiques, sponsoring, mécénat défiscalisable, cooptation traçable, gestion des postes/personnes/affectations, contrats juridiques avec workflow, Bible technique chiffrée, signature électronique, et monitoring.
 
 ### 7.2 Objectifs
 1. **Fonder un standard culturel** premium pour la diaspora afro mondiale

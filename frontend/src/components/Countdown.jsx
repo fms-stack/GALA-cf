@@ -25,7 +25,7 @@ export function Countdown() {
         <div className="label-eyebrow opacity-60 mt-2">{t("common.hours")}</div>
       </div>
       <div className="hidden md:block flex-1 border-t border-ivoire/20 ml-6" />
-      <div className="hidden md:block label-eyebrow opacity-50">12.12.2026 · 19h00</div>
+      <div className="hidden md:block label-eyebrow opacity-50">10.04.2027 · 19h00</div>
     </div>
   );
 }

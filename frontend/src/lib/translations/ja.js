@@ -1,8 +1,8 @@
 const ja = {
   nav: { home: "ホーム", concept: "コンセプト", prix: "7つの賞", billetterie: "チケット", cercle: "サークル", mecenat: "メセナ", partenaires: "パートナー", soumettre: "応募", casting: "キャスティング" },
   cta: { confirm: "確認する", reserve: "席を予約", join_circle: "サークルに参加", become_patron: "メセナになる", confirm_presence: "出席を確認", public_billet: "一般チケット", discover: "見る" },
-  hero: { chapter: "第一章 · 2026年12月12日（土）· パリ", tagline: "没入型の美食と文化の体験 · 料理、文化、音楽、アート、ファッション、映画、文学。", note: "イベントを超えた、文化の刻印。" },
-  footer: { rights: "全著作権所有", powered: "Powered by", staff_access: "チーム入口 ↗", baseline: "Cook & Food Gala · イベントを超えた、文化の刻印。", date_place: "2026年12月12日 · パリ", powered_by_label: "提供", contact: "お問い合わせ" },
+  hero: { chapter: "第一章 · 2027年4月10日（土）· パリ", tagline: "没入型の美食と文化の体験 · 料理、文化、音楽、アート、ファッション、映画、文学。", note: "イベントを超えた、文化の刻印。" },
+  footer: { rights: "全著作権所有", powered: "Powered by", staff_access: "チーム入口 ↗", baseline: "Cook & Food Gala · イベントを超えた、文化の刻印。", date_place: "2027年4月10日 · パリ", powered_by_label: "提供", contact: "お問い合わせ" },
   invitation: { title: "テーブルの120席。", body: "招待状は2026年9月に発送されます。\n推薦制のみ。", manifest: "関心を表明 · 機密", signal_ok: "受け付けました。運営よりご連絡いたします。" },
   common: { days: "日", hours: "時間", name: "氏名 *", email: "メールアドレス *", phone: "電話番号", message: "メッセージ", optional: "（任意）", sending: "送信中…", thanks: "ありがとうございます。", ref: "参照番号", discover: "見る →", choose: "選ぶ →" },
   home: {
@@ -34,7 +34,7 @@ const ja = {
       { title: "ステージプラン", body: "中央円形ステージ、二つのキッチンアイランド、弧状のVIP席120、観覧席、サイドゾーン、TC'Vコントロールルーム。" },
       { title: "進行表", body: "18:30 一般開場 → 22:00 授賞式 → 00:00 戦略的ネットワーキング。分刻み。" },
       { title: "七つの部門", body: "ディレクション · アート · キャスティング · 技術 · シリーズ · DataTech · コミュニケーション。確定25ポスト。" },
-      { title: "軌道", body: "Chapter I (2026) · Chapter II (2027) · Chapter III (2028) · IPO軌道。" },
+      { title: "軌道", body: "Chapter I (2027) · Chapter II (2028) · Chapter III (2029) · IPO軌道。" },
     ],
   },
   prix: {
@@ -82,14 +82,16 @@ const ja = {
     s_label: "申請を受領", s_body: "機密参照番号", s_body2: "運営より直接ご連絡いたします。", s_wa: "+596 696 78 89 86 · サークル専用WhatsApp", sent_toast: "申請を送信しました。",
   },
   billetterie: {
-    eyebrow: "チケット · パリ · 12.12.2026", title: "席を予約する。",
+    eyebrow: "チケット · パリ · 10.04.2027", title: "席を予約する。",
     intro: "一夜 · 一つのステージ · 七つの分野。まずご臨席のかたちをお選びください · 詳細は後ほど。",
     load_error: "チケット情報を読み込めませんでした。",
     tiers: {
+      early: { eyebrow: "アーリーバード", body: "正面スタンド · 先行価格 · 数量限定、2027年1月31日まで。" },
       premium: { eyebrow: "プレミアム", body: "正面高段の観覧席 · 優先入場 · 専用クローク。" },
       gradin: { eyebrow: "スタンド", body: "円形ステージを正面に望む · 完全な体験。" },
       lateral: { eyebrow: "サイド", body: "スタンディングゾーン · キッチンアイランドに近い没入空間。" },
     },
+    sold_out: "完売", closed: "販売終了", remaining: "残り {n} 席", tickets_title: "あなたのチケット。", ticket_open: "チケットを開く →", ticket_label: "記名チケット", ticket_hint: "入口でこのQRコードを提示してください · 1枚につき1回入場。", ticket_used: "使用済みのチケット", ticket_not_found: "チケットが見つかりません。", seat: "席",
     back: "← カテゴリーを変更", qty: "席数", total: "お支払い合計",
     pay: "支払って予約 →", redirect: "Stripeへ移動中…", secure: "Stripe Checkoutによる安全な決済。リダイレクトされます。",
     s_paid_label: "決済確認済み", s_paid_title: "ようこそ。", s_paid_body: "お席は予約されました。確認メールが届きます。",
@@ -97,7 +99,7 @@ const ja = {
   },
   rsvp: {
     eyebrow: "RSVP · デジタル", title: "出席を|確認する。",
-    date_line: "2026年12月12日（土）· 19:00 · パリ。", dress: "ドレスコード：",
+    date_line: "2027年4月10日（土）· 19:00 · パリ。", dress: "ドレスコード：",
     privacy: "お客様の情報は厳格に機密として保管されます。いかなる名前も公開されません。",
     name_ph: "フルネーム", email_ph: "you@example.com", seats: "席数",
     submit: "出席を確認 →", nontransf: "個人招待 · 譲渡不可",

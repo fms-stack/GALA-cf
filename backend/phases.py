@@ -53,7 +53,7 @@ d'autre part,
 
 **IL A ÉTÉ EXPOSÉ CE QUI SUIT :**
 
-Dans le cadre de la préparation et de la réalisation du Cook & Food Gala · Chapter I, prévu le 12 décembre 2026 à Paris, CVLN est amenée à transmettre au Récipiendaire des informations strictement confidentielles relatives à la production, aux talents, aux montants, aux contrats partenaires, à la Bible technique ainsi qu'à l'ensemble de l'écosystème CVLN.
+Dans le cadre de la préparation et de la réalisation du Cook & Food Gala · Chapter I, prévu le 10 avril 2027 à Paris, CVLN est amenée à transmettre au Récipiendaire des informations strictement confidentielles relatives à la production, aux talents, aux montants, aux contrats partenaires, à la Bible technique ainsi qu'à l'ensemble de l'écosystème CVLN.
 
 **ARTICLE 1 · Objet**
 Le Récipiendaire s'engage à garder strictement confidentielles toutes les informations transmises, sous quelque forme que ce soit (orale, écrite, numérique, visuelle).
@@ -85,7 +85,7 @@ Entre :
 Et **{full_name}**, intervenant en qualité de {role_title}, ci-après dénommé(e) « le Prestataire ».
 
 **ARTICLE 1 · Objet**
-Le Prestataire s'engage à réaliser la mission suivante pour le compte du Client dans le cadre du Cook & Food Gala 2026 : {role_title}.
+Le Prestataire s'engage à réaliser la mission suivante pour le compte du Client dans le cadre du Cook & Food Gala 2027 : {role_title}.
 
 **Livrables attendus :**
 {deliverables}
@@ -118,7 +118,7 @@ Le Prestataire : ________________________     Pour CVLN : ______________________
 Entre **CVLN Holding** (« le Cessionnaire ») et **{full_name}** (« l'Auteur »), il est convenu :
 
 **ARTICLE 1 · Œuvre concernée**
-Toute œuvre originale créée par l'Auteur dans le cadre du Cook & Food Gala 2026, au titre de sa mission de {role_title}.
+Toute œuvre originale créée par l'Auteur dans le cadre du Cook & Food Gala 2027, au titre de sa mission de {role_title}.
 
 **ARTICLE 2 · Droits cédés**
 L'Auteur cède au Cessionnaire, à titre exclusif et pour le monde entier, l'intégralité de ses droits patrimoniaux : reproduction, représentation, adaptation, traduction, exploitation commerciale, sous tous formats et supports connus ou à venir.
@@ -145,7 +145,7 @@ L'Auteur : ________________________     Pour CVLN : ________________________""",
 Entre **CVLN Holding** / **CVL Culinary Innovations** et **{full_name}** (« le Chef Invité »).
 
 **ARTICLE 1 · Mission**
-Le Chef Invité participe au Cook & Food Gala 2026 en qualité de chef performeur sur les îlots cuisine de l'arène studio 360°.
+Le Chef Invité participe au Cook & Food Gala 2027 en qualité de chef performeur sur les îlots cuisine de l'arène studio 360°.
 Livrables : {deliverables}
 
 **ARTICLE 2 · Standard CIP**
@@ -176,7 +176,7 @@ Le Chef : ________________________     Pour CVL Culinary Innovations : _________
 Entre **CVLN Holding** et **{full_name}** (« l'Artiste »), au titre de sa mission de {role_title}.
 
 **ARTICLE 1 · Droits voisins**
-L'Artiste cède à CVLN ses droits voisins relatifs à toute interprétation, performance, captation sonore ou visuelle réalisée dans le cadre du Cook & Food Gala 2026.
+L'Artiste cède à CVLN ses droits voisins relatifs à toute interprétation, performance, captation sonore ou visuelle réalisée dans le cadre du Cook & Food Gala 2027.
 
 **ARTICLE 2 · Droit à l'image**
 L'Artiste autorise CVLN, Factory Maker Studio et leurs partenaires à fixer, reproduire et diffuser son image pour toute exploitation liée au Gala, à la série TC'V et aux supports promotionnels, pour une durée de 10 ans.
@@ -200,7 +200,7 @@ L'Artiste : ________________________     Pour CVLN : ________________________"""
 Entre **CVLN Holding** et **{full_name}** (« le Partenaire »).
 
 **ARTICLE 1 · Objet**
-Le Partenaire s'associe au Cook & Food Gala 2026 en qualité de partenaire officiel selon les modalités définies dans l'annexe sponsoring.
+Le Partenaire s'associe au Cook & Food Gala 2027 en qualité de partenaire officiel selon les modalités définies dans l'annexe sponsoring.
 
 **ARTICLE 2 · Engagements du Partenaire**
 {deliverables}
@@ -227,7 +227,7 @@ Le Partenaire : ________________________     Pour CVLN : _______________________
         "kind": "contrat",
         "body": """**AUTORISATION DE FIXATION ET D'EXPLOITATION DE L'IMAGE**
 
-Je soussigné(e) **{full_name}**, présent(e) au Cook & Food Gala 2026 le 12 décembre 2026 à Paris,
+Je soussigné(e) **{full_name}**, présent(e) au Cook & Food Gala 2027 le 10 avril 2027 à Paris,
 
 Autorise **CVLN Holding** et **Factory Maker Studio** à :
 
@@ -283,7 +283,7 @@ def _generate_contract_pdf(title: str, body: str) -> bytes:
     eyebrow     = ParagraphStyle("eb", parent=styles["BodyText"], fontSize=8, alignment=TA_CENTER, textColor="#A98A5A", spaceAfter=24, leading=10)
 
     story = []
-    story.append(Paragraph("COOK &amp; FOOD GALA · CHAPTER I · PARIS · 12.12.2026", eyebrow))
+    story.append(Paragraph("COOK &amp; FOOD GALA · CHAPTER I · PARIS · 10.04.2027", eyebrow))
     story.append(Paragraph(title, title_style))
     for raw in body.split("\n"):
         line = raw.strip()

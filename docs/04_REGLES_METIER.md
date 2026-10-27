@@ -118,7 +118,7 @@ Toutes ✅ OBSERVÉES dans le code, sauf marquage contraire. Format : identifian
 ### RULE-026 — API non indexable
 - **Description** : toutes les réponses `/api/*` portent `X-Robots-Tag: noindex, nofollow, noarchive` ; Swagger/Redoc désactivés.
 
-### RULE-027 — Date pivot unique : 12 décembre 2026, 19 h UTC
+### RULE-027 — Date pivot unique : 10 avril 2027, 19 h UTC
 - **Description** : countdown public et `days_to_gala` du dashboard dérivent de cette constante (hardcodée en deux endroits — server.py:845 et 921).
 - **Cas limites** : duplication → risque d'incohérence si l'une est modifiée (dette mineure).
 

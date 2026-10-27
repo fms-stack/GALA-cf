@@ -1,7 +1,7 @@
 # CVLN Gala OS — PRD
 
 ## Original problem statement
-Portail Privé Cook & Food Gala 2026 — plateforme à 2 couches strictement séparées :
+Portail Privé Cook & Food Gala 2027 — plateforme à 2 couches strictement séparées :
 1. Site public éditorial `cfceremony.com` (vitrine du Gala, RSVP VIP, ZÉRO donnée sensible exposée).
 2. Back-office privé sécurisé JWT (gestion postes/personnes/affectations, contrats NDA, signature Yousign, accès Bible conditionnel, dashboard admin).
 
@@ -25,7 +25,7 @@ Portail Privé Cook & Food Gala 2026 — plateforme à 2 couches strictement sé
 - Seed automatique: 3 system users + 25 positions (POS-01..POS-25, 7 pôles)
 - CRUD Positions / People / Assignments (back-office light theme)
 - Liste & gestion invitations VIP avec filtres et changement de statut
-- Dashboard admin: 4 KPI (postes, personnes, affectations, J-XXX vers 12/12/2026) + cards invitations & contrats
+- Dashboard admin: 4 KPI (postes, personnes, affectations, J-XXX vers 10/04/2027) + cards invitations & contrats
 - Audit logs sur toutes mutations
 - Header `X-Robots-Tag: noindex, nofollow, noarchive` sur toutes les routes `/api/`
 - RBAC: admin/production peuvent créer/éditer, admin seul peut supprimer, juridique read-only
@@ -69,3 +69,10 @@ Portail Privé Cook & Food Gala 2026 — plateforme à 2 couches strictement sé
 
 ## Test credentials
 Voir `/app/memory/test_credentials.md` — admin Laurent, production, juridique (mots de passe rotés 2026-06).
+
+## Report de date + billetterie opérationnelle (2026-10-27)
+- **Date du Gala : samedi 10 avril 2027, 19h00 (Europe/Paris)** · constante `GALA_DATE` dans `backend/server.py`, textes mis à jour dans les 9 langues, contrats, e-mails, docs. Trajectoire décalée : Chapter I (2027) · II (2028) · III (2029).
+- `backend/ticketing.py` : 4 catégories (Early Bird 40 € jusqu'au 31/01/2027 · Gradin 50 € · Latéral 80 € · Premium 120 €), jauge par catégorie (100/350/200/150 = 800, modifiable par l'admin), places bloquées 30 min pendant le paiement, billets nominatifs `CF-XXXXX-XXXXX` avec QR (SVG), contrôle d'accès à usage unique.
+- `backend/mailer.py` : envoi réel via Resend dès que `RESEND_API_KEY` est renseignée (`RESEND_FROM` = expéditeur sur domaine vérifié). Mock sinon.
+- Front : cartes « Complet / Vente close / Plus que N places », billets affichés après paiement, page `/billet/:code`, back-office `/admin/billetterie` (ventes, recettes, jauge) et `/admin/checkin` (douchette, saisie, caméra).
+- Reste à faire avant ouverture : clés Stripe live + Resend, domaine `cfceremony.com`, achat réel de bout en bout.

@@ -1,8 +1,8 @@
 const ht = {
   nav: { home: "Akèy", concept: "Konsèp", prix: "7 Pri yo", billetterie: "Tikè", cercle: "Sèk la", mecenat: "Mesena", partenaires: "Patnè", soumettre: "Soumèt", casting: "Kasting" },
   cta: { confirm: "Konfime", reserve: "Rezève yon plas", join_circle: "Antre nan Sèk la", become_patron: "Vin mesèn", confirm_presence: "Konfime prezans mwen", public_billet: "Tikè piblik", discover: "Dekouvri" },
-  hero: { chapter: "Chapit I · Samdi 12 Desanm 2026 · Pari", tagline: "Yon eksperyans gastwonomik ak kiltirèl imèsif · Kwizin, Kilti, Mizik, Atizay, Mòd, Sinema ak Literati.", note: "Plis pase yon evènman, yon mak kiltirèl." },
-  footer: { rights: "Tout dwa rezève", powered: "Powered by", staff_access: "Aksè ekip ↗", baseline: "Cook & Food Gala · plis pase yon evènman, yon mak kiltirèl.", date_place: "12 Desanm 2026 · Pari", powered_by_label: "Pouse pa", contact: "Kontak" },
+  hero: { chapter: "Chapit I · Samdi 10 Avril 2027 · Pari", tagline: "Yon eksperyans gastwonomik ak kiltirèl imèsif · Kwizin, Kilti, Mizik, Atizay, Mòd, Sinema ak Literati.", note: "Plis pase yon evènman, yon mak kiltirèl." },
+  footer: { rights: "Tout dwa rezève", powered: "Powered by", staff_access: "Aksè ekip ↗", baseline: "Cook & Food Gala · plis pase yon evènman, yon mak kiltirèl.", date_place: "10 Avril 2027 · Pari", powered_by_label: "Pouse pa", contact: "Kontak" },
   invitation: { title: "120 plas sou tab la.", body: "Envitasyon yo ap soti an septanm 2026.\nSèlman sou kooptasyon.", manifest: "Montre enterè w · konfidansyèl", signal_ok: "Siyal la resevwa. Direksyon an ap tounen vin jwenn ou." },
   common: { days: "Jou", hours: "Èdtan", name: "Non konplè *", email: "Imèl *", phone: "Telefòn", message: "Mesaj", optional: "(si w vle)", sending: "Ap voye…", thanks: "Mèsi.", ref: "Referans", discover: "Dekouvri →", choose: "Chwazi →" },
   home: {
@@ -34,7 +34,7 @@ const ht = {
       { title: "Plan sèn", body: "Sèn santral awondi, de zile kwizin, 120 plas VIP an ak, gradò, zòn sou kote, rejì TC'V." },
       { title: "Run of Show", body: "18h30 ouvèti piblik → 22h00 seremoni pri yo → 00h00 rezotaj estratejik. Milimetre." },
       { title: "Sèt Pòl", body: "Direksyon · Atistik · Kasting · Teknik · Seri · DataTech · Kominikasyon. 25 pòs konfime." },
-      { title: "Trajectwa", body: "Chapter I (2026) · Chapter II (2027) · Chapter III (2028) · trajectwa IPO." },
+      { title: "Trajectwa", body: "Chapter I (2027) · Chapter II (2028) · Chapter III (2029) · trajectwa IPO." },
     ],
   },
   prix: {
@@ -82,14 +82,16 @@ const ht = {
     s_label: "Demann resevwa", s_body: "Referans konfidansyèl", s_body2: "Direksyon an ap tounen vin jwenn ou pèsonèlman.", s_wa: "+596 696 78 89 86 · WhatsApp dedye pou Sèk la", sent_toast: "Demann voye.",
   },
   billetterie: {
-    eyebrow: "Tikè · Pari · 12.12.2026", title: "Rezève yon plas.",
+    eyebrow: "Tikè · Pari · 10.04.2027", title: "Rezève yon plas.",
     intro: "Yon nwit · yon sèn · sèt disiplin. Chwazi dabò nati prezans ou · detay yo ap vini apre.",
     load_error: "Nou pa t ka chaje tikè yo.",
     tiers: {
+      early: { eyebrow: "Early Bird", body: "Gradin devan · pri lansman · kantite limite, jiska 31 janvye 2027." },
       premium: { eyebrow: "Premium", body: "Gradò devan an wotè · antre priyoritè · vestyè dedye." },
       gradin: { eyebrow: "Gradò", body: "Vi dirèk sou sèn awondi a · eksperyans konplè." },
       lateral: { eyebrow: "Sou kote", body: "Zòn kanpe · anbyans imèsif toupre zile kwizin yo." },
     },
+    sold_out: "Fini", closed: "Vant fèmen", remaining: "Rete sèlman {n} plas", tickets_title: "Tikè ou yo.", ticket_open: "Louvri tikè a →", ticket_label: "Tikè nominatif", ticket_hint: "Montre QR kòd sa a nan antre a · yon tikè = yon antre.", ticket_used: "Tikè sa a deja itilize", ticket_not_found: "Nou pa jwenn tikè a.", seat: "Plas",
     back: "← Chanje kategori", qty: "Kantite plas", total: "Total pou peye",
     pay: "Peye epi rezève →", redirect: "Redireksyon Stripe…", secure: "Peman sekirize atravè Stripe Checkout. Y ap redirije w.",
     s_paid_label: "Peman konfime", s_paid_title: "Byenveni.", s_paid_body: "Plas ou rezève. Yon imèl konfimasyon ap rive jwenn ou.",
@@ -97,7 +99,7 @@ const ht = {
   },
   rsvp: {
     eyebrow: "RSVP · Dijital", title: "Konfime|prezans mwen.",
-    date_line: "Samdi 12 desanm 2026 · 19h00 · Pari.", dress: "Kòd abiman :",
+    date_line: "Samdi 10 avril 2027 · 19h00 · Pari.", dress: "Kòd abiman :",
     privacy: "Enfòmasyon w yo anrejistre yon fason strikteman konfidansyèl. Okenn non pa parèt piblikman.",
     name_ph: "Non konplè w", email_ph: "ou@egzanp.com", seats: "Kantite plas",
     submit: "Konfime prezans mwen →", nontransf: "Envitasyon pèsonèl · pa transferab",

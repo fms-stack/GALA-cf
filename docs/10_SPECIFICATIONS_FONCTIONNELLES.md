@@ -1,7 +1,7 @@
 # 10. SPÉCIFICATIONS FONCTIONNELLES
 
 ## 10.1 Vision produit
-CVLN Gala OS est le système d'exploitation du **Cook & Food Gala 2026 — Chapter I** (Paris, samedi 12 décembre 2026) : événement gastronomique et culturel de la diaspora afro mondiale mêlant cuisine, culture, musique, art, mode, cinéma et littérature. La plateforme couvre l'intégralité du cycle : vitrine éditoriale premium, billetterie publique sans friction tarifaire, filière VIP confidentielle par cooptation, mécénat, candidatures/casting/sponsoring, production interne (postes, personnes, affectations), contrats juridiques avec workflow, Bible technique confidentielle, gouvernance (Founders' Circle) et pilotage (dashboard, audit).
+CVLN Gala OS est le système d'exploitation du **Cook & Food Gala 2027 — Chapter I** (Paris, samedi 10 avril 2027) : événement gastronomique et culturel de la diaspora afro mondiale mêlant cuisine, culture, musique, art, mode, cinéma et littérature. La plateforme couvre l'intégralité du cycle : vitrine éditoriale premium, billetterie publique sans friction tarifaire, filière VIP confidentielle par cooptation, mécénat, candidatures/casting/sponsoring, production interne (postes, personnes, affectations), contrats juridiques avec workflow, Bible technique confidentielle, gouvernance (Founders' Circle) et pilotage (dashboard, audit).
 
 ## 10.2 Objectifs
 1. Installer un standard culturel premium pour la diaspora afro mondiale (« plus qu'un événement, une empreinte culturelle »).

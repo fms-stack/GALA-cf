@@ -32,7 +32,7 @@ Tout ce chapitre est ✅ **OBSERVÉ** sauf mention contraire.
 │       │   └── utils.js              # helper cn() (clsx + tailwind-merge)
 │       ├── components/
 │       │   ├── Logo.jsx              # 83 l.  — logo SVG vectoriel (anneaux concentriques + onde) — PNG officiel NON intégré
-│       │   ├── Countdown.jsx         # 29 l.  — compte à rebours vers 12.12.2026 (GET /public/countdown)
+│       │   ├── Countdown.jsx         # 29 l.  — compte à rebours vers 10.04.2027 (GET /public/countdown)
 │       │   ├── CustomCursor.jsx      # 59 l.  — curseur custom 2 couches, désactivé sur écrans tactiles
 │       │   ├── AmbientAudio.jsx      # 52 l.  — audio HTML5 opt-in (src via env) — URL externe non fiable
 │       │   ├── PageTransition.jsx    # 26 l.  — wrapper Framer Motion

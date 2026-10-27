@@ -1,6 +1,6 @@
-# CVLN Gala OS — Cook & Food Gala 2026
+# CVLN Gala OS — Cook & Food Gala 2027
 
-Portail du **Cook & Food Gala 2026 — Chapter I** (Paris · 12.12.2026) : site public éditorial premium + back-office privé sécurisé.
+Portail du **Cook & Food Gala 2027 — Chapter I** (Paris · 10.04.2027) : site public éditorial premium + back-office privé sécurisé.
 
 > 📚 **Documentation complète** : voir [`/docs`](docs/00_INDEX.md) — architecture, API (45+ endpoints), règles métier, algorithmes, base de données, sécurité, performance, propriété intellectuelle.
 

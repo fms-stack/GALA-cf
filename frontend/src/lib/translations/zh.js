@@ -1,8 +1,8 @@
 const zh = {
   nav: { home: "首页", concept: "概念", prix: "七项大奖", billetterie: "门票", cercle: "核心圈", mecenat: "赞助", partenaires: "合作伙伴", soumettre: "提交", casting: "选角" },
   cta: { confirm: "确认", reserve: "预订席位", join_circle: "加入核心圈", become_patron: "成为赞助人", confirm_presence: "确认出席", public_billet: "公众门票", discover: "探索" },
-  hero: { chapter: "第一章 · 2026年12月12日 星期六 · 巴黎", tagline: "沉浸式美食与文化体验 · 烹饪、文化、音乐、艺术、时尚、电影与文学。", note: "不仅是活动，更是文化印记。" },
-  footer: { rights: "版权所有", powered: "Powered by", staff_access: "团队入口 ↗", baseline: "Cook & Food Gala · 不仅是活动，更是文化印记。", date_place: "2026年12月12日 · 巴黎", powered_by_label: "技术支持", contact: "联系方式" },
+  hero: { chapter: "第一章 · 2027年4月10日 星期六 · 巴黎", tagline: "沉浸式美食与文化体验 · 烹饪、文化、音乐、艺术、时尚、电影与文学。", note: "不仅是活动，更是文化印记。" },
+  footer: { rights: "版权所有", powered: "Powered by", staff_access: "团队入口 ↗", baseline: "Cook & Food Gala · 不仅是活动，更是文化印记。", date_place: "2027年4月10日 · 巴黎", powered_by_label: "技术支持", contact: "联系方式" },
   invitation: { title: "餐桌上的 120 个席位。", body: "邀请函将于 2026 年 9 月发出。\n仅限推荐。", manifest: "表达兴趣 · 保密", signal_ok: "信号已收到，负责团队将与您联系。" },
   common: { days: "天", hours: "小时", name: "姓名 *", email: "电子邮箱 *", phone: "电话", message: "留言", optional: "（可选）", sending: "发送中…", thanks: "谢谢。", ref: "参考编号", discover: "探索 →", choose: "选择 →" },
   home: {
@@ -34,7 +34,7 @@ const zh = {
       { title: "舞台布局", body: "中央环形舞台、两座烹饪岛、120个弧形VIP席、看台、侧区、TC'V导控室。" },
       { title: "流程安排", body: "18:30公众开放 → 22:00颁奖典礼 → 00:00战略社交。分秒必争。" },
       { title: "七大部门", body: "总监 · 艺术 · 选角 · 技术 · 剧集 · 数据科技 · 传播。25个已确认岗位。" },
-      { title: "发展轨迹", body: "第一章（2026）· 第二章（2027）· 第三章（2028）· IPO轨迹。" },
+      { title: "发展轨迹", body: "第一章（2027）· 第二章（2028）· 第三章（2029）· IPO轨迹。" },
     ],
   },
   prix: {
@@ -82,14 +82,16 @@ const zh = {
     s_label: "申请已收到", s_body: "保密编号", s_body2: "管理层将亲自与您联系。", s_wa: "+596 696 78 89 86 · 核心圈专属WhatsApp", sent_toast: "申请已提交。",
   },
   billetterie: {
-    eyebrow: "门票 · 巴黎 · 12.12.2026", title: "预订席位。",
+    eyebrow: "门票 · 巴黎 · 10.04.2027", title: "预订席位。",
     intro: "一个夜晚 · 一座舞台 · 七大领域。请先选择您的出席方式 · 详情随后呈现。",
     load_error: "无法加载票务信息。",
     tiers: {
+      early: { eyebrow: "早鸟票", body: "正面看台 · 首发价 · 数量有限，截至2027年1月31日。" },
       premium: { eyebrow: "尊享", body: "高位正面看台 · 优先入场 · 专属衣帽间。" },
       gradin: { eyebrow: "看台", body: "直视环形舞台 · 完整体验。" },
       lateral: { eyebrow: "侧区", body: "站立区 · 紧邻烹饪岛的沉浸式氛围。" },
     },
+    sold_out: "已售罄", closed: "已停售", remaining: "仅剩 {n} 个席位", tickets_title: "您的门票。", ticket_open: "打开门票 →", ticket_label: "实名门票", ticket_hint: "入场时出示此二维码 · 一票一人次。", ticket_used: "门票已使用", ticket_not_found: "未找到门票。", seat: "席位",
     back: "← 更换类别", qty: "席位数量", total: "应付总额",
     pay: "支付并预订 →", redirect: "正在跳转Stripe…", secure: "通过Stripe Checkout安全支付。即将跳转。",
     s_paid_label: "支付已确认", s_paid_title: "欢迎。", s_paid_body: "您的席位已预订。确认邮件即将送达。",
@@ -97,7 +99,7 @@ const zh = {
   },
   rsvp: {
     eyebrow: "RSVP · 数字", title: "确认|我的出席。",
-    date_line: "2026年12月12日 星期六 · 19:00 · 巴黎。", dress: "着装要求：",
+    date_line: "2027年4月10日 星期六 · 19:00 · 巴黎。", dress: "着装要求：",
     privacy: "您的信息将被严格保密存储。任何姓名都不会公开。",
     name_ph: "您的全名", email_ph: "you@example.com", seats: "席位数量",
     submit: "确认出席 →", nontransf: "私人邀请 · 不可转让",

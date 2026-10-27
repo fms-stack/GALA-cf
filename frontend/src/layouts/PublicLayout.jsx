@@ -34,7 +34,7 @@ export default function PublicLayout() {
             <Logo size={32} className="transition-transform duration-700 group-hover:rotate-180" />
             <div className="leading-tight">
               <div className="serif-display text-xl">Cook &amp; Food</div>
-              <div className="label-eyebrow opacity-70">Gala · 2026</div>
+              <div className="label-eyebrow opacity-70">Gala · 2027</div>
             </div>
           </Link>
           <nav className="hidden lg:flex items-center gap-8">

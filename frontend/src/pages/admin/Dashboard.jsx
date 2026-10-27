@@ -31,7 +31,7 @@ export default function Dashboard() {
         <Stat label="Postes" value={stats?.positions ?? "·"} testid="stat-positions" />
         <Stat label="Personnes" value={stats?.people ?? "·"} testid="stat-people" />
         <Stat label="Affectations" value={stats?.assignments ?? "·"} testid="stat-assignments" />
-        <Stat label="Compte à rebours" value={stats ? `J-${stats.days_to_gala}` : "·"} hint="12 décembre 2026" testid="stat-countdown" />
+        <Stat label="Compte à rebours" value={stats ? `J-${stats.days_to_gala}` : "·"} hint="10 avril 2027" testid="stat-countdown" />
       </div>
 
       <div className="grid lg:grid-cols-2 gap-6">

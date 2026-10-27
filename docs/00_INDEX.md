@@ -1,5 +1,5 @@
 # CVLN GALA OS — DOSSIER TECHNIQUE & PROPRIÉTÉ INTELLECTUELLE
-## Cook & Food Gala 2026 — Chapter I · Paris · 12.12.2026
+## Cook & Food Gala 2027 — Chapter I · Paris · 10.04.2027
 
 **Titulaire** : CVLN Holding · **Éditeur** : Factory Maker Studio
 **Version** : 2.0 · **Date** : Juin 2026

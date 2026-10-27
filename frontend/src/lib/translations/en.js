@@ -1,8 +1,8 @@
 const en = {
   nav: { home: "Home", concept: "Concept", prix: "The 7 Awards", billetterie: "Tickets", cercle: "Circle", mecenat: "Patronage", partenaires: "Partners", soumettre: "Submit", casting: "Casting" },
   cta: { confirm: "Confirm", reserve: "Reserve a seat", join_circle: "Join the Circle", become_patron: "Become a patron", confirm_presence: "Confirm my presence", public_billet: "Public tickets", discover: "Discover" },
-  hero: { chapter: "Chapter I · Saturday December 12, 2026 · Paris", tagline: "An immersive gastronomic & cultural experience · Cuisine, Culture, Music, Art, Fashion, Cinema & Literature.", note: "More than an event. A cultural imprint." },
-  footer: { rights: "All rights reserved", powered: "Powered by", staff_access: "Team access ↗", baseline: "Cook & Food Gala · more than an event, a cultural imprint.", date_place: "December 12, 2026 · Paris", powered_by_label: "Powered by", contact: "Contact" },
+  hero: { chapter: "Chapter I · Saturday April 10, 2027 · Paris", tagline: "An immersive gastronomic & cultural experience · Cuisine, Culture, Music, Art, Fashion, Cinema & Literature.", note: "More than an event. A cultural imprint." },
+  footer: { rights: "All rights reserved", powered: "Powered by", staff_access: "Team access ↗", baseline: "Cook & Food Gala · more than an event, a cultural imprint.", date_place: "April 10, 2027 · Paris", powered_by_label: "Powered by", contact: "Contact" },
   invitation: { title: "120 seats at the table.", body: "Invitations are sent out in September 2026.\nBy co-option only.", manifest: "Signal your interest · confidential", signal_ok: "Signal received. The team will reach out to you." },
   common: { days: "Days", hours: "Hours", name: "Full name *", email: "E-mail *", phone: "Phone", message: "Message", optional: "(optional)", sending: "Sending…", thanks: "Thank you.", ref: "Reference", discover: "Discover →", choose: "Choose →" },
   home: {
@@ -35,7 +35,7 @@ const en = {
       { title: "Stage Plan", body: "Central circular stage, two kitchen islands, 120 VIP seats in arc, stands, side zones, TC'V control room." },
       { title: "Run of Show", body: "6:30pm public opening → 10:00pm awards ceremony → 12:00am strategic networking. To the minute." },
       { title: "Seven Poles", body: "Direction · Artistic · Casting · Technical · Series · DataTech · Communication. 25 confirmed positions." },
-      { title: "Trajectory", body: "Chapter I (2026) · Chapter II (2027) · Chapter III (2028) · IPO trajectory." },
+      { title: "Trajectory", body: "Chapter I (2027) · Chapter II (2028) · Chapter III (2029) · IPO trajectory." },
     ],
   },
   prix: {
@@ -83,14 +83,16 @@ const en = {
     s_label: "Request received", s_body: "Confidential reference", s_body2: "The direction will get back to you personally.", s_wa: "+596 696 78 89 86 · Circle-dedicated WhatsApp", sent_toast: "Request sent.",
   },
   billetterie: {
-    eyebrow: "Tickets · Paris · 12.12.2026", title: "Reserve a seat.",
+    eyebrow: "Tickets · Paris · 10.04.2027", title: "Reserve a seat.",
     intro: "One night · one stage · seven disciplines. First choose the nature of your presence · details will follow.",
     load_error: "Unable to load ticketing.",
     tiers: {
+      early: { eyebrow: "Early Bird", body: "Front stand · launch price · limited quantity, until January 31, 2027." },
       premium: { eyebrow: "Premium", body: "Elevated front stand · priority arrival · dedicated cloakroom." },
       gradin: { eyebrow: "Stand", body: "Direct view of the circular stage · full experience." },
       lateral: { eyebrow: "Side", body: "Standing zone · immersive atmosphere close to the kitchen islands." },
     },
+    sold_out: "Sold out", closed: "Sales closed", remaining: "Only {n} seats left", tickets_title: "Your tickets.", ticket_open: "Open ticket →", ticket_label: "Named ticket", ticket_hint: "Show this QR code at the entrance · one ticket = one entry.", ticket_used: "Ticket already used", ticket_not_found: "Ticket not found.", seat: "Seat",
     back: "← Change category", qty: "Number of seats", total: "Total due",
     pay: "Pay and reserve →", redirect: "Redirecting to Stripe…", secure: "Secure payment via Stripe Checkout. You will be redirected.",
     s_paid_label: "Payment confirmed", s_paid_title: "Welcome.", s_paid_body: "Your seat is reserved. A confirmation e-mail is on its way.",
@@ -98,7 +100,7 @@ const en = {
   },
   rsvp: {
     eyebrow: "RSVP · Digital", title: "Confirm|my presence.",
-    date_line: "Saturday December 12, 2026 · 7:00pm · Paris.", dress: "Dress code:",
+    date_line: "Saturday April 10, 2027 · 7:00pm · Paris.", dress: "Dress code:",
     privacy: "Your details are stored strictly confidentially. No name is ever exposed publicly.",
     name_ph: "Your full name", email_ph: "you@example.com", seats: "Number of seats",
     submit: "Confirm my presence →", nontransf: "Personal invitation · non-transferable",
