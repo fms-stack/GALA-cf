@@ -3,14 +3,23 @@
 - Les chefs passent par les statuts candidat → qualifie → finaliste → laureat (ou elimine).
 - Chaque juré note chaque chef par épreuve sur 4 critères (0 à 10), pondérés par CRITERIA.
 - Le vote du public ne porte que sur les finalistes, une voix par adresse e-mail, ouvert/fermé par l'admin.
+  Une voix ne compte qu'après confirmation par le lien reçu par e-mail (48 h).
 """
-from datetime import datetime, timezone
+import os
+import secrets
+from datetime import datetime, timezone, timedelta
 from typing import Literal, Optional
 
 from bson import ObjectId
 from fastapi import APIRouter, HTTPException, Depends, Query
 from pydantic import BaseModel, Field, EmailStr
 from pymongo.errors import DuplicateKeyError
+
+from mailer import send_email
+
+FRONTEND_URL = os.environ.get("FRONTEND_URL", "http://localhost:3000")
+EXPOSE_DEV_LINKS = os.environ.get("EXPOSE_DEV_LINKS", "false").lower() == "true"
+VOTE_LINK_HOURS = 48
 
 # Pondération du jury (somme = 1) · goût, technique, créativité, histoire racontée par le plat
 CRITERIA = {"gout": 0.35, "technique": 0.25, "creativite": 0.20, "recit": 0.20}
@@ -54,6 +63,10 @@ class ScoreIn(BaseModel):
     recit: float = Field(ge=0, le=10)
 
 
+class VoteConfirmIn(BaseModel):
+    token: str = Field(min_length=10, max_length=100)
+
+
 class SettingsIn(BaseModel):
     vote_open: bool
 
@@ -73,6 +86,8 @@ def public_chef(c: dict) -> dict:
 async def ensure_indexes(db):
     await db.competition_scores.create_index([("chef_id", 1), ("juror_id", 1), ("round", 1)], unique=True)
     await db.competition_votes.create_index("email", unique=True)
+    await db.competition_vote_requests.create_index("token", unique=True)
+    await db.competition_vote_requests.create_index("email", unique=True)
 
 
 def create_competition_router(db, require_role, audit, doc_out):
@@ -216,10 +231,42 @@ def create_competition_router(db, require_role, audit, doc_out):
             chef = None
         if not chef:
             raise HTTPException(status_code=400, detail="Ce chef ne fait pas partie des finalistes")
+        email = payload.email.lower()
+        if await db.competition_votes.find_one({"email": email}):
+            raise HTTPException(status_code=409, detail="Un vote a déjà été enregistré pour cette adresse")
+        # Vote en attente : un seul par adresse (un nouveau choix remplace l'ancien tant qu'il n'est pas confirmé)
+        token = secrets.token_urlsafe(24)
+        expires = (datetime.now(timezone.utc) + timedelta(hours=VOTE_LINK_HOURS)).isoformat()
+        await db.competition_vote_requests.update_one(
+            {"email": email},
+            {"$set": {"email": email, "chef_id": payload.chef_id, "token": token, "expires_at": expires, "created_at": now_iso()}},
+            upsert=True,
+        )
+        link = f"{FRONTEND_URL}/concours?confirmer={token}"
+        await send_email(email, "Confirmez votre vote · Concours Héritage & Création",
+                         f"<p>Vous avez choisi <b>{chef['name']}</b> pour le prix du public du Cook &amp; Food Gala.</p>"
+                         f'<p>Pour que votre voix compte, confirmez-la (lien valable {VOTE_LINK_HOURS} h) :</p>'
+                         f'<p><a href="{link}">{link}</a></p>')
+        return {"ok": True, "pending": True, "dev_link": link if EXPOSE_DEV_LINKS else None}
+
+    @router.post("/public/competition/vote/confirm")
+    async def confirm_vote(payload: VoteConfirmIn):
+        req = await db.competition_vote_requests.find_one({"token": payload.token})
+        if not req:
+            raise HTTPException(status_code=404, detail="Lien de confirmation invalide ou déjà utilisé")
+        if datetime.fromisoformat(req["expires_at"]) < datetime.now(timezone.utc):
+            await db.competition_vote_requests.delete_one({"_id": req["_id"]})
+            raise HTTPException(status_code=410, detail="Lien de confirmation expiré · merci de voter à nouveau")
+        if not (await get_settings())["vote_open"]:
+            raise HTTPException(status_code=403, detail="Le vote du public est clos")
+        chef = await db.competition_chefs.find_one({"_id": ObjectId(req["chef_id"])})
         try:
-            await db.competition_votes.insert_one({"chef_id": payload.chef_id, "email": payload.email.lower(), "created_at": now_iso()})
+            await db.competition_votes.insert_one({"chef_id": req["chef_id"], "email": req["email"],
+                                                   "confirmed_at": now_iso(), "created_at": req.get("created_at")})
         except DuplicateKeyError:
             raise HTTPException(status_code=409, detail="Un vote a déjà été enregistré pour cette adresse")
-        return {"ok": True}
+        finally:
+            await db.competition_vote_requests.delete_one({"_id": req["_id"]})
+        return {"ok": True, "chef": chef["name"] if chef else ""}
 
     return router

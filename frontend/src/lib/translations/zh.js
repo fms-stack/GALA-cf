@@ -81,7 +81,7 @@ const zh = {
     submit: "提交申请 →", note: "7日内审阅 · 署名 Cook & Food Gala by Factory Maker Studio & CVLN Group",
     s_label: "申请已收到", s_body: "保密编号", s_body2: "管理层将亲自与您联系。", s_wa: "+596 696 78 89 86 · 核心圈专属WhatsApp", sent_toast: "申请已提交。",
   },
-  concours: {eyebrow: "大赛 · 传承与创造", title: "主厨对决。", intro: "来自侨民社群的主厨围绕一种标志性食材同台竞技，在传承食谱与当代创作之间展开较量。决赛将于2027年4月10日在两座烹饪岛台现场进行。", criteria: "味道 · 技艺 · 创意 · 菜肴讲述的故事", finalists: "决赛选手", empty: "决赛选手将于2027年3月公布。", vote_open: "观众投票已开放 · 每人一票。", vote_closed: "观众投票尚未开放。", vote: "投票 →", vote_ok: "感谢，您的投票已记录。", chosen: "您的选择", apply: "您是主厨吗？提交报名 →" },
+  concours: {eyebrow: "大赛 · 传承与创造", title: "主厨对决。", intro: "来自侨民社群的主厨围绕一种标志性食材同台竞技，在传承食谱与当代创作之间展开较量。决赛将于2027年4月10日在两座烹饪岛台现场进行。", criteria: "味道 · 技艺 · 创意 · 菜肴讲述的故事", finalists: "决赛选手", empty: "决赛选手将于2027年3月公布。", vote_open: "观众投票已开放 · 每人一票。", vote_closed: "观众投票尚未开放。", vote: "投票 →", vote_ok: "感谢，您的投票已记录。", chosen: "您的选择", apply: "您是主厨吗？提交报名 →", check_email: "最后一步：请通过电子邮件中的链接确认您的投票（48小时内有效）。", confirmed: "您为 {chef} 投出的一票已计入。", confirm_error: "无法确认" },
   billetterie: {
     eyebrow: "门票 · 巴黎 · 10.04.2027", title: "预订席位。",
     intro: "一个夜晚 · 一座舞台 · 七大领域。请先选择您的出席方式 · 详情随后呈现。",

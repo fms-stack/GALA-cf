@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { api, formatApiError } from "@/lib/api";
 import { toast } from "sonner";
 import { useI18n } from "@/lib/i18n";
@@ -11,11 +11,23 @@ export default function Concours() {
   const [honeypot, setHoneypot] = useState("");
   const [loading, setLoading] = useState(false);
   const [voted, setVoted] = useState(false);
+  const [confirmation, setConfirmation] = useState(null); // { ok, text }
+  const [params] = useSearchParams();
+  const token = params.get("confirmer");
   const { t } = useI18n();
 
   useEffect(() => {
     api.get("/public/competition").then((r) => setData(r.data)).catch(() => {});
   }, []);
+
+  // Lien reçu par e-mail : la voix ne compte qu'une fois confirmée
+  useEffect(() => {
+    if (!token) return;
+    api.post("/public/competition/vote/confirm", { token })
+      .then((r) => setConfirmation({ ok: true, text: t("concours.confirmed").replace("{chef}", r.data.chef) }))
+      .catch((err) => setConfirmation({ ok: false, text: formatApiError(err.response?.data?.detail) }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [token]);
 
   const vote = async (e) => {
     e.preventDefault();
@@ -24,7 +36,7 @@ export default function Concours() {
     try {
       await api.post("/public/competition/vote", { chef_id: choice, email, honeypot });
       setVoted(true);
-      toast.success(t("concours.vote_ok"));
+      toast.success(t("concours.check_email"));
     } catch (err) { toast.error(formatApiError(err.response?.data?.detail)); }
     finally { setLoading(false); }
   };
@@ -36,6 +48,13 @@ export default function Concours() {
         <h1 className="serif-display text-5xl lg:text-7xl mb-8">{t("concours.title")}</h1>
         <p className="text-sable max-w-2xl text-lg leading-relaxed mb-6">{t("concours.intro")}</p>
         <p className="label-eyebrow opacity-60 mb-16">{t("concours.criteria")}</p>
+
+        {confirmation && (
+          <div data-testid="concours-confirmation" className={`border px-6 py-5 mb-16 max-w-2xl ${confirmation.ok ? "border-or text-or" : "border-sable/40 text-sable"}`}>
+            <p className="serif-display text-2xl">{confirmation.ok ? t("concours.vote_ok") : t("concours.confirm_error")}</p>
+            <p className="text-sm mt-2">{confirmation.text}</p>
+          </div>
+        )}
 
         <h2 className="serif-display text-3xl mb-8">{t("concours.finalists")}</h2>
         {data.finalists.length === 0 ? (
@@ -63,7 +82,7 @@ export default function Concours() {
 
         {data.finalists.length > 0 && (
           voted ? (
-            <p className="serif-display text-3xl text-or" data-testid="concours-voted">{t("concours.vote_ok")}</p>
+            <p className="serif-display text-3xl text-or max-w-2xl" data-testid="concours-voted">{t("concours.check_email")}</p>
           ) : data.vote_open ? (
             <form onSubmit={vote} className="max-w-md space-y-6" data-testid="concours-vote-form">
               <p className="text-sable">{t("concours.vote_open")}</p>

@@ -20,7 +20,7 @@ from fastapi.responses import JSONResponse
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 from pydantic import BaseModel, Field, EmailStr, ConfigDict
-from emergentintegrations.payments.stripe.checkout import (
+from payments import (
     StripeCheckout, CheckoutSessionRequest, CheckoutSessionResponse, CheckoutStatusResponse,
 )
 from mailer import send_email
@@ -767,6 +767,7 @@ async def create_checkout_session(payload: CheckoutCreateIn, request: Request):
     cancel_url = f"{payload.origin_url}/billetterie"
     metadata = {
         "package_id": payload.package_id,
+        "package_label": pkg["label"],
         "quantity": str(payload.quantity),
         "full_name": payload.full_name,
         "email": payload.email,
@@ -1131,3 +1132,25 @@ async def on_startup():
 @app.on_event("shutdown")
 async def on_shutdown():
     client.close()
+
+
+# ============================================================================
+# Site public (build React) servi par le même service · hébergement Render
+# Actif seulement si FRONTEND_BUILD_DIR pointe vers un build existant (image Docker).
+# Toute route hors /api renvoie le fichier demandé ou index.html (routage côté navigateur).
+# ============================================================================
+FRONTEND_BUILD_DIR = Path(os.environ.get("FRONTEND_BUILD_DIR", ""))
+if os.environ.get("FRONTEND_BUILD_DIR") and (FRONTEND_BUILD_DIR / "index.html").exists():
+    from fastapi.responses import FileResponse
+
+    _build_root = FRONTEND_BUILD_DIR.resolve()
+
+    @app.get("/{full_path:path}", include_in_schema=False)
+    async def serve_site(full_path: str):
+        if full_path.startswith("api/"):
+            raise HTTPException(status_code=404, detail="Not Found")
+        candidate = (_build_root / full_path).resolve()
+        if full_path and candidate.is_file() and _build_root in candidate.parents:
+            cache = "public, max-age=31536000, immutable" if full_path.startswith("static/") else "public, max-age=3600"
+            return FileResponse(candidate, headers={"Cache-Control": cache})
+        return FileResponse(_build_root / "index.html", headers={"Cache-Control": "no-cache"})
