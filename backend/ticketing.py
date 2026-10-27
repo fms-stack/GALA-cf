@@ -9,6 +9,7 @@ import os
 import secrets
 import logging
 from datetime import datetime, timezone, timedelta
+from zoneinfo import ZoneInfo
 from typing import Optional
 
 from fastapi import APIRouter, HTTPException, Depends
@@ -21,6 +22,7 @@ logger = logging.getLogger(__name__)
 
 FRONTEND_URL = os.environ.get("FRONTEND_URL", "http://localhost:3000")
 HOLD_MINUTES = 30
+PARIS = ZoneInfo("Europe/Paris")
 # Version du texte d'information sur la captation affiché à l'achat (à incrémenter si le texte change)
 IMAGE_NOTICE_VERSION = "2026-10-27"
 
@@ -286,6 +288,8 @@ def create_ticketing_router(db, require_role, audit, doc_out):
         existing = await db.tickets.find_one({"code": code})
         if not existing:
             raise HTTPException(status_code=404, detail="Billet inconnu")
-        raise HTTPException(status_code=409, detail=f"Billet déjà scanné le {existing.get('checked_in_at', '')[:16].replace('T', ' à ')} UTC")
+        at = existing.get("checked_in_at")
+        when = datetime.fromisoformat(at).astimezone(PARIS).strftime("%d/%m à %H:%M") if at else "?"
+        raise HTTPException(status_code=409, detail=f"Billet déjà scanné le {when} (heure de Paris)")
 
     return router

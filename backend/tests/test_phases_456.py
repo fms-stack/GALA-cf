@@ -10,9 +10,9 @@ import requests
 
 BASE_URL = os.environ.get("REACT_APP_BACKEND_URL", "https://production-vault-5.preview.emergentagent.com").rstrip("/")
 
-ADMIN = {"email": "laurent@cvln.holding", "password": "GalaCVLN2026!"}
-PROD = {"email": "production@cfceremony.com", "password": "Prod-CF2026!Gala"}
-JUR = {"email": "juridique@cfceremony.com", "password": "Jur-CF2026!Gala"}
+ADMIN = {"email": os.environ["ADMIN_EMAIL"], "password": os.environ["ADMIN_PASSWORD"]}
+PROD = {"email": "production@cfceremony.com", "password": os.environ["STAFF_PRODUCTION_PASSWORD"]}
+JUR = {"email": "juridique@cfceremony.com", "password": os.environ["STAFF_JURIDIQUE_PASSWORD"]}
 
 
 def _login(creds):

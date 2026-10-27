@@ -6,9 +6,9 @@ import requests
 BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', open('/app/frontend/.env').read().split('REACT_APP_BACKEND_URL=')[1].split('\n')[0]).rstrip('/')
 API = f"{BASE_URL}/api"
 
-ADMIN = {"email": "laurent@cvln.holding", "password": "GalaCVLN2026!"}
-PROD = {"email": "miguel@cvln.holding", "password": "Production2026!"}
-JUR = {"email": "hashtag@cvln.holding", "password": "Juridique2026!"}
+ADMIN = {"email": os.environ["ADMIN_EMAIL"], "password": os.environ["ADMIN_PASSWORD"]}
+PROD = {"email": "production@cfceremony.com", "password": os.environ["STAFF_PRODUCTION_PASSWORD"]}
+JUR = {"email": "juridique@cfceremony.com", "password": os.environ["STAFF_JURIDIQUE_PASSWORD"]}
 
 
 @pytest.fixture(scope="module")

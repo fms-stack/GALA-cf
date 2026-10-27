@@ -70,7 +70,7 @@ def test_bcrypt_hash_format():
 
 
 def test_old_staff_password_rejected():
-    r = requests.post(f"{BASE}/auth/login", json={"email": "production@cfceremony.com", "password": "Prod-CF2026!Gala"}, timeout=15)
+    r = requests.post(f"{BASE}/auth/login", json={"email": "production@cfceremony.com", "password": os.environ["STAFF_PRODUCTION_PASSWORD"]}, timeout=15)
     assert r.status_code == 401
     DB.login_attempts.delete_many({"identifier": {"$regex": "production@cfceremony.com"}})
 

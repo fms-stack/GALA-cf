@@ -231,7 +231,7 @@ class MecenatIn(BaseModel):
     full_name: str = Field(min_length=2, max_length=120)
     email: EmailStr
     organisation: Optional[str] = ""
-    amount_eur: float = Field(ge=500.0)
+    amount_eur: float = Field(ge=500.0, le=999999.0)  # plafond Stripe Checkout par paiement
     purpose: Optional[str] = ""  # for which purpose: general, prizes, bible, casting
     honeypot: Optional[str] = ""
 
@@ -629,6 +629,24 @@ async def public_mecenat(p: MecenatIn, request: Request):
     return {"ok": True, "url": session.url}
 
 
+@api_router.get("/public/mecenat/status/{session_id}")
+async def mecenat_status(session_id: str, request: Request):
+    """Vérifie le paiement d'un don auprès de Stripe et met à jour le registre des dons."""
+    rec = await db.mecenat_donations.find_one({"session_id": session_id})
+    if not rec:
+        raise HTTPException(status_code=404, detail="Don introuvable")
+    if rec.get("payment_status") != "paid":
+        host_url = str(request.base_url).rstrip("/")
+        stripe_checkout = StripeCheckout(api_key=os.environ.get("STRIPE_API_KEY", ""), webhook_url=f"{host_url}/api/webhook/stripe")
+        st: CheckoutStatusResponse = await stripe_checkout.get_checkout_status(session_id)
+        update = {"payment_status": st.payment_status, "status": st.status}
+        if st.payment_status == "paid":
+            update["paid_at"] = datetime.now(timezone.utc).isoformat()
+        await db.mecenat_donations.update_one({"_id": rec["_id"]}, {"$set": update})
+        rec.update(update)
+    return {"payment_status": rec.get("payment_status"), "status": rec.get("status"), "amount": rec.get("amount")}
+
+
 @api_router.get("/cercle-restreint-inquiries")
 async def list_cercle(user: dict = Depends(require_role("admin", "production"))):
     items = await db.cercle_restreint_inquiries.find({}).sort("created_at", -1).to_list(500)
@@ -649,9 +667,7 @@ async def list_cooptation(user: dict = Depends(require_role("admin", "production
 
 @api_router.post("/cercle/{iid}/send-reply")
 async def send_cercle_reply(iid: str, body: dict, user: dict = Depends(require_role("admin"))):
-    """Send an automated reply email to a Cercle candidate.
-    Currently MOCKED until RESEND_API_KEY is configured.
-    """
+    """Send a reply email to a Cercle candidate (Resend · mock when RESEND_API_KEY is empty)."""
     rec = await db.cercle_restreint_inquiries.find_one({"_id": ObjectId(iid)})
     if not rec:
         raise HTTPException(status_code=404, detail="Demande introuvable")
@@ -662,13 +678,8 @@ async def send_cercle_reply(iid: str, body: dict, user: dict = Depends(require_r
         "Cook & Food Gala · Chapter I · Samedi 10 avril 2027 · Paris\n\n"
         "· Cook & Food Gala by Factory Maker Studio & CVLN Group"
     )
-    if RESEND_API_KEY:
-        # Production: integrate Resend SDK here
-        logger.info(f"[Resend] sent to {rec['email']}: {subject}")
-        sent = True
-    else:
-        logger.warning(f"[MOCK EMAIL] to={rec['email']} subject={subject}")
-        sent = False
+    html = "<p>" + body_text.replace("&", "&amp;").replace("<", "&lt;").replace("\n\n", "</p><p>").replace("\n", "<br>") + "</p>"
+    sent = await send_email(rec["email"], subject, html)
     await db.cercle_restreint_inquiries.update_one(
         {"_id": rec["_id"]},
         {"$set": {"last_reply_at": datetime.now(timezone.utc).isoformat(), "reply_sent": sent}}
@@ -696,7 +707,7 @@ async def issue_cooptation(body: dict, user: dict = Depends(require_role("admin"
         "used": False,
         "created_at": datetime.now(timezone.utc).isoformat(),
     })
-    return {"token": token, "url": f"{FRONTEND_URL}/cercle-restreint?coopte={token}", "expires_in_days": 7}
+    return {"token": token, "url": f"{FRONTEND_URL}/cercle-restreint?coopte={token}", "expires_in_days": 7}  # lu par CercleRestreint.jsx
 
 
 @api_router.get("/public/cooptation/{token}")
@@ -822,6 +833,10 @@ async def stripe_webhook(request: Request):
                 {"$set": {"payment_status": "paid", "status": "complete", "paid_at": datetime.now(timezone.utc).isoformat()}},
             )
             await issue_tickets(db, ev.session_id)
+            await db.mecenat_donations.update_one(
+                {"session_id": ev.session_id},
+                {"$set": {"payment_status": "paid", "status": "complete", "paid_at": datetime.now(timezone.utc).isoformat()}},
+            )
         return {"received": True}
     except Exception as e:
         logger.error(f"Stripe webhook error: {e}")
@@ -849,7 +864,7 @@ async def dashboard_stats(user: dict = Depends(get_current_user)):
     orders_total = await db.payment_transactions.count_documents({})
     tickets_issued = await db.tickets.count_documents({})
     tickets_checked_in = await db.tickets.count_documents({"status": "checked_in"})
-    days_to_gala = (GALA_DATE - datetime.now(timezone.utc)).days
+    days_to_gala = max(0, (GALA_DATE - datetime.now(timezone.utc)).days)
     return {
         "positions": positions,
         "people": people,
@@ -952,10 +967,11 @@ async def health_full(user: dict = Depends(require_role("admin"))):
     status["checks"]["stripe"] = {"ok": bool(os.environ.get("STRIPE_API_KEY"))}
     # Resend (mocked when key missing)
     status["checks"]["resend"] = {"ok": bool(RESEND_API_KEY), "mode": "live" if RESEND_API_KEY else "mock"}
-    # Object Storage / Bible (chiffrée au repos)
-    from pathlib import Path as _P
-    bible_file = _P("/app/backend/storage/bible/GALA_COOK_FOOD_BIBLE.pdf.enc")
-    status["checks"]["bible_storage"] = {"ok": bible_file.parent.exists(), "uploaded": bible_file.exists(), "encrypted": True}
+    # Bible · chiffrée (Fernet) et stockée en GridFS (bucket « bible »)
+    bible_doc = await db["bible.files"].find_one({}, {"_id": 1})
+    status["checks"]["bible_storage"] = {"ok": True, "uploaded": bible_doc is not None, "encrypted": True, "backend": "gridfs"}
+    # E-mails · expéditeur utilisé par Resend
+    status["checks"]["resend"]["from"] = os.environ.get("RESEND_FROM", "Cook & Food Gala <billetterie@cfceremony.com>")
     # Yousign · not yet integrated
     status["checks"]["yousign"] = {"ok": False, "mode": "mock"}
     # Collections
