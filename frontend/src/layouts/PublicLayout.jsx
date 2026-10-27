@@ -36,7 +36,7 @@ export default function PublicLayout() {
       <header className="fixed top-0 inset-x-0 z-50 backdrop-blur-md bg-noir/70 border-b border-ivoire/10">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12 py-5 flex items-center justify-between">
           <Link to="/" onClick={() => setOpen(false)} className="flex items-center gap-3 text-ivoire group shrink-0" data-testid="public-logo-link">
-            <Logo size={32} className="transition-transform duration-700 group-hover:rotate-180" />
+            <Logo size={32} className="transition-all duration-700 group-hover:scale-110 group-hover:text-or" />
             <div className="leading-tight">
               <div className="serif-display text-xl whitespace-nowrap">Cook &amp; Food</div>
               <div className="label-eyebrow opacity-70">Gala · 2027</div>
